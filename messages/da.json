@@ -1,0 +1,48 @@
+{
+  "home": {
+    "title": "Denmark Intern",
+    "subtitle": "Forbind danske virksomheder med svenske praktikanter"
+  },
+  "nav": {
+    "home": "Hjem",
+    "about": "Om",
+    "contact": "Kontakt",
+    "login": "Log ind",
+    "signup": "Tilmeld",
+    "dashboard": "Dashboard",
+    "logout": "Log ud"
+  },
+  "hero": {
+    "headline": "Ansæt svenske praktikanter – enkelt for danske virksomheder.",
+    "subheadline": "Hurtig, friktionsfri matching på tværs af Øresund. Minimalt gebyr. Stor effekt.",
+    "primaryCTA": "Få kandidater",
+    "secondaryCTA": "Tal med os",
+    "story": "Mikkel i København har en ambitiøs plan – men for få hænder. På den anden side af Øresund søger Lina i Malmö en meningsfuld praktikplads. Denmark Intern bygger broen og matcher danske teams med motiverede svenske praktikanter – på uger, ikke måneder."
+  },
+  "auth": {
+    "selectRole": "Vælg din rolle",
+    "company": "Virksomhed",
+    "candidate": "Kandidat",
+    "email": "E-mail",
+    "password": "Adgangskode",
+    "confirmPassword": "Bekræft adgangskode",
+    "firstName": "Fornavn",
+    "lastName": "Efternavn",
+    "loginButton": "Log ind",
+    "signupButton": "Tilmeld",
+    "alreadyHaveAccount": "Har du allerede en konto?",
+    "dontHaveAccount": "Har du ikke en konto?",
+    "forgotPassword": "Glemt adgangskode?"
+  },
+  "common": {
+    "loading": "Indlæser...",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "submit": "Indsend",
+    "delete": "Slet",
+    "edit": "Rediger",
+    "view": "Vis",
+    "search": "Søg",
+    "filter": "Filtrer"
+  }
+}

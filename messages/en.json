@@ -1,0 +1,48 @@
+{
+  "home": {
+    "title": "Denmark Intern",
+    "subtitle": "Connect Danish Companies with Swedish Interns"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "hero": {
+    "headline": "Hire Swedish interns, simply — for Danish companies.",
+    "subheadline": "Fast, low-friction matching across the Øresund. Minimal fee. Real impact.",
+    "primaryCTA": "Get candidates",
+    "secondaryCTA": "Talk to us",
+    "story": "Mikkel, a hiring manager in Copenhagen, has a roadmap full of ideas but not enough hands. Across the Øresund, Lina in Malmö is looking for a meaningful internship to launch her career. Denmark Intern bridges this gap—matching Danish teams with motivated Swedish interns in days, not months."
+  },
+  "auth": {
+    "selectRole": "Select your role",
+    "company": "Company",
+    "candidate": "Candidate",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "loginButton": "Login",
+    "signupButton": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "forgotPassword": "Forgot Password?"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "search": "Search",
+    "filter": "Filter"
+  }
+}
