@@ -541,53 +541,6 @@ export default function CompanyDashboard() {
           >
             {copy.viewMatches}
           </ActionButton>
-          <ActionButton
-            variant="outline"
-            icon={FileText}
-            onClick={() => router.push(`/${locale}/dashboard/company/reports`)}
-          >
-            {copy.viewReports}
-          </ActionButton>
-        </div>
-
-        {/* Legacy Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardDescription>{locale === 'da' ? 'Totalt' : 'Total'}</CardDescription>
-              <CardTitle className="text-3xl">{stats.total}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-zinc-500">{locale === 'da' ? 'Alle roller' : 'All roles'}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardDescription>{locale === 'da' ? 'Kladder' : 'Drafts'}</CardDescription>
-              <CardTitle className="text-3xl">{stats.draft}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-zinc-500">{locale === 'da' ? 'Ikke publiceret' : 'Not published'}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardDescription>{locale === 'da' ? 'Aktive' : 'Active'}</CardDescription>
-              <CardTitle className="text-3xl">{stats.active}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-zinc-500">{locale === 'da' ? 'Søger kandidater' : 'Seeking candidates'}</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardDescription>{locale === 'da' ? 'Matchet' : 'Matched'}</CardDescription>
-              <CardTitle className="text-3xl">{stats.matched}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-zinc-500">{locale === 'da' ? 'Kandidater fundet' : 'Candidates found'}</p>
-            </CardContent>
-          </Card>
         </div>
 
         {roles.length === 0 ? (
