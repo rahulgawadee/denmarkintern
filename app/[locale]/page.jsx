@@ -9,7 +9,7 @@ import {
   ValuePropsSection,
   StorySection,
   RolesSection,
-  ProcessSection,
+  HowItWorksSection,
   PricingSection,
   SocialProofSection,
   FaqSection,
@@ -36,14 +36,14 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdf5e6] text-[#4a3728] antialiased">
+    <div className="min-h-screen bg-white text-[#4a3728] antialiased">
       <HomeHeader locale={locale} brand={text.brand} navItems={text.nav} primaryCta={text.hero?.primaryCta} />
       <main className="relative">
         <HeroSection locale={locale} hero={text.hero} />
         <ValuePropsSection locale={locale} valueProps={text.valueProps} />
         <StorySection locale={locale} story={text.story} />
         <RolesSection locale={locale} roles={text.roles} />
-        <ProcessSection locale={locale} process={text.process} />
+        <HowItWorksSection locale={locale} />
         <PricingSection pricing={text.pricing} compliance={text.compliance} />
         <SocialProofSection testimonials={text.socialProof} />
         <FaqSection items={text.faq} />

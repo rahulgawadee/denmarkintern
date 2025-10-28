@@ -1,106 +1,126 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Zap, ListChecks } from 'lucide-react';
-import QuickRoleForm from '@/components/forms/QuickRoleForm';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { BackButton } from '@/components/ui/back-button';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
+import { ListChecks } from 'lucide-react';
 import FullRoleForm from '@/components/forms/FullRoleForm';
 
 export default function AddRolePage() {
   const params = useParams();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const locale = params?.locale || 'da';
   const user = useSelector((state) => state.auth.user);
-  
-  // Get mode from query params (quick or full)
-  const mode = searchParams.get('mode') || 'quick';
-  const [activeTab, setActiveTab] = useState(mode);
-  
-  // Update active tab when mode changes
-  useEffect(() => {
-    setActiveTab(mode);
-  }, [mode]);
 
   const copy = locale === 'da' ? {
     title: 'Opret praktikrolle',
-    subtitle: 'Vælg hvordan du vil oprette din praktikrolle',
-    quickForm: 'Hurtig formular',
-    quickFormDesc: '2-trins formular til hurtigt at oprette en rolle',
-    fullForm: 'Fuld formular',
-    fullFormDesc: 'Detaljeret trin-for-trin guide med alle muligheder',
-    back: 'Tilbage til dashboard',
+    subtitle: 'Udfyld formularen nedenfor for at oprette en ny praktikrolle',
+    formTitle: 'Rolleoplysninger',
+    formDesc: '📋 Detaljeret trin-for-trin guide med alle muligheder',
+    back: 'Tilbage',
+    dashboard: 'Dashboard',
+    addRole: 'Opret rolle',
   } : {
     title: 'Create Internship Role',
-    subtitle: 'Choose how you want to create your internship role',
-    quickForm: 'Quick Form',
-    quickFormDesc: '2-step form to quickly create a role',
-    fullForm: 'Full Form',
-    fullFormDesc: 'Detailed step-by-step guide with all options',
-    back: 'Back to dashboard',
+    subtitle: 'Fill out the form below to create a new internship role',
+    formTitle: 'Role Information',
+    formDesc: '📋 Detailed step-by-step guide with all options',
+    back: 'Back',
+    dashboard: 'Dashboard',
+    addRole: 'Add Role',
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
-        <Button
-          variant="ghost"
-          onClick={() => router.push(`/${locale}/dashboard/company`)}
-          className="mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          {copy.back}
-        </Button>
+    <>
+      {/* Header with Breadcrumb */}
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] px-4 sticky top-0 z-10">
+        <SidebarTrigger className="-ml-1 text-[#4a3728]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                href={`/${locale}/dashboard/company`}
+                className="text-[#6b5444] hover:text-[#fa8072] transition-colors"
+              >
+                {copy.dashboard}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator className="text-[#ffe4b5]" />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">
+                {copy.addRole}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 mb-2">{copy.title}</h1>
-          <p className="text-zinc-600">{copy.subtitle}</p>
-        </div>
+      {/* Main Content - Full Width */}
+      <main className="flex-1 overflow-auto">
+        <div className="w-full h-full bg-linear-to-b from-[#fdf5e6] via-white to-[#ffefd5]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+            
+            {/* Header Section */}
+            <div className="mb-8 space-y-4">
+              <div className="flex items-start justify-between flex-wrap gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-lg">
+                      <ListChecks className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">
+                        {copy.title}
+                      </h1>
+                      <p className="text-sm sm:text-base text-[#6b5444] mt-1">
+                        {copy.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <BackButton
+                  href={`/${locale}/dashboard/company`}
+                  variant="outline"
+                  className="border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:text-[#fa8072] hover:border-[#fa8072] transition-all duration-200"
+                >
+                  {copy.back}
+                </BackButton>
+              </div>
+            </div>
 
-        {/* Form Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="quick" className="flex items-center gap-2">
-              <Zap className="h-4 w-4" />
-              {copy.quickForm}
-            </TabsTrigger>
-            <TabsTrigger value="full" className="flex items-center gap-2">
-              <ListChecks className="h-4 w-4" />
-              {copy.fullForm}
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="quick">
-            <Card>
-              <CardHeader>
-                <CardTitle>{copy.quickForm}</CardTitle>
-                <CardDescription>{copy.quickFormDesc}</CardDescription>
+            {/* Form Card */}
+            <Card className="border-2 border-[#ffe4b5] shadow-xl bg-white/95 backdrop-blur">
+              <CardHeader className="border-b border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-white">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center">
+                    <ListChecks className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl text-[#4a3728]">{copy.formTitle}</CardTitle>
+                    <CardDescription className="text-[#6b5444]">{copy.formDesc}</CardDescription>
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent>
-                <QuickRoleForm locale={locale} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="full">
-            <Card>
-              <CardHeader>
-                <CardTitle>{copy.fullForm}</CardTitle>
-                <CardDescription>{copy.fullFormDesc}</CardDescription>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 <FullRoleForm locale={locale} />
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-    </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

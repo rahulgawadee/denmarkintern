@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EmployerFullForm from '@/components/forms/EmployerFullForm';
 import EmployerQuickForm from '@/components/forms/EmployerQuickForm';
 import { FileText } from 'lucide-react';
@@ -16,48 +18,59 @@ export default function ContactSection({ locale, contact, briefTemplateHref }) {
       : 'Choose the path that fits: quick email handoff or the full matching brief.';
 
   return (
-    <section id="contact" className="bg-gradient-to-br from-[#fa8072] via-[#ffa07a] to-[#e9967a] py-20 sm:py-24 text-white relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffcc99]/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#ffe5b4]/20 rounded-full blur-3xl" />
+    <section id="contact" className="bg-[#ffefd5] border-y-2 border-[#ffe4b5] py-20 sm:py-24 relative overflow-hidden">
+      {/* Subtle decorative elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#ffa07a]/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#fa8072]/5 rounded-full blur-3xl" />
       
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between mb-12">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-bold drop-shadow-lg">{contact.hero}</h2>
-            <p className="mt-3 text-lg text-white/90 drop-shadow">{description}</p>
-          </div>
-          <Button asChild className="bg-white text-[#fa8072] hover:bg-[#ffefd5] hover:text-[#fa8072] shadow-xl hover:shadow-2xl transition-all hover:scale-105 font-bold border-2 border-white/20 w-fit">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#4a3728] mb-3">{contact.hero}</h2>
+          <p className="text-lg text-[#6b5444] mb-6">{description}</p>
+          <Button asChild className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white shadow-md hover:shadow-lg transition-all hover:scale-105 font-bold">
             <Link href={briefTemplateHref} download>
               <FileText className="mr-2 h-5 w-5" />
               {contact.downloadLabel}
             </Link>
           </Button>
         </div>
-        <div className="grid gap-8 lg:grid-cols-2">
-          {contact.quick ? (
-            <Card className="border-2 border-white/20 bg-white shadow-xl backdrop-blur text-[#4a3728]">
-              <CardHeader className="border-b-2 border-[#ffefd5] bg-[#ffefd5]/40">
-                <CardTitle className="text-xl font-bold text-[#4a3728]">{contact.quick.title}</CardTitle>
-                <CardDescription className="text-[#6b5444]">{contact.quick.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <EmployerQuickForm copy={contact.quick} />
-              </CardContent>
-            </Card>
-          ) : null}
-          {contact.full ? (
-            <Card className="border-2 border-white/20 bg-white shadow-xl backdrop-blur text-[#4a3728]">
-              <CardHeader className="border-b-2 border-[#ffefd5] bg-[#ffefd5]/40">
-                <CardTitle className="text-xl font-bold text-[#4a3728]">{contact.full.title}</CardTitle>
-                <CardDescription className="text-[#6b5444]">{contact.full.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <EmployerFullForm copy={contact.full} />
-              </CardContent>
-            </Card>
-          ) : null}
-        </div>
+
+        <Tabs defaultValue="quick" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white border-2 border-[#ffe4b5] p-1 h-auto gap-2">
+            <TabsTrigger 
+              value="quick" 
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-4 px-4 rounded-md transition-all data-[state=active]:shadow-md text-sm sm:text-base"
+            >
+              {locale === 'da' ? 'Mulighed A — Efterlad din e-mail (hurtigst)' : 'Option A — Leave your email (fastest)'}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="full" 
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-4 px-4 rounded-md transition-all data-[state=active]:shadow-md text-sm sm:text-base"
+            >
+              {locale === 'da' ? 'Mulighed B — Fortæl os om din virksomhed' : 'Option B — Tell us about your company'}
+            </TabsTrigger>
+          </TabsList>
+
+          {contact.quick && (
+            <TabsContent value="quick" className="mt-0">
+              <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
+                <CardContent className="pt-6">
+                  <EmployerQuickForm copy={contact.quick} />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
+          {contact.full && (
+            <TabsContent value="full" className="mt-0">
+              <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
+                <CardContent className="pt-6">
+                  <EmployerFullForm copy={contact.full} />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+        </Tabs>
       </div>
     </section>
   );

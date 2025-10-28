@@ -345,10 +345,13 @@ export default function CandidateProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-linear-to-b from-[#fdf5e6] to-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-zinc-600">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
+          <div className="relative inline-block">
+            <div className="absolute inset-0 bg-linear-to-r from-[#ffa07a] to-[#fa8072] rounded-full blur-xl opacity-20 animate-pulse"></div>
+            <div className="relative animate-spin rounded-full h-16 w-16 border-4 border-[#ffe4b5] border-t-[#fa8072] mx-auto mb-4"></div>
+          </div>
+          <p className="text-[#6b5444] font-medium">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
         </div>
       </div>
     );
@@ -356,59 +359,93 @@ export default function CandidateProfilePage() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage>{copy.title}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
-      <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
-        <div className="w-full max-w-5xl mx-auto space-y-6">
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+        <div className="w-full max-w-6xl mx-auto space-y-6">
           {/* Header */}
-          <div>
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              {copy.title}
-            </h1>
-            <p className="text-zinc-600 dark:text-zinc-400 mt-2">
-              {copy.subtitle}
-            </p>
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#ffe4b5] shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex-1">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent mb-2">
+                  {copy.title}
+                </h1>
+                <p className="text-[#6b5444] text-sm lg:text-base">
+                  {copy.subtitle}
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handlePreview}
+                  className="border-2 border-[#ffe4b5] hover:bg-[#ffefd5] hover:border-[#fa8072] text-[#4a3728] font-semibold"
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  {copy.preview}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleDownloadPDF}
+                  className="border-2 border-[#ffe4b5] hover:bg-[#ffefd5] hover:border-[#fa8072] text-[#4a3728] font-semibold"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  {copy.download}
+                </Button>
+              </div>
+            </div>
           </div>
 
           {/* Profile Completion */}
-          <Card className="border-2">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>{copy.completion}</CardTitle>
-                  <CardDescription>
+          <Card className="border-2 border-[#ffe4b5] shadow-lg overflow-hidden">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1">
+                  <CardTitle className="text-[#4a3728] text-xl sm:text-2xl">{copy.completion}</CardTitle>
+                  <CardDescription className="text-[#6b5444] text-sm sm:text-base">
                     {profile.profileCompletion}% complete
                   </CardDescription>
                 </div>
-                <div className="text-4xl font-bold text-blue-600">
-                  {profile.profileCompletion}%
+                <div className="relative">
+                  <div className="text-5xl sm:text-6xl font-bold bg-linear-to-r from-[#ffa07a] to-[#fa8072] bg-clip-text text-transparent">
+                    {profile.profileCompletion}%
+                  </div>
+                  {profile.profileCompletion >= 80 && (
+                    <CheckCircle2 className="absolute -top-2 -right-2 h-8 w-8 text-green-500 animate-bounce" />
+                  )}
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <Progress value={profile.profileCompletion} className="h-3" />
+            <CardContent className="space-y-4 pt-6">
+              <div className="relative">
+                <Progress value={profile.profileCompletion} className="h-4 bg-[#ffe4b5]" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs font-bold text-[#4a3728] mix-blend-difference">
+                    {profile.profileCompletion}%
+                  </span>
+                </div>
+              </div>
               {profile.canApply ? (
-                <Alert className="border-green-500 bg-green-50">
-                  <CheckCircle2 className="h-4 w-4 text-green-600" />
-                  <AlertDescription className="text-green-800">
-                    {copy.canApply}
+                <Alert className="border-2 border-green-500 bg-linear-to-r from-green-50 to-emerald-50">
+                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                  <AlertDescription className="text-green-800 font-semibold">
+                    ✨ {copy.canApply}
                   </AlertDescription>
                 </Alert>
               ) : (
-                <Alert className="border-amber-500 bg-amber-50">
-                  <AlertCircle className="h-4 w-4 text-amber-600" />
-                  <AlertDescription className="text-amber-800">
-                    {copy.cannotApply}
+                <Alert className="border-2 border-amber-500 bg-linear-to-r from-amber-50 to-orange-50">
+                  <AlertCircle className="h-5 w-5 text-amber-600" />
+                  <AlertDescription className="text-amber-800 font-semibold">
+                    ⚠️ {copy.cannotApply}
                   </AlertDescription>
                 </Alert>
               )}
@@ -417,109 +454,122 @@ export default function CandidateProfilePage() {
 
           {/* Message Alert */}
           {message.text && (
-            <Alert className={message.type === 'success' ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}>
+            <Alert className={`border-2 ${message.type === 'success' ? 'border-green-500 bg-linear-to-r from-green-50 to-emerald-50' : 'border-red-500 bg-linear-to-r from-red-50 to-rose-50'} animate-in slide-in-from-top-5`}>
               {message.type === 'success' ? (
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <CheckCircle2 className="h-5 w-5 text-green-600" />
               ) : (
-                <AlertCircle className="h-4 w-4 text-red-600" />
+                <AlertCircle className="h-5 w-5 text-red-600" />
               )}
-              <AlertDescription className={message.type === 'success' ? 'text-green-800' : 'text-red-800'}>
+              <AlertDescription className={`${message.type === 'success' ? 'text-green-800' : 'text-red-800'} font-semibold`}>
                 {message.text}
               </AlertDescription>
             </Alert>
           )}
 
           {/* Personal Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <User className="h-5 w-5 text-white" />
+                </div>
                 {copy.personalInfo}
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-2">
+            <CardContent className="grid gap-4 sm:gap-6 md:grid-cols-2 pt-6">
               <div className="space-y-2">
-                <Label htmlFor="firstName">First Name *</Label>
+                <Label htmlFor="firstName" className="text-[#4a3728] font-semibold">First Name *</Label>
                 <Input
                   id="firstName"
                   value={profile.firstName}
                   onChange={(e) => handleInputChange('firstName', e.target.value)}
                   placeholder="John"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name *</Label>
+                <Label htmlFor="lastName" className="text-[#4a3728] font-semibold">Last Name *</Label>
                 <Input
                   id="lastName"
                   value={profile.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
                   placeholder="Doe"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email" className="text-[#4a3728] font-semibold">Email *</Label>
                 <Input
                   id="email"
                   type="email"
                   value={profile.email}
                   disabled
-                  className="bg-zinc-50 cursor-not-allowed"
+                  className="bg-[#fdf5e6] cursor-not-allowed border-2 border-[#ffe4b5]"
                   placeholder="john@example.com"
                 />
-                <p className="text-xs text-zinc-500">Email cannot be changed here</p>
+                <p className="text-xs text-[#8b7355] flex items-center gap-1">
+                  <AlertCircle className="h-3 w-3" />
+                  Email cannot be changed here
+                </p>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone *</Label>
+                <Label htmlFor="phone" className="text-[#4a3728] font-semibold">Phone *</Label>
                 <Input
                   id="phone"
                   value={profile.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="+45 12 34 56 78"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="city">City *</Label>
+                <Label htmlFor="city" className="text-[#4a3728] font-semibold">City *</Label>
                 <Input
                   id="city"
                   value={profile.city}
                   onChange={(e) => handleInputChange('city', e.target.value)}
                   placeholder="Copenhagen"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="country">Country *</Label>
+                <Label htmlFor="country" className="text-[#4a3728] font-semibold">Country *</Label>
                 <Input
                   id="country"
                   value={profile.country}
                   onChange={(e) => handleInputChange('country', e.target.value)}
                   placeholder="Denmark"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Education */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <GraduationCap className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <GraduationCap className="h-5 w-5 text-white" />
+                </div>
                 {copy.education}
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-2">
+            <CardContent className="grid gap-4 sm:gap-6 md:grid-cols-2 pt-6">
               <div className="space-y-2">
-                <Label htmlFor="university">University *</Label>
+                <Label htmlFor="university" className="text-[#4a3728] font-semibold">University *</Label>
                 <Input
                   id="university"
                   value={profile.university}
                   onChange={(e) => handleInputChange('university', e.target.value)}
                   placeholder="University of Copenhagen"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="degree">Degree *</Label>
+                <Label htmlFor="degree" className="text-[#4a3728] font-semibold">Degree *</Label>
                 <Select value={profile.degree} onValueChange={(val) => handleInputChange('degree', val)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]">
                     <SelectValue placeholder="Select degree" />
                   </SelectTrigger>
                   <SelectContent>
@@ -533,115 +583,152 @@ export default function CandidateProfilePage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="major">Major / Field of Study *</Label>
+                <Label htmlFor="major" className="text-[#4a3728] font-semibold">Major / Field of Study *</Label>
                 <Input
                   id="major"
                   value={profile.major}
                   onChange={(e) => handleInputChange('major', e.target.value)}
                   placeholder="Computer Science"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="graduationYear">Graduation Year *</Label>
+                <Label htmlFor="graduationYear" className="text-[#4a3728] font-semibold">Graduation Year *</Label>
                 <Input
                   id="graduationYear"
                   type="number"
                   value={profile.graduationYear}
                   onChange={(e) => handleInputChange('graduationYear', e.target.value)}
                   placeholder="2025"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Skills */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Code className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <Code className="h-5 w-5 text-white" />
+                </div>
                 {copy.skills}
               </CardTitle>
-              <CardDescription>Add skills used for auto-matching (e.g., React, Marketing, Excel)</CardDescription>
+              <CardDescription className="text-[#6b5444]">
+                Add skills used for auto-matching (e.g., React, Marketing, Excel)
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-6">
               <div className="flex gap-2">
                 <Input
                   value={skillInput}
                   onChange={(e) => setSkillInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleAddSkill()}
                   placeholder="Type a skill and press Enter"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
-                <Button onClick={handleAddSkill} size="icon">
+                <Button 
+                  onClick={handleAddSkill} 
+                  size="icon"
+                  className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md hover:shadow-lg"
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">
-                {profile.skills.map((skill) => (
-                  <Badge key={skill} variant="secondary" className="gap-1">
-                    {skill}
-                    <X
-                      className="h-3 w-3 cursor-pointer"
-                      onClick={() => handleRemoveSkill(skill)}
-                    />
-                  </Badge>
-                ))}
+                {profile.skills.length === 0 ? (
+                  <p className="text-sm text-[#8b7355] italic">No skills added yet. Add your first skill!</p>
+                ) : (
+                  profile.skills.map((skill) => (
+                    <Badge 
+                      key={skill} 
+                      className="gap-1 bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffa07a] hover:from-[#ffe4b5] hover:to-[#ffefd5] px-3 py-1.5 text-sm font-medium"
+                    >
+                      {skill}
+                      <X
+                        className="h-3 w-3 cursor-pointer hover:text-[#fa8072]"
+                        onClick={() => handleRemoveSkill(skill)}
+                      />
+                    </Badge>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
 
           {/* Tools / Software */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Code className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <Code className="h-5 w-5 text-white" />
+                </div>
                 {copy.tools}
               </CardTitle>
-              <CardDescription>Technical tools you know (e.g., Figma, Python, Adobe XD)</CardDescription>
+              <CardDescription className="text-[#6b5444]">
+                Technical tools you know (e.g., Figma, Python, Adobe XD)
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-6">
               <div className="flex gap-2">
                 <Input
                   value={toolInput}
                   onChange={(e) => setToolInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleAddTool()}
                   placeholder="Type a tool and press Enter"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
-                <Button onClick={handleAddTool} size="icon">
+                <Button 
+                  onClick={handleAddTool} 
+                  size="icon"
+                  className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md hover:shadow-lg"
+                >
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">
-                {profile.tools.map((tool) => (
-                  <Badge key={tool} variant="secondary" className="gap-1">
-                    {tool}
-                    <X
-                      className="h-3 w-3 cursor-pointer"
-                      onClick={() => handleRemoveTool(tool)}
-                    />
-                  </Badge>
-                ))}
+                {profile.tools.length === 0 ? (
+                  <p className="text-sm text-[#8b7355] italic">No tools added yet. Add your first tool!</p>
+                ) : (
+                  profile.tools.map((tool) => (
+                    <Badge 
+                      key={tool} 
+                      className="gap-1 bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffa07a] hover:from-[#ffe4b5] hover:to-[#ffefd5] px-3 py-1.5 text-sm font-medium"
+                    >
+                      {tool}
+                      <X
+                        className="h-3 w-3 cursor-pointer hover:text-[#fa8072]"
+                        onClick={() => handleRemoveTool(tool)}
+                      />
+                    </Badge>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
 
           {/* Languages */}
-          <Card>
-            <CardHeader>
-              <CardTitle>{copy.languages}</CardTitle>
-              <CardDescription>Select known languages and proficiency levels</CardDescription>
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="text-[#4a3728] text-lg sm:text-xl">{copy.languages}</CardTitle>
+              <CardDescription className="text-[#6b5444]">
+                Select known languages and proficiency levels
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-2 md:grid-cols-3">
+            <CardContent className="space-y-4 pt-6">
+              <div className="grid gap-2 sm:grid-cols-3">
                 <Input
                   value={languageInput.language}
                   onChange={(e) => setLanguageInput(prev => ({ ...prev, language: e.target.value }))}
                   placeholder="Language (e.g., English)"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
                 <Select
                   value={languageInput.proficiency}
                   onValueChange={(val) => setLanguageInput(prev => ({ ...prev, proficiency: val }))}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]">
                     <SelectValue placeholder="Proficiency" />
                   </SelectTrigger>
                   <SelectContent>
@@ -652,73 +739,90 @@ export default function CandidateProfilePage() {
                     <SelectItem value="native">Native</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button onClick={handleAddLanguage}>
+                <Button 
+                  onClick={handleAddLanguage}
+                  className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md hover:shadow-lg"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add
                 </Button>
               </div>
               <div className="space-y-2">
-                {profile.languages.map((lang, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 border rounded">
-                    <span className="font-medium">{lang.language}</span>
-                    <div className="flex items-center gap-2">
-                      <Badge>{lang.proficiency}</Badge>
-                      <X
-                        className="h-4 w-4 cursor-pointer text-red-600"
-                        onClick={() => handleRemoveLanguage(lang.language)}
-                      />
+                {profile.languages.length === 0 ? (
+                  <p className="text-sm text-[#8b7355] italic">No languages added yet. Add your first language!</p>
+                ) : (
+                  profile.languages.map((lang, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border-2 border-[#ffe4b5] rounded-lg bg-[#fdf5e6] hover:bg-[#ffefd5] transition-colors">
+                      <span className="font-medium text-[#4a3728]">{lang.language}</span>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffa07a]">
+                          {lang.proficiency}
+                        </Badge>
+                        <X
+                          className="h-4 w-4 cursor-pointer text-[#fa8072] hover:text-[#ff6347]"
+                          onClick={() => handleRemoveLanguage(lang.language)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
 
           {/* Experience */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Briefcase className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <Briefcase className="h-5 w-5 text-white" />
+                </div>
                 {copy.experience}
               </CardTitle>
-              <CardDescription>Optional: Brief description or bullet points of your experience</CardDescription>
+              <CardDescription className="text-[#6b5444]">
+                Optional: Brief description or bullet points of your experience
+              </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <Textarea
                 value={profile.experience}
                 onChange={(e) => handleInputChange('experience', e.target.value)}
                 placeholder="• Worked as intern at XYZ Company&#10;• Led project on ABC&#10;• Experience with DEF"
                 rows={6}
                 maxLength={2000}
+                className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072] min-h-[150px]"
               />
-              <p className="text-sm text-zinc-500 mt-2">
+              <p className="text-sm text-[#8b7355] mt-2">
                 {profile.experience?.length || 0} / 2000 characters
               </p>
             </CardContent>
           </Card>
 
           {/* Availability */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <Calendar className="h-5 w-5 text-white" />
+                </div>
                 {copy.availability}
               </CardTitle>
             </CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-3">
+            <CardContent className="grid gap-4 sm:grid-cols-1 md:grid-cols-3 pt-6">
               <div className="space-y-2">
-                <Label htmlFor="startDate">Start Date *</Label>
+                <Label htmlFor="startDate" className="text-[#4a3728] font-medium">Start Date *</Label>
                 <Input
                   id="startDate"
                   type="date"
                   value={profile.availability.startDate}
                   onChange={(e) => handleInputChange('availability', { startDate: e.target.value })}
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="weeklyHours">Weekly Hours *</Label>
+                <Label htmlFor="weeklyHours" className="text-[#4a3728] font-medium">Weekly Hours *</Label>
                 <Select value={profile.weeklyHours} onValueChange={(val) => handleInputChange('weeklyHours', val)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]">
                     <SelectValue placeholder="Select hours" />
                   </SelectTrigger>
                   <SelectContent>
@@ -731,9 +835,9 @@ export default function CandidateProfilePage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="duration">Internship Duration *</Label>
+                <Label htmlFor="duration" className="text-[#4a3728] font-medium">Internship Duration *</Label>
                 <Select value={profile.internshipDuration} onValueChange={(val) => handleInputChange('internshipDuration', val)}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent>
@@ -748,20 +852,27 @@ export default function CandidateProfilePage() {
           </Card>
 
           {/* Work Mode */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
                 {copy.workMode}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
+            <CardContent className="pt-6">
+              <div className="flex flex-wrap gap-3">
                 {['onsite', 'remote', 'hybrid'].map((mode) => (
                   <Button
                     key={mode}
                     variant={profile.workMode.includes(mode) ? 'default' : 'outline'}
                     onClick={() => handleWorkModeToggle(mode)}
+                    className={
+                      profile.workMode.includes(mode)
+                        ? 'bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md hover:shadow-lg border-0'
+                        : 'border-2 border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:border-[#ffa07a]'
+                    }
                   >
                     {mode.charAt(0).toUpperCase() + mode.slice(1)}
                   </Button>
@@ -771,16 +882,20 @@ export default function CandidateProfilePage() {
           </Card>
 
           {/* Resume Upload */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <FileText className="h-5 w-5 text-white" />
+                </div>
                 Resume / CV *
               </CardTitle>
-              <CardDescription>Upload your resume (PDF, DOC, DOCX - Max 5MB)</CardDescription>
+              <CardDescription className="text-[#6b5444]">
+                Upload your resume (PDF, DOC, DOCX - Max 5MB)
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center gap-4">
+            <CardContent className="space-y-4 pt-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <Input
                   id="cv-upload"
                   type="file"
@@ -793,6 +908,7 @@ export default function CandidateProfilePage() {
                   onClick={() => document.getElementById('cv-upload')?.click()}
                   disabled={uploading}
                   variant="outline"
+                  className="border-2 border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:border-[#ffa07a]"
                 >
                   <Upload className="h-4 w-4 mr-2" />
                   {uploading ? copy.uploading : 'Upload Resume'}
@@ -802,7 +918,7 @@ export default function CandidateProfilePage() {
                     href={profile.cv}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline flex items-center gap-1"
+                    className="text-[#fa8072] hover:text-[#ff6347] hover:underline flex items-center gap-1 font-medium"
                   >
                     <FileText className="h-4 w-4" />
                     View Current Resume
@@ -813,47 +929,65 @@ export default function CandidateProfilePage() {
           </Card>
 
           {/* Links */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <LinkIcon className="h-5 w-5" />
+          <Card className="border-2 border-[#ffe4b5] shadow-md hover:shadow-xl transition-shadow">
+            <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+              <CardTitle className="flex items-center gap-2 text-[#4a3728] text-lg sm:text-xl">
+                <div className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] p-2 rounded-lg">
+                  <LinkIcon className="h-5 w-5 text-white" />
+                </div>
                 {copy.links}
               </CardTitle>
-              <CardDescription>Optional: Add your LinkedIn and portfolio links</CardDescription>
+              <CardDescription className="text-[#6b5444]">
+                Optional: Add your LinkedIn and portfolio links
+              </CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-4 md:grid-cols-2">
+            <CardContent className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 pt-6">
               <div className="space-y-2">
-                <Label htmlFor="linkedIn">LinkedIn</Label>
+                <Label htmlFor="linkedIn" className="text-[#4a3728] font-medium">LinkedIn</Label>
                 <Input
                   id="linkedIn"
                   value={profile.linkedIn}
                   onChange={(e) => handleInputChange('linkedIn', e.target.value)}
                   placeholder="https://linkedin.com/in/yourprofile"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="portfolio">Portfolio</Label>
+                <Label htmlFor="portfolio" className="text-[#4a3728] font-medium">Portfolio</Label>
                 <Input
                   id="portfolio"
                   value={profile.portfolio}
                   onChange={(e) => handleInputChange('portfolio', e.target.value)}
                   placeholder="https://yourportfolio.com"
+                  className="border-2 border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-4 justify-end">
-            <Button variant="outline" onClick={handlePreview}>
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-end">
+            <Button 
+              variant="outline" 
+              onClick={handlePreview}
+              className="border-2 border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:border-[#ffa07a] shadow-sm hover:shadow-md"
+            >
               <Eye className="h-4 w-4 mr-2" />
               {copy.preview}
             </Button>
-            <Button variant="outline" onClick={handleDownloadPDF}>
+            <Button 
+              variant="outline" 
+              onClick={handleDownloadPDF}
+              className="border-2 border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:border-[#ffa07a] shadow-sm hover:shadow-md"
+            >
               <Download className="h-4 w-4 mr-2" />
               {copy.download}
             </Button>
-            <Button onClick={handleSave} disabled={saving}>
+            <Button 
+              onClick={handleSave} 
+              disabled={saving}
+              className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Save className="h-4 w-4 mr-2" />
               {saving ? copy.saving : copy.save}
             </Button>

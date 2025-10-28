@@ -3,8 +3,17 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
-  ArrowLeft,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
+import {
   RefreshCw,
   CheckCircle,
   Clock,
@@ -273,160 +282,192 @@ export default function MyApplicationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-zinc-600">{copy.loading}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fa8072] mx-auto"></div>
+          <p className="mt-4 text-[#6b5444]">{copy.loading}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
+    <>
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                href={`/${locale}/dashboard/candidate`}
+                className="text-[#6b5444] hover:text-[#fa8072]"
+              >
+                Dashboard
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className="ml-auto">
           <Button
+            onClick={handleRefresh}
+            disabled={refreshing}
             variant="ghost"
-            onClick={() => router.push(`/${locale}/dashboard/candidate`)}
-            className="mb-4"
+            size="sm"
+            className="gap-2 hover:bg-[#ffefd5] hover:text-[#fa8072]"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {copy.back}
+            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">{copy.refresh}</span>
           </Button>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-zinc-900">{copy.title}</h1>
-              <p className="text-zinc-600 mt-2">{copy.subtitle}</p>
-            </div>
-            <Button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              variant="outline"
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              {copy.refresh}
-            </Button>
-          </div>
         </div>
+      </header>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="invitations" className="flex items-center gap-2">
-              <Mail className="h-4 w-4" />
-              {copy.invitationsTab}
-              {invitations.length > 0 && (
-                <Badge className="ml-2 bg-blue-100 text-blue-800">
-                  {invitations.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="accepted" className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4" />
-              {copy.acceptedTab}
-              {acceptedApplications.length > 0 && (
-                <Badge className="ml-2 bg-green-100 text-green-800">
-                  {acceptedApplications.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="pending" className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              {copy.pendingTab}
-              {pendingApplications.length > 0 && (
-                <Badge className="ml-2 bg-yellow-100 text-yellow-800">
-                  {pendingApplications.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="rejected" className="flex items-center gap-2">
-              <XCircle className="h-4 w-4" />
-              {copy.rejectedTab}
-              {rejectedApplications.length > 0 && (
-                <Badge className="ml-2 bg-red-100 text-red-800">
-                  {rejectedApplications.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+        <div className="w-full max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#ffe4b5] shadow-sm">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent">
+              {copy.title}
+            </h1>
+            <p className="text-[#6b5444] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
+          </div>
+
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="bg-[#ffefd5] border border-[#ffe4b5] p-1 h-auto w-full sm:w-auto grid grid-cols-2 sm:grid-cols-4 gap-1">
+              <TabsTrigger 
+                value="invitations" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <Mail className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.invitationsTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Invit.' : 'Invit.'}</span>
+                {invitations.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {invitations.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="accepted" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.acceptedTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Accep.' : 'Accep.'}</span>
+                {acceptedApplications.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {acceptedApplications.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="pending" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.pendingTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Pend.' : 'Pend.'}</span>
+                {pendingApplications.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {pendingApplications.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="rejected" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <XCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.rejectedTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Rej.' : 'Rej.'}</span>
+                {rejectedApplications.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {rejectedApplications.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+            </TabsList>
 
           {/* Tab 0: Invitations - New invitations from companies */}
-          <TabsContent value="invitations">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mail className="h-5 w-5 text-blue-600" />
+          <TabsContent value="invitations" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <Mail className="h-5 w-5 text-[#fa8072]" />
                   {copy.invitationsTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {invitations.length === 0 
                     ? copy.noInvitationsDesc
                     : `${invitations.length} pending invitation${invitations.length === 1 ? '' : 's'}`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {invitations.length === 0 ? (
                   <div className="text-center py-12">
-                    <Mail className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noInvitations}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noInvitationsDesc}</p>
+                    <Mail className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noInvitations}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noInvitationsDesc}</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {invitations.map((invitation) => (
-                      <div key={invitation._id} className="border border-zinc-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                        <div className="flex justify-between items-start mb-4">
-                          <div className="flex items-start space-x-4">
-                            <Avatar className="h-12 w-12">
-                              <AvatarFallback>
-                                <Building className="h-6 w-6" />
+                      <div key={invitation._id} className="border border-[#ffe4b5] rounded-lg p-4 sm:p-6 hover:shadow-lg hover:border-[#fa8072] transition-all">
+                        <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
+                          <div className="flex items-start space-x-3 sm:space-x-4 w-full sm:w-auto">
+                            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 shrink-0">
+                              <AvatarFallback className="bg-[#ffefd5]">
+                                <Building className="h-5 w-5 sm:h-6 sm:w-6 text-[#fa8072]" />
                               </AvatarFallback>
                             </Avatar>
-                            <div>
-                              <h3 className="text-lg font-semibold text-zinc-900">
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-base sm:text-lg font-semibold text-[#4a3728] line-clamp-2">
                                 {invitation.internshipId?.title}
                               </h3>
-                              <p className="text-sm text-zinc-600">{invitation.companyId?.companyName}</p>
-                              <div className="flex items-center gap-4 mt-2 text-sm text-zinc-500">
+                              <p className="text-sm text-[#6b5444] truncate">{invitation.companyId?.companyName}</p>
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-xs sm:text-sm text-[#8b7355]">
                                 <span className="flex items-center">
-                                  <MapPin className="h-4 w-4 mr-1" />
-                                  {typeof invitation.internshipId?.location === 'string' 
-                                    ? invitation.internshipId.location 
-                                    : invitation.internshipId?.location?.city || invitation.internshipId?.location?.address || 'N/A'}
+                                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 shrink-0" />
+                                  <span className="truncate">
+                                    {typeof invitation.internshipId?.location === 'string' 
+                                      ? invitation.internshipId.location 
+                                      : invitation.internshipId?.location?.city || invitation.internshipId?.location?.address || 'N/A'}
+                                  </span>
                                 </span>
                                 <span className="flex items-center">
-                                  <Clock className="h-4 w-4 mr-1" />
+                                  <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1 shrink-0" />
                                   {invitation.internshipId?.duration} months
                                 </span>
                               </div>
                             </div>
                           </div>
-                          <Badge className="bg-blue-100 text-blue-800">Invitation</Badge>
+                          <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white shrink-0">Invitation</Badge>
                         </div>
 
                         {invitation.message && (
-                          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
-                            <p className="text-sm font-medium text-blue-900 mb-1">{copy.message}:</p>
-                            <p className="text-sm text-blue-800">{invitation.message}</p>
+                          <div className="bg-blue-50 border-l-4 border-blue-500 p-3 sm:p-4 mb-4 rounded">
+                            <p className="text-xs sm:text-sm font-medium text-blue-900 mb-1">{copy.message}:</p>
+                            <p className="text-xs sm:text-sm text-blue-800">{invitation.message}</p>
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between text-xs text-zinc-500 mb-4">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-[#8b7355] mb-4 gap-2">
                           <span>{copy.sentOn}: {new Date(invitation.sentAt).toLocaleDateString()}</span>
                           <span className="text-orange-600">
                             {copy.expiresOn}: {new Date(invitation.expiresAt).toLocaleDateString()}
                           </span>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                           <Button
                             onClick={() => setRespondModal({ open: true, invitation, action: 'accepted' })}
-                            className="flex-1"
+                            className="flex-1 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
                           >
                             <CheckCircle className="h-4 w-4 mr-2" />
                             {copy.accept}
@@ -455,29 +496,29 @@ export default function MyApplicationsPage() {
           </TabsContent>
 
           {/* Tab 1: Pending - Awaiting or Scheduled Interviews */}
-          <TabsContent value="pending">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-yellow-600" />
+          <TabsContent value="pending" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <Clock className="h-5 w-5 text-[#fa8072]" />
                   {copy.pendingTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {pendingApplications.length === 0 
                     ? copy.noPendingDesc
                     : `${pendingApplications.length} active application${pendingApplications.length === 1 ? '' : 's'}`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {pendingApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <Clock className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noPending}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noPendingDesc}</p>
+                    <Clock className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noPending}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noPendingDesc}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {pendingApplications.map((application) => (
                       <ApplicationCard
                         key={application._id}
@@ -493,29 +534,29 @@ export default function MyApplicationsPage() {
           </TabsContent>
 
           {/* Tab 2: Accepted - Offer Letters Received */}
-          <TabsContent value="accepted">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-green-600" />
+          <TabsContent value="accepted" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <Award className="h-5 w-5 text-[#fa8072]" />
                   {copy.acceptedTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {acceptedApplications.length === 0 
                     ? copy.noAcceptedDesc
                     : `${acceptedApplications.length} offer${acceptedApplications.length === 1 ? '' : 's'} received`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {acceptedApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <Award className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noAccepted}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noAcceptedDesc}</p>
+                    <Award className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noAccepted}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noAcceptedDesc}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {acceptedApplications.map((application) => (
                       <AcceptedApplicationCard
                         key={application._id}
@@ -531,29 +572,29 @@ export default function MyApplicationsPage() {
           </TabsContent>
 
           {/* Tab 3: Rejected */}
-          <TabsContent value="rejected">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <XCircle className="h-5 w-5 text-red-600" />
+          <TabsContent value="rejected" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <XCircle className="h-5 w-5 text-[#fa8072]" />
                   {copy.rejectedTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {rejectedApplications.length === 0 
                     ? copy.noRejectedDesc
                     : `${rejectedApplications.length} rejected application${rejectedApplications.length === 1 ? '' : 's'}`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {rejectedApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <CheckCircle className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noRejected}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noRejectedDesc}</p>
+                    <CheckCircle className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noRejected}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noRejectedDesc}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {rejectedApplications.map((application) => (
                       <ApplicationCard
                         key={application._id}
@@ -619,11 +660,12 @@ export default function MyApplicationsPage() {
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row justify-end gap-3">
             <Button
               variant="outline"
               onClick={() => setRespondModal({ open: false, invitation: null, action: null })}
               disabled={responding}
+              className="hover:bg-[#ffefd5]"
             >
               {copy.cancel}
             </Button>
@@ -631,6 +673,10 @@ export default function MyApplicationsPage() {
               onClick={handleRespondToInvitation}
               disabled={responding}
               variant={respondModal.action === 'accepted' ? 'default' : 'destructive'}
+              className={respondModal.action === 'accepted' 
+                ? "bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a]" 
+                : ""
+              }
             >
               {responding ? (
                 <>
@@ -643,7 +689,8 @@ export default function MyApplicationsPage() {
             </Button>
           </div>
         </Modal>
-      </div>
-    </div>
+        </div>
+      </main>
+    </>
   );
 }

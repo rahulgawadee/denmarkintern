@@ -4,7 +4,7 @@ export default function HomeFooter({ footer }) {
   }
 
   return (
-    <footer className="border-t-2 border-[#ffe4b5] bg-gradient-to-b from-[#fdf5e6] to-[#ffefd5]">
+    <footer className="border-t-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/30">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>

@@ -13,7 +13,7 @@ export default function ValuePropsSection({ locale, valueProps }) {
       : 'It’s all about focused matches, crisp expectations, and a flow that saves your team time.';
 
   return (
-    <section id="how-we-help" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 bg-[#ffefd5]">
+    <section id="how-we-help" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 bg-linear-to-b from-white via-[#fdf5e6]/30 to-white">
       <div className="text-center max-w-3xl mx-auto mb-12">
         <h2 className="text-3xl sm:text-4xl font-bold text-[#4a3728] mb-4">{heading}</h2>
         <p className="text-lg text-[#6b5444] leading-relaxed">{intro}</p>

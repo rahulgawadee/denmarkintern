@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Bell, CheckCircle2, Circle, Trash2 } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Bell, CheckCircle2, Circle, Trash2, Sparkles, Mail, Calendar, FileText, User, Award } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
@@ -30,6 +30,19 @@ const categoryLabels = {
   offer: { da: 'Tilbud', en: 'Offer', sv: 'Erbjudande' },
   reminder: { da: 'Påmindelse', en: 'Reminder', sv: 'Påminnelse' },
   system: { da: 'System', en: 'System', sv: 'System' },
+};
+
+const getCategoryIcon = (category) => {
+  const icons = {
+    general: Bell,
+    match: Sparkles,
+    interview: Calendar,
+    application: FileText,
+    offer: Award,
+    reminder: Bell,
+    system: Bell,
+  };
+  return icons[category] || Bell;
 };
 
 const getCategoryLabel = (category, locale) => {
@@ -239,95 +252,160 @@ export default function NotificationsView({ locale = 'en' }) {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5 text-blue-600" />
-              {copy.heading}
-            </CardTitle>
-            <CardDescription>{copy.description}</CardDescription>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-red-500 text-white">
-              {copy.unread}: {unreadCount}
-            </Badge>
-            <Button variant="outline" onClick={markAllAsRead} disabled={updating || unreadCount === 0}>
+      {/* Header Card with Stats */}
+      <Card className="border-2 border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] shadow-md">
+        <CardContent className="pt-6 pb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white border-0 px-4 py-2 text-base sm:text-lg font-semibold">
+                {copy.unread}: {unreadCount}
+              </Badge>
+              <div className="text-sm text-[#6b5444]">
+                {notifications.length} {locale === 'da' ? 'total' : locale === 'sv' ? 'totalt' : 'total'}
+              </div>
+            </div>
+            <Button 
+              onClick={markAllAsRead} 
+              disabled={updating || unreadCount === 0}
+              className="bg-linear-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#10b981] text-white shadow-md"
+            >
               <CheckCircle2 className="h-4 w-4 mr-2" />
               {copy.markAll}
             </Button>
           </div>
-        </CardHeader>
-        <CardContent>
-          {error ? (
-            <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-              {error}
-            </div>
-          ) : null}
-          {loading ? (
-            <div className="space-y-3">
-              {Array.from({ length: 3 }).map((_, idx) => (
-                <div key={idx} className="h-20 animate-pulse rounded-lg bg-muted" />
-              ))}
-            </div>
-          ) : null}
-          {!loading && notifications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center gap-2 py-10 text-center text-zinc-500">
-              <Bell className="h-10 w-10 text-zinc-300" />
-              <p className="text-base font-semibold text-zinc-600">{copy.empty}</p>
-              <p className="text-sm text-zinc-500">{copy.emptyHelper}</p>
-            </div>
-          ) : null}
+        </CardContent>
+      </Card>
 
-          <div className="space-y-4">
-            {notifications.map((notification) => (
-              <div
-                key={notification._id}
-                className={`border rounded-lg p-4 transition ${notification.read ? 'bg-white' : 'bg-blue-50 border-blue-100'}`}
-              >
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      {!notification.read ? <Circle className="h-3 w-3 text-blue-500" /> : <CheckCircle2 className="h-3 w-3 text-green-500" />}
-                      <h3 className="text-base font-semibold text-zinc-900">{notification.title}</h3>
-                    </div>
-                    <p className="text-sm text-zinc-600 whitespace-pre-wrap">{notification.message}</p>
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
-                      <Badge variant="outline">{getCategoryLabel(notification.category, locale)}</Badge>
-                      <span>{formatDate(notification.createdAt, locale)}</span>
-                      {notification.link ? (
-                        <a href={notification.link} className="text-blue-600 hover:underline" rel="noopener noreferrer">
-                          {locale === 'da' ? 'Åbn' : locale === 'sv' ? 'Öppna' : 'Open'}
-                        </a>
-                      ) : null}
+      {/* Error State */}
+      {error ? (
+        <Card className="border-2 border-red-200 bg-red-50">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3 text-red-700">
+              <Bell className="h-5 w-5" />
+              <p className="text-sm font-medium">{error}</p>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {/* Loading State */}
+      {loading ? (
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, idx) => (
+            <Card key={idx} className="border-2 border-[#ffe4b5]">
+              <CardContent className="pt-6">
+                <div className="space-y-3 animate-pulse">
+                  <div className="h-4 bg-[#ffefd5] rounded w-3/4"></div>
+                  <div className="h-3 bg-[#ffefd5] rounded w-full"></div>
+                  <div className="h-3 bg-[#ffefd5] rounded w-5/6"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Empty State */}
+      {!loading && notifications.length === 0 ? (
+        <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+          <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
+            <Bell className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
+            <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">{copy.empty}</h3>
+            <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">{copy.emptyHelper}</p>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {/* Notifications List */}
+      <div className="space-y-4">
+        {notifications.map((notification) => {
+          const CategoryIcon = getCategoryIcon(notification.category);
+          return (
+            <Card
+              key={notification._id}
+              className={`overflow-hidden hover:shadow-xl transition-all duration-300 border-2 ${
+                notification.read 
+                  ? 'border-[#ffe4b5] bg-white' 
+                  : 'border-[#ffa07a] bg-linear-to-br from-[#fdf5e6] via-white to-[#ffefd5]/30'
+              }`}
+            >
+              <CardContent className="pt-6 pb-5">
+                <div className="flex flex-col gap-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 flex-1 min-w-0">
+                      <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center shrink-0 shadow-md ${
+                        notification.read 
+                          ? 'bg-linear-to-br from-[#e5e7eb] to-[#d1d5db]'
+                          : 'bg-linear-to-br from-[#ffa07a] to-[#fa8072]'
+                      }`}>
+                        <CategoryIcon className={`h-5 w-5 sm:h-6 sm:w-6 ${notification.read ? 'text-[#6b7280]' : 'text-white'}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          {!notification.read && (
+                            <Circle className="h-2 w-2 text-[#fa8072] fill-[#fa8072] shrink-0" />
+                          )}
+                          <h3 className="text-base sm:text-lg font-semibold text-[#4a3728] line-clamp-2">
+                            {notification.title}
+                          </h3>
+                        </div>
+                        <p className="text-sm text-[#6b5444] whitespace-pre-wrap mt-1 line-clamp-3">
+                          {notification.message}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+
+                  {/* Meta Info */}
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <Badge className="bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffe4b5]">
+                      {getCategoryLabel(notification.category, locale)}
+                    </Badge>
+                    <span className="text-xs sm:text-sm text-[#6b5444] flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      {formatDate(notification.createdAt, locale)}
+                    </span>
+                    {notification.link && (
+                      <a 
+                        href={notification.link} 
+                        className="text-xs sm:text-sm text-[#fa8072] hover:text-[#ffa07a] font-medium hover:underline transition-colors" 
+                        rel="noopener noreferrer"
+                      >
+                        {locale === 'da' ? 'Åbn' : locale === 'sv' ? 'Öppna' : 'Open'} →
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-[#ffe4b5]">
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="sm"
                       onClick={() => updateNotification(notification._id, !notification.read)}
                       disabled={updating}
+                      className="flex-1 border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
                     >
-                      <CheckCircle2 className="h-4 w-4 mr-1" />
+                      <CheckCircle2 className="h-4 w-4 mr-2" />
                       {notification.read ? copy.unreadAction : copy.read}
                     </Button>
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="sm"
                       onClick={() => deleteNotification(notification._id)}
                       disabled={updating}
+                      className="flex-1 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                     >
-                      <Trash2 className="h-4 w-4 mr-1" />
+                      <Trash2 className="h-4 w-4 mr-2" />
                       {copy.delete}
                     </Button>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }

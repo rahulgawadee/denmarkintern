@@ -57,6 +57,7 @@ export default function FullRoleForm({ locale = 'da' }) {
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [draftId, setDraftId] = useState(null); // Track draft ID for publishing
 
   const copy = locale === 'da' ? {
     stepA: 'Virksomhedsinfo',
@@ -69,8 +70,10 @@ export default function FullRoleForm({ locale = 'da' }) {
     next: 'Næste',
     back: 'Tilbage',
     saveDraft: 'Gem som udkast',
+    publish: 'Publicer rolle',
     submit: 'Indsend til matching',
     submitting: 'Indsender...',
+    publishing: 'Publicerer...',
     // Fields
     title: 'Stillingsbetegnelse',
     department: 'Afdeling',
@@ -145,8 +148,10 @@ export default function FullRoleForm({ locale = 'da' }) {
     next: 'Next',
     back: 'Back',
     saveDraft: 'Save as Draft',
+    publish: 'Publish Role',
     submit: 'Submit for Matching',
     submitting: 'Submitting...',
+    publishing: 'Publishing...',
     // Fields
     title: 'Job Title',
     department: 'Department',
@@ -276,7 +281,50 @@ export default function FullRoleForm({ locale = 'da' }) {
         throw new Error(data.error || 'Failed to create role');
       }
 
-      router.push(`/${locale}/dashboard/company?success=role_created`);
+      // If saved as draft, store the ID and stay on the page
+      if (status === 'draft') {
+        setDraftId(data.internship._id);
+        // Show success message but stay on page for potential publishing
+        alert(locale === 'da' ? 'Rolle gemt som udkast!' : 'Role saved as draft!');
+      } else {
+        // If published, redirect to dashboard
+        router.push(`/${locale}/dashboard/company?success=role_created`);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePublish = async () => {
+    if (!draftId) {
+      setError(locale === 'da' ? 'Ingen udkast at publicere' : 'No draft to publish');
+      return;
+    }
+
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch(`/api/internships/${draftId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          status: 'under_review',
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to publish role');
+      }
+
+      router.push(`/${locale}/dashboard/company?success=role_published`);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -628,14 +676,28 @@ export default function FullRoleForm({ locale = 'da' }) {
         <div className="flex gap-2">
           {step < totalSteps && (
             <>
-              <ActionButton
-                variant="outline"
-                icon={Save}
-                onClick={() => handleSubmit('draft')}
-                loading={loading}
-              >
-                {copy.saveDraft}
-              </ActionButton>
+              {!draftId && (
+                <ActionButton
+                  variant="outline"
+                  icon={Save}
+                  onClick={() => handleSubmit('draft')}
+                  loading={loading}
+                >
+                  {copy.saveDraft}
+                </ActionButton>
+              )}
+              {draftId && (
+                <ActionButton
+                  variant="default"
+                  icon={Check}
+                  onClick={handlePublish}
+                  loading={loading}
+                  loadingText={copy.publishing}
+                  className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
+                >
+                  {copy.publish}
+                </ActionButton>
+              )}
               <ActionButton
                 icon={ArrowRight}
                 onClick={handleNext}
@@ -647,14 +709,38 @@ export default function FullRoleForm({ locale = 'da' }) {
           )}
 
           {step === totalSteps && (
-            <ActionButton
-              icon={Check}
-              onClick={() => handleSubmit('under_review')}
-              loading={loading}
-              loadingText={copy.submitting}
-            >
-              {copy.submit}
-            </ActionButton>
+            <>
+              {!draftId && (
+                <ActionButton
+                  variant="outline"
+                  icon={Save}
+                  onClick={() => handleSubmit('draft')}
+                  loading={loading}
+                >
+                  {copy.saveDraft}
+                </ActionButton>
+              )}
+              {draftId ? (
+                <ActionButton
+                  icon={Check}
+                  onClick={handlePublish}
+                  loading={loading}
+                  loadingText={copy.publishing}
+                  className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
+                >
+                  {copy.publish}
+                </ActionButton>
+              ) : (
+                <ActionButton
+                  icon={Check}
+                  onClick={() => handleSubmit('under_review')}
+                  loading={loading}
+                  loadingText={copy.submitting}
+                >
+                  {copy.submit}
+                </ActionButton>
+              )}
+            </>
           )}
         </div>
       </div>

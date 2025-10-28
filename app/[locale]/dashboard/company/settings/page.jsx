@@ -18,7 +18,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Building2, User, Globe, Lock, AlertCircle, Save, Edit } from 'lucide-react';
+import { ArrowLeft, Building2, User, Globe, Lock, AlertCircle, Save, Edit, Settings, Home, ChevronRight, Shield, Mail, Phone, MapPin, Globe2 } from 'lucide-react';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Separator } from '@/components/ui/separator';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 
 export default function SettingsPage() {
   const params = useParams();
@@ -119,14 +129,19 @@ export default function SettingsPage() {
           language: profile.languagePreference || 'da',
           notifications: true,
         });
+      } else if (res.status === 404) {
+        // Profile not found - this is OK for new users
+        console.log('No profile found yet - using default values');
+        setError('');
       } else {
-        const errorData = await res.json();
+        const errorData = await res.json().catch(() => ({ error: 'Failed to parse error response' }));
         if (res.status === 401) {
           setError('Session expired. Please log in again.');
           setTimeout(() => {
             router.push(`/${locale}/login`);
           }, 2000);
         } else {
+          console.error('Profile fetch error:', errorData);
           setError(errorData.error || 'Failed to fetch profile');
         }
       }
@@ -145,7 +160,7 @@ export default function SettingsPage() {
 
     try {
       const res = await fetch('/api/profile/company', {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -184,7 +199,7 @@ export default function SettingsPage() {
 
     try {
       const res = await fetch('/api/profile/company', {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -217,7 +232,7 @@ export default function SettingsPage() {
 
     try {
       const res = await fetch('/api/profile/company', {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -367,184 +382,274 @@ export default function SettingsPage() {
 
   if (fetching) {
     return (
-      <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-[#fdf5e6] via-white to-[#ffefd5] flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-900"></div>
-          <p className="mt-4 text-zinc-600">{copy.loading}</p>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#ffe4b5] border-t-[#fa8072]"></div>
+          <p className="mt-4 text-[#6b5444] font-medium">{copy.loading}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
-        <Button
-          variant="ghost"
-          onClick={() => router.push(`/${locale}/dashboard/company`)}
-          className="mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          {copy.back}
-        </Button>
+    <div className="min-h-screen bg-linear-to-br from-[#fdf5e6] via-white to-[#ffefd5]">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-40 bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] shadow-sm">
+        <div className="flex h-16 items-center gap-4 px-4 sm:px-6 lg:px-8">
+          <SidebarTrigger className="text-[#4a3728]" />
+          <Separator orientation="vertical" className="h-6 bg-[#ffe4b5]" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href={`/${locale}/dashboard/company`} className="flex items-center gap-1 text-[#6b5444] hover:text-[#4a3728]">
+                  <Home className="h-4 w-4" />
+                  Dashboard
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>
+                <ChevronRight className="h-4 w-4 text-[#6b5444]" />
+              </BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#4a3728] font-medium">{copy.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </header>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 mb-2">{copy.title}</h1>
-          <p className="text-zinc-600">{copy.subtitle}</p>
+      {/* Main Content */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Page Header */}
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center gap-4 mb-3">
+            <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-lg">
+              <Settings className="h-7 w-7 sm:h-8 sm:w-8 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">{copy.title}</h1>
+              <p className="text-sm sm:text-base text-[#6b5444] mt-1">{copy.subtitle}</p>
+            </div>
+          </div>
         </div>
 
         {/* Alerts */}
         {error && (
-          <Alert variant="destructive" className="mb-6">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
+          <Alert variant="destructive" className="mb-6 border-2">
+            <AlertCircle className="h-5 w-5" />
+            <AlertDescription className="font-medium">{error}</AlertDescription>
           </Alert>
         )}
 
         {success && (
-          <Alert className="mb-6 bg-green-50 text-green-900 border-green-200">
-            <AlertDescription>{success}</AlertDescription>
+          <Alert className="mb-6 bg-linear-to-r from-green-50 to-emerald-50 text-green-900 border-2 border-green-200 shadow-md">
+            <AlertDescription className="font-medium flex items-center gap-2">
+              <Save className="h-4 w-4" />
+              {success}
+            </AlertDescription>
           </Alert>
         )}
 
-        {/* Settings Cards */}
-        <div className="grid gap-6">
+        {/* Settings Cards Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Company Info Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Building2 className="h-5 w-5" />
-                    {copy.companyInfo}
-                  </CardTitle>
-                  <CardDescription>Company details and business information</CardDescription>
+          <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-md shrink-0">
+                    <Building2 className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg sm:text-xl text-[#4a3728]">{copy.companyInfo}</CardTitle>
+                    <CardDescription className="text-sm text-[#6b5444] mt-1">Company details and business information</CardDescription>
+                  </div>
                 </div>
-                <Button onClick={() => setIsCompanyModalOpen(true)} size="sm">
-                  <Edit className="h-4 w-4 mr-2" />
-                  {copy.edit}
+                <Button 
+                  onClick={() => setIsCompanyModalOpen(true)} 
+                  size="sm"
+                  className="shrink-0 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md"
+                >
+                  <Edit className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{copy.edit}</span>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <dl className="grid grid-cols-2 gap-4">
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.companyName}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{companyInfo.companyName || '-'}</dd>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Building2 className="h-5 w-5 text-[#fa8072] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.companyName}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{companyInfo.companyName || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.website}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{companyInfo.website || '-'}</dd>
+                
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Globe2 className="h-5 w-5 text-[#fa8072] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.website}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{companyInfo.website || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.cvr}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{companyInfo.cvr || '-'}</dd>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                    <Shield className="h-5 w-5 text-[#fa8072] mt-0.5 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.cvr}</dt>
+                      <dd className="text-sm font-semibold text-[#4a3728]">{companyInfo.cvr || '-'}</dd>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                    <MapPin className="h-5 w-5 text-[#fa8072] mt-0.5 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.city}</dt>
+                      <dd className="text-sm font-semibold text-[#4a3728]">{companyInfo.city || '-'}</dd>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.city}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{companyInfo.city || '-'}</dd>
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Globe className="h-5 w-5 text-[#fa8072] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.country}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728]">{companyInfo.country || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.country}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{companyInfo.country || '-'}</dd>
-                </div>
-              </dl>
+              </div>
             </CardContent>
           </Card>
 
           {/* Contact Info Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    {copy.contactInfo}
-                  </CardTitle>
-                  <CardDescription>Primary contact details</CardDescription>
+          <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#10b981] to-[#059669] flex items-center justify-center shadow-md shrink-0">
+                    <User className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg sm:text-xl text-[#4a3728]">{copy.contactInfo}</CardTitle>
+                    <CardDescription className="text-sm text-[#6b5444] mt-1">Primary contact details</CardDescription>
+                  </div>
                 </div>
-                <Button onClick={() => setIsContactModalOpen(true)} size="sm">
-                  <Edit className="h-4 w-4 mr-2" />
-                  {copy.edit}
+                <Button 
+                  onClick={() => setIsContactModalOpen(true)} 
+                  size="sm"
+                  className="shrink-0 bg-linear-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#10b981] text-white shadow-md"
+                >
+                  <Edit className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{copy.edit}</span>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <dl className="grid grid-cols-2 gap-4">
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.contactName}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{contactInfo.name || '-'}</dd>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <User className="h-5 w-5 text-[#10b981] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.contactName}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{contactInfo.name || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.title}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{contactInfo.title || '-'}</dd>
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Building2 className="h-5 w-5 text-[#10b981] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.title}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{contactInfo.title || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.email}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{contactInfo.email || '-'}</dd>
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Mail className="h-5 w-5 text-[#10b981] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.email}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{contactInfo.email || '-'}</dd>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.phone}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">{contactInfo.phone || '-'}</dd>
+
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                  <Phone className="h-5 w-5 text-[#10b981] mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.phone}</dt>
+                    <dd className="text-sm font-semibold text-[#4a3728] truncate">{contactInfo.phone || '-'}</dd>
+                  </div>
                 </div>
-              </dl>
+              </div>
             </CardContent>
           </Card>
 
           {/* Preferences Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Globe className="h-5 w-5" />
-                    {copy.preferences}
-                  </CardTitle>
-                  <CardDescription>Language and notification settings</CardDescription>
+          <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#3b82f6] to-[#2563eb] flex items-center justify-center shadow-md shrink-0">
+                    <Globe className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg sm:text-xl text-[#4a3728]">{copy.preferences}</CardTitle>
+                    <CardDescription className="text-sm text-[#6b5444] mt-1">Language and notification settings</CardDescription>
+                  </div>
                 </div>
-                <Button onClick={() => setIsPreferencesModalOpen(true)} size="sm">
-                  <Edit className="h-4 w-4 mr-2" />
-                  {copy.edit}
+                <Button 
+                  onClick={() => setIsPreferencesModalOpen(true)} 
+                  size="sm"
+                  className="shrink-0 bg-linear-to-r from-[#3b82f6] to-[#2563eb] hover:from-[#2563eb] hover:to-[#3b82f6] text-white shadow-md"
+                >
+                  <Edit className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{copy.edit}</span>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <dl className="grid grid-cols-2 gap-4">
-                <div>
-                  <dt className="text-sm font-medium text-zinc-500">{copy.language}</dt>
-                  <dd className="mt-1 text-sm text-zinc-900">
+            <CardContent className="space-y-4">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                <Globe className="h-5 w-5 text-[#3b82f6] mt-0.5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <dt className="text-xs font-medium text-[#6b5444] mb-1">{copy.language}</dt>
+                  <dd className="text-sm font-semibold text-[#4a3728]">
                     {preferences.language === 'da' ? 'Dansk (Danish)' : 
                      preferences.language === 'en' ? 'English' : 
                      'Svenska (Swedish)'}
                   </dd>
                 </div>
-              </dl>
+              </div>
             </CardContent>
           </Card>
 
           {/* Security Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Lock className="h-5 w-5" />
-                    {copy.security}
-                  </CardTitle>
-                  <CardDescription>Password and account security</CardDescription>
+          <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#ef4444] to-[#dc2626] flex items-center justify-center shadow-md shrink-0">
+                    <Lock className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg sm:text-xl text-[#4a3728]">{copy.security}</CardTitle>
+                    <CardDescription className="text-sm text-[#6b5444] mt-1">Password and account security</CardDescription>
+                  </div>
                 </div>
-                <Button onClick={() => setIsPasswordModalOpen(true)} size="sm">
-                  <Edit className="h-4 w-4 mr-2" />
-                  {copy.changePassword}
+                <Button 
+                  onClick={() => setIsPasswordModalOpen(true)} 
+                  size="sm"
+                  className="shrink-0 bg-linear-to-r from-[#ef4444] to-[#dc2626] hover:from-[#dc2626] hover:to-[#ef4444] text-white shadow-md"
+                >
+                  <Edit className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{copy.edit}</span>
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-zinc-600">
-                Click the button above to change your password
-              </p>
+            <CardContent className="space-y-4">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-linear-to-r from-[#fdf5e6] to-[#ffefd5]/50">
+                <Lock className="h-5 w-5 text-[#ef4444] mt-0.5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <dt className="text-xs font-medium text-[#6b5444] mb-1">Password</dt>
+                  <dd className="text-sm font-semibold text-[#4a3728]">Click "Edit" to change your password</dd>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -553,64 +658,78 @@ export default function SettingsPage() {
         <Modal
           isOpen={isCompanyModalOpen}
           onClose={() => setIsCompanyModalOpen(false)}
-          title={copy.companyInfo}
+          title={
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center">
+                <Building2 className="h-5 w-5 text-white" />
+              </div>
+              <span>{copy.companyInfo}</span>
+            </div>
+          }
           size="md"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-2">
-              <Label>{copy.companyName}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.companyName}</Label>
               <Input
                 value={companyInfo.companyName}
                 onChange={(e) => setCompanyInfo({ ...companyInfo, companyName: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.website}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.website}</Label>
               <Input
                 type="url"
                 value={companyInfo.website}
                 onChange={(e) => setCompanyInfo({ ...companyInfo, website: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
+                placeholder="https://example.com"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.cvr}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.cvr}</Label>
               <Input
                 value={companyInfo.cvr}
                 onChange={(e) => setCompanyInfo({ ...companyInfo, cvr: e.target.value })}
                 placeholder="12345678"
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>{copy.city}</Label>
+                <Label className="text-[#4a3728] font-medium">{copy.city}</Label>
                 <Input
                   value={companyInfo.city}
                   onChange={(e) => setCompanyInfo({ ...companyInfo, city: e.target.value })}
                   disabled={loading}
+                  className="border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>{copy.country}</Label>
+                <Label className="text-[#4a3728] font-medium">{copy.country}</Label>
                 <Input
                   value={companyInfo.country}
                   onChange={(e) => setCompanyInfo({ ...companyInfo, country: e.target.value })}
                   disabled={loading}
+                  className="border-[#ffe4b5] focus:border-[#fa8072] focus:ring-[#fa8072]"
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-[#ffe4b5]">
               <Button
                 variant="outline"
                 onClick={() => setIsCompanyModalOpen(false)}
                 disabled={loading}
+                className="border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
               >
                 {copy.cancel}
               </Button>
@@ -618,6 +737,7 @@ export default function SettingsPage() {
                 icon={Save}
                 onClick={handleSaveCompanyInfo}
                 loading={loading}
+                className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
               >
                 {copy.save}
               </ActionButton>
@@ -629,53 +749,68 @@ export default function SettingsPage() {
         <Modal
           isOpen={isContactModalOpen}
           onClose={() => setIsContactModalOpen(false)}
-          title={copy.contactInfo}
+          title={
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-[#10b981] to-[#059669] flex items-center justify-center">
+                <User className="h-5 w-5 text-white" />
+              </div>
+              <span>{copy.contactInfo}</span>
+            </div>
+          }
           size="md"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-2">
-              <Label>{copy.contactName}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.contactName}</Label>
               <Input
                 value={contactInfo.name}
                 onChange={(e) => setContactInfo({ ...contactInfo, name: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#10b981] focus:ring-[#10b981]"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.title}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.title}</Label>
               <Input
                 value={contactInfo.title}
                 onChange={(e) => setContactInfo({ ...contactInfo, title: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#10b981] focus:ring-[#10b981]"
+                placeholder="e.g., HR Manager"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.email}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.email}</Label>
               <Input
                 type="email"
                 value={contactInfo.email}
                 onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#10b981] focus:ring-[#10b981]"
+                placeholder="contact@company.com"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.phone}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.phone}</Label>
               <Input
                 type="tel"
                 value={contactInfo.phone}
                 onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#10b981] focus:ring-[#10b981]"
+                placeholder="+45 12 34 56 78"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-[#ffe4b5]">
               <Button
                 variant="outline"
                 onClick={() => setIsContactModalOpen(false)}
                 disabled={loading}
+                className="border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
               >
                 {copy.cancel}
               </Button>
@@ -683,6 +818,7 @@ export default function SettingsPage() {
                 icon={Save}
                 onClick={handleSaveContactInfo}
                 loading={loading}
+                className="bg-linear-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#10b981] text-white"
               >
                 {copy.save}
               </ActionButton>
@@ -694,33 +830,41 @@ export default function SettingsPage() {
         <Modal
           isOpen={isPreferencesModalOpen}
           onClose={() => setIsPreferencesModalOpen(false)}
-          title={copy.preferences}
+          title={
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-[#3b82f6] to-[#2563eb] flex items-center justify-center">
+                <Globe className="h-5 w-5 text-white" />
+              </div>
+              <span>{copy.preferences}</span>
+            </div>
+          }
           size="md"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="space-y-2">
-              <Label>{copy.language}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.language}</Label>
               <Select
                 value={preferences.language}
                 onValueChange={(value) => setPreferences({ ...preferences, language: value })}
                 disabled={loading}
               >
-                <SelectTrigger>
+                <SelectTrigger className="border-[#ffe4b5] focus:border-[#3b82f6] focus:ring-[#3b82f6]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="da">Dansk (Danish)</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="sv">Svenska (Swedish)</SelectItem>
+                  <SelectItem value="da">🇩🇰 Dansk (Danish)</SelectItem>
+                  <SelectItem value="en">🇬🇧 English</SelectItem>
+                  <SelectItem value="sv">🇸🇪 Svenska (Swedish)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-[#ffe4b5]">
               <Button
                 variant="outline"
                 onClick={() => setIsPreferencesModalOpen(false)}
                 disabled={loading}
+                className="border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
               >
                 {copy.cancel}
               </Button>
@@ -728,6 +872,7 @@ export default function SettingsPage() {
                 icon={Save}
                 onClick={handleSavePreferences}
                 loading={loading}
+                className="bg-linear-to-r from-[#3b82f6] to-[#2563eb] hover:from-[#2563eb] hover:to-[#3b82f6] text-white"
               >
                 {copy.save}
               </ActionButton>
@@ -739,52 +884,67 @@ export default function SettingsPage() {
         <Modal
           isOpen={isPasswordModalOpen}
           onClose={() => setIsPasswordModalOpen(false)}
-          title={copy.changePassword}
+          title={
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-[#ef4444] to-[#dc2626] flex items-center justify-center">
+                <Lock className="h-5 w-5 text-white" />
+              </div>
+              <span>{copy.changePassword}</span>
+            </div>
+          }
           size="md"
         >
-          <div className="space-y-4">
+          <div className="space-y-5">
             {error && (
-              <Alert variant="destructive">
+              <Alert variant="destructive" className="border-2">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
+                <AlertDescription className="font-medium">{error}</AlertDescription>
               </Alert>
             )}
 
             <div className="space-y-2">
-              <Label>{copy.currentPassword}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.currentPassword}</Label>
               <Input
                 type="password"
                 value={passwordData.currentPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#ef4444] focus:ring-[#ef4444]"
+                placeholder="••••••••"
               />
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.newPassword}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.newPassword}</Label>
               <Input
                 type="password"
                 value={passwordData.newPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#ef4444] focus:ring-[#ef4444]"
+                placeholder="••••••••"
               />
+              <p className="text-xs text-[#6b5444]">At least 8 characters</p>
             </div>
 
             <div className="space-y-2">
-              <Label>{copy.confirmPassword}</Label>
+              <Label className="text-[#4a3728] font-medium">{copy.confirmPassword}</Label>
               <Input
                 type="password"
                 value={passwordData.confirmPassword}
                 onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                 disabled={loading}
+                className="border-[#ffe4b5] focus:border-[#ef4444] focus:ring-[#ef4444]"
+                placeholder="••••••••"
               />
             </div>
 
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4 border-t border-[#ffe4b5]">
               <Button
                 variant="outline"
                 onClick={() => setIsPasswordModalOpen(false)}
                 disabled={loading}
+                className="border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
               >
                 {copy.cancel}
               </Button>
@@ -792,6 +952,7 @@ export default function SettingsPage() {
                 icon={Lock}
                 onClick={handleChangePassword}
                 loading={loading}
+                className="bg-linear-to-r from-[#ef4444] to-[#dc2626] hover:from-[#dc2626] hover:to-[#ef4444] text-white"
               >
                 {copy.changePassword}
               </ActionButton>

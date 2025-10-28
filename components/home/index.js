@@ -3,7 +3,7 @@ export { default as HeroSection } from './HeroSection';
 export { default as ValuePropsSection } from './ValuePropsSection';
 export { default as StorySection } from './StorySection';
 export { default as RolesSection } from './RolesSection';
-export { default as ProcessSection } from './ProcessSection';
+export { default as HowItWorksSection } from './HowItWorksSection';
 export { default as PricingSection } from './PricingSection';
 export { default as SocialProofSection } from './SocialProofSection';
 export { default as FaqSection } from './FaqSection';

@@ -209,32 +209,32 @@ export default function CandidateDashboard() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage>{copy.dashboard}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.dashboard}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
-      <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
-        <div className="w-full max-w-full space-y-6">
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+        <div className="w-full max-w-7xl mx-auto space-y-6">
           {/* Header */}
-          <div>
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
+          <div className="bg-white rounded-xl p-6 border border-[#ffe4b5] shadow-sm">
+            <h1 className="text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent">
               {copy.dashboard}
             </h1>
-            <p className="text-zinc-600 dark:text-zinc-400 mt-2">
+            <p className="text-[#6b5444] mt-2 text-sm lg:text-base">
               {copy.subtitle}
             </p>
           </div>
 
           {/* Overview Cards */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StatsCard
               title={copy.activeApplications}
               value={stats.activeApplications}
@@ -267,22 +267,31 @@ export default function CandidateDashboard() {
 
             {/* Tabs */}
             <Tabs defaultValue="invitations" className="space-y-6">
-              <TabsList>
-                <TabsTrigger value="invitations" className="gap-2">
+              <TabsList className="bg-[#ffefd5] border border-[#ffe4b5] p-1 h-auto flex-wrap">
+                <TabsTrigger 
+                  value="invitations" 
+                  className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-4 py-2.5"
+                >
                   <Target className="h-4 w-4" />
-                  {copy.invitations} ({invitations.length})
+                  <span className="hidden sm:inline">{copy.invitations}</span> ({invitations.length})
                 </TabsTrigger>
-                <TabsTrigger value="applications" className="gap-2">
+                <TabsTrigger 
+                  value="applications" 
+                  className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-4 py-2.5"
+                >
                   <FileText className="h-4 w-4" />
-                  {copy.myApplications} ({applications.length})
+                  <span className="hidden sm:inline">{copy.myApplications}</span> ({applications.length})
                 </TabsTrigger>
-                <TabsTrigger value="profile" className="gap-2">
+                <TabsTrigger 
+                  value="profile" 
+                  className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-4 py-2.5"
+                >
                   <Settings className="h-4 w-4" />
-                  {copy.profile}
+                  <span className="hidden sm:inline">{copy.profile}</span>
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="invitations" className="space-y-4">
+              <TabsContent value="invitations" className="space-y-4 mt-6">
                 {invitations.length === 0 ? (
                   <EmptyState
                     icon={Target}
@@ -290,39 +299,43 @@ export default function CandidateDashboard() {
                     description={copy.noInvitations}
                   />
                 ) : (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{locale === 'da' ? 'Ventende Invitationer' : 'Pending Invitations'}</CardTitle>
-                      <CardDescription>
+                  <Card className="border-[#ffe4b5] shadow-md">
+                    <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                      <CardTitle className="text-[#4a3728] flex items-center gap-2">
+                        <Target className="h-5 w-5 text-[#fa8072]" />
+                        {locale === 'da' ? 'Ventende Invitationer' : 'Pending Invitations'}
+                      </CardTitle>
+                      <CardDescription className="text-[#6b5444]">
                         {locale === 'da' 
                           ? 'Virksomheder der har inviteret dig til at ansøge' 
                           : 'Companies that have invited you to apply'}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
+                    <CardContent className="pt-6">
+                      <div className="space-y-3">
                         {invitations.map((invitation) => (
                           <div 
                             key={invitation._id} 
-                            className="border rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                            className="border border-[#ffe4b5] rounded-lg p-4 hover:shadow-lg hover:border-[#fa8072] transition-all cursor-pointer bg-white"
                             onClick={() => router.push(`/${locale}/dashboard/candidate/applications`)}
                           >
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h3 className="font-semibold text-lg">{invitation.internshipId?.title}</h3>
-                                <p className="text-sm text-zinc-600">{invitation.companyId?.companyName}</p>
-                                <p className="text-xs text-zinc-500 mt-2">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-lg text-[#4a3728]">{invitation.internshipId?.title}</h3>
+                                <p className="text-sm text-[#6b5444] mt-1">{invitation.companyId?.companyName}</p>
+                                <p className="text-xs text-[#8b7355] mt-2 flex items-center gap-1">
+                                  <Calendar className="h-3 w-3" />
                                   {locale === 'da' ? 'Sendt' : 'Sent'}: {new Date(invitation.sentAt).toLocaleDateString()}
                                 </p>
                               </div>
-                              <span className="text-sm px-3 py-1 bg-blue-100 text-blue-800 rounded-full">
+                              <span className="text-sm px-3 py-1.5 bg-linear-to-r from-blue-500 to-blue-600 text-white rounded-full font-medium w-fit">
                                 {locale === 'da' ? 'Ny invitation' : 'New invitation'}
                               </span>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <p className="text-sm text-zinc-500 mt-4 text-center">
+                      <p className="text-sm text-[#6b5444] mt-6 text-center p-3 bg-[#ffefd5] rounded-lg">
                         {locale === 'da' 
                           ? 'Klik for at se alle invitationer og svare' 
                           : 'Click to view all invitations and respond'}
@@ -332,7 +345,7 @@ export default function CandidateDashboard() {
                 )}
               </TabsContent>
 
-              <TabsContent value="applications" className="space-y-4">
+              <TabsContent value="applications" className="space-y-4 mt-6">
                 {applications.length === 0 ? (
                   <EmptyState
                     icon={FileText}
@@ -353,14 +366,17 @@ export default function CandidateDashboard() {
                 )}
               </TabsContent>
 
-              <TabsContent value="profile">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{copy.profileSettings}</CardTitle>
-                    <CardDescription>{copy.manageProfile}</CardDescription>
+              <TabsContent value="profile" className="mt-6">
+                <Card className="border-[#ffe4b5] shadow-md">
+                  <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                    <CardTitle className="text-[#4a3728] flex items-center gap-2">
+                      <Settings className="h-5 w-5 text-[#fa8072]" />
+                      {copy.profileSettings}
+                    </CardTitle>
+                    <CardDescription className="text-[#6b5444]">{copy.manageProfile}</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-zinc-500">{copy.profileManagement}</p>
+                  <CardContent className="pt-6">
+                    <p className="text-sm text-[#6b5444] p-4 bg-[#ffefd5] rounded-lg">{copy.profileManagement}</p>
                   </CardContent>
                 </Card>
               </TabsContent>

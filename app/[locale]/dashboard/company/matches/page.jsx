@@ -11,6 +11,17 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { Modal } from '@/components/ui/modal';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { BackButton } from '@/components/ui/back-button';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
 import {
   Dialog,
   DialogContent,
@@ -19,7 +30,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { ArrowLeft, Eye, Send, UserCheck, GraduationCap, Mail, Phone, MapPin, Clock, CheckCircle, XCircle, Loader2, Building2, Calendar, FileText, ExternalLink, Download, Briefcase } from 'lucide-react';
+import { ArrowLeft, Eye, Send, UserCheck, GraduationCap, Mail, Phone, MapPin, Clock, CheckCircle, XCircle, Loader2, Building2, Calendar, FileText, ExternalLink, Download, Briefcase, Users, Sparkles, ChevronRight, TrendingUp } from 'lucide-react';
 
 export default function MatchesPage() {
   const params = useParams();
@@ -161,25 +172,25 @@ export default function MatchesPage() {
 
   const getInvitationStatusBadge = (status) => {
     const badges = {
-      pending: <Badge className="bg-yellow-100 text-yellow-800">{copy.pending}</Badge>,
-      accepted: <Badge className="bg-green-100 text-green-800">{copy.accepted}</Badge>,
-      rejected: <Badge className="bg-red-100 text-red-800">{copy.rejected}</Badge>,
-      expired: <Badge className="bg-gray-100 text-gray-800">{copy.expired}</Badge>,
+      pending: <Badge className="bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0">{copy.pending}</Badge>,
+      accepted: <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0">{copy.accepted}</Badge>,
+      rejected: <Badge className="bg-linear-to-r from-[#ef4444] to-[#dc2626] text-white border-0">{copy.rejected}</Badge>,
+      expired: <Badge className="bg-linear-to-r from-[#9ca3af] to-[#6b7280] text-white border-0">{copy.expired}</Badge>,
     };
     return badges[status] || badges.pending;
   };
 
   const getMatchColor = (percentage) => {
-    if (percentage >= 80) return 'text-green-600 bg-green-100';
-    if (percentage >= 60) return 'text-blue-600 bg-blue-100';
-    return 'text-yellow-600 bg-yellow-100';
+    if (percentage >= 80) return 'bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0';
+    if (percentage >= 60) return 'bg-linear-to-r from-[#3b82f6] to-[#2563eb] text-white border-0';
+    return 'bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0';
   };
 
   const getStatusBadge = (status) => {
     return status === 'active' ? (
-      <Badge className="bg-green-100 text-green-800">Active</Badge>
+      <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0 px-3 py-1">Active</Badge>
     ) : (
-      <Badge className="bg-gray-100 text-gray-800">Under Review</Badge>
+      <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white border-0 px-3 py-1">Under Review</Badge>
     );
   };
 
@@ -305,540 +316,391 @@ export default function MatchesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
         <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent"></div>
-          <p className="mt-4 text-zinc-600">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#fa8072] border-r-transparent"></div>
+          <p className="mt-4 text-[#6b5444] font-medium">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back Button */}
-        <Button
-          variant="ghost"
-          onClick={() => view === 'candidates' ? goBackToInternships() : router.push(`/${locale}/dashboard/company`)}
-          className="mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          {view === 'candidates' ? copy.backToRoles : copy.back}
-        </Button>
+    <div className="flex flex-col h-screen overflow-hidden bg-linear-to-b from-[#fdf5e6] to-white">
+      {/* Sticky Header with Breadcrumb */}
+      <header className="flex h-16 shrink-0 items-center gap-2 bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] px-4 sticky top-0 z-10 border-b border-[#ffe4b5]">
+        <SidebarTrigger className="-ml-1 text-[#4a3728]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                href={`/${locale}/dashboard/company`}
+                className="text-[#6b5444] hover:text-[#fa8072] transition-colors"
+              >
+                {locale === 'da' ? 'Dashboard' : 'Dashboard'}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator className="text-[#ffe4b5]" />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">
+                {locale === 'da' ? 'Matches' : 'Matches'}
+              </BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
 
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 mb-2">
-            {view === 'candidates' && selectedRole 
-              ? `${copy.matchedCandidatesFor} ${selectedRole.title}`
-              : copy.title
-            }
-          </h1>
-          <p className="text-zinc-600">
-            {view === 'candidates' 
-              ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} found`
-              : copy.subtitle
-            }
-          </p>
-        </div>
+      {/* Main Content - Scrollable */}
+      <main className="flex-1 overflow-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+          
+          {/* Page Header */}
+          <div className="mb-6 sm:mb-8">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-lg">
+                  <Users className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">
+                    {view === 'candidates' && selectedRole 
+                      ? `${copy.matchedCandidatesFor} ${selectedRole.title}`
+                      : copy.title
+                    }
+                  </h1>
+                  <p className="text-sm sm:text-base text-[#6b5444] mt-1">
+                    {view === 'candidates' 
+                      ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} found`
+                      : copy.subtitle
+                    }
+                  </p>
+                </div>
+              </div>
+              
+              {view === 'candidates' && (
+                <BackButton
+                  onClick={goBackToInternships}
+                  variant="outline"
+                  className="border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:text-[#fa8072] hover:border-[#fa8072] transition-all duration-200"
+                >
+                  {copy.backToRoles}
+                </BackButton>
+              )}
+            </div>
+          </div>
 
         {/* Internships List View */}
         {view === 'internships' && (
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList>
-              <TabsTrigger value="matches">{copy.matchesTab}</TabsTrigger>
-              <TabsTrigger value="invitations">
-                {copy.invitationsTab}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 h-12 bg-white border-2 border-[#ffe4b5] rounded-xl p-1">
+              <TabsTrigger 
+                value="matches" 
+                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+              >
+                <Users className="h-4 w-4" />
+                <span className="hidden sm:inline">{copy.matchesTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Matches' : 'Matches'}</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="invitations" 
+                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+              >
+                <Mail className="h-4 w-4" />
+                <span className="hidden sm:inline">{copy.invitationsTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Anmodede' : 'Requested'}</span>
                 {invitations.length > 0 && (
-                  <Badge className="ml-2 bg-blue-100 text-blue-800">{invitations.length}</Badge>
+                  <Badge className="ml-2 bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0">{invitations.length}</Badge>
                 )}
               </TabsTrigger>
             </TabsList>
 
             {/* All Internships Tab */}
-            <TabsContent value="matches">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{copy.matchesTab}</CardTitle>
-                  <CardDescription>
-                    {internships.length === 0 
-                      ? copy.noInternshipsDesc 
-                      : `${internships.length} internship${internships.length === 1 ? '' : 's'} posted`}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {internships.length === 0 ? (
-                    <div className="text-center py-12">
-                      <Briefcase className="mx-auto h-12 w-12 text-zinc-400 mb-4" />
-                      <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noInternships}</h3>
-                      <p className="text-sm text-zinc-500">{copy.noInternshipsDesc}</p>
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b border-zinc-200">
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.internshipTitle}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.matchesFound}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.postedOn}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.status}
-                            </th>
-                            <th className="text-right py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.actions}
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {internships.map((internship) => (
-                            <tr key={internship._id} className="border-b border-zinc-100 hover:bg-zinc-50">
-                              <td className="py-4 px-4">
-                                <div>
-                                  <p className="text-sm font-medium text-zinc-900">{internship.title}</p>
-                                  <p className="text-xs text-zinc-500">{internship.department}</p>
-                                </div>
-                              </td>
-                              <td className="py-4 px-4">
-                                <Badge className="bg-blue-100 text-blue-800 text-base px-3 py-1">
-                                  {internship.matchesFound}
-                                </Badge>
-                              </td>
-                              <td className="py-4 px-4">
-                                <div className="flex items-center text-sm text-zinc-600">
-                                  <Calendar className="h-4 w-4 mr-1.5 text-zinc-400" />
-                                  {new Date(internship.postedOn).toLocaleDateString()}
-                                </div>
-                              </td>
-                              <td className="py-4 px-4">
-                                {getStatusBadge(internship.status)}
-                              </td>
-                              <td className="py-4 px-4">
-                                <div className="flex justify-end">
-                                  <ActionButton
-                                    variant="default"
-                                    size="sm"
-                                    icon={Eye}
-                                    onClick={() => fetchMatchesForRole(internship._id)}
-                                    disabled={internship.matchesFound === 0}
-                                  >
-                                    {copy.viewMatches}
-                                  </ActionButton>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+            <TabsContent value="matches" className="mt-0 space-y-0">
+              {internships.length === 0 ? (
+                <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+                  <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
+                    <Sparkles className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
+                    <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                      {copy.noInternships}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                      {locale === 'da' ? 'Opret din første praktikopslag for at begynde at matche med kandidater.' : 'Create your first internship role to start matching with candidates.'}
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="space-y-5">
+                  {internships.map((internship) => (
+                    <Card 
+                      key={internship._id} 
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-white cursor-pointer group"
+                      onClick={() => fetchMatchesForRole(internship._id)}
+                    >
+                      <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] pb-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shrink-0 shadow-md">
+                              <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <CardTitle className="text-lg sm:text-xl text-[#4a3728] group-hover:text-[#fa8072] transition-colors line-clamp-1">
+                                {internship.title}
+                              </CardTitle>
+                              <p className="text-xs sm:text-sm text-[#6b5444] mt-0.5 line-clamp-1">
+                                {internship.department}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3 shrink-0">
+                            <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0 px-3 py-1.5 text-sm font-semibold whitespace-nowrap">
+                              {internship.matchesFound} {locale === 'da' ? 'Matches' : 'Matches'}
+                            </Badge>
+                            <ChevronRight className="h-5 w-5 text-[#6b5444] group-hover:text-[#fa8072] group-hover:translate-x-1 transition-all" />
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pt-4 pb-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                            <Calendar className="h-4 w-4 text-[#fa8072] shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs text-[#6b5444]">{copy.postedOn}</p>
+                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                                {new Date(internship.postedOn).toLocaleDateString(locale)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                            <TrendingUp className="h-4 w-4 text-[#fa8072] shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs text-[#6b5444]">{copy.matchesFound}</p>
+                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                                {internship.matchesFound} {locale === 'da' ? 'kandidater' : 'candidates'}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40 sm:col-span-2 lg:col-span-1">
+                            {getStatusBadge(internship.status)}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </TabsContent>
 
             {/* Requested Candidates Tab */}
-            <TabsContent value="invitations">
-              <Card>
-                <CardHeader>
-                  <CardTitle>{copy.invitationsTab}</CardTitle>
-                  <CardDescription>
-                    {invitations.length === 0 
-                      ? copy.noInvitationsDesc 
-                      : `${invitations.length} invitation${invitations.length === 1 ? '' : 's'} sent`}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {invitations.length === 0 ? (
-                    <div className="text-center py-12">
-                      <Mail className="mx-auto h-12 w-12 text-zinc-400 mb-4" />
-                      <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noInvitations}</h3>
-                      <p className="text-sm text-zinc-500">{copy.noInvitationsDesc}</p>
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b border-zinc-200">
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.candidate}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.role}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.invitationStatus}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.sentOn}
-                            </th>
-                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.respondedOn}
-                            </th>
-                            <th className="text-right py-3 px-4 text-sm font-medium text-zinc-700">
-                              {copy.actions}
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {invitations.map((invitation) => (
-                            <tr key={invitation._id} className="border-b border-zinc-100 hover:bg-zinc-50">
-                              <td className="py-4 px-4">
-                                <div className="flex items-center">
-                                  <Avatar className="h-10 w-10 mr-3">
-                                    <AvatarFallback>
-                                      {invitation.candidateId?.firstName?.[0]}{invitation.candidateId?.lastName?.[0]}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <div>
-                                    <p className="text-sm font-medium text-zinc-900">
-                                      {invitation.candidateId?.firstName} {invitation.candidateId?.lastName}
-                                    </p>
-                                    <p className="text-xs text-zinc-500">{invitation.candidateId?.email}</p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="py-4 px-4">
-                                <p className="text-sm text-zinc-900">{invitation.internshipId?.title}</p>
-                              </td>
-                              <td className="py-4 px-4">
-                                {getInvitationStatusBadge(invitation.status)}
-                              </td>
-                              <td className="py-4 px-4">
-                                <p className="text-sm text-zinc-600">
-                                  {new Date(invitation.sentAt).toLocaleDateString()}
-                                </p>
-                              </td>
-                              <td className="py-4 px-4">
-                                <p className="text-sm text-zinc-600">
-                                  {invitation.respondedAt 
-                                    ? new Date(invitation.respondedAt).toLocaleDateString()
-                                    : '—'}
-                                </p>
-                              </td>
-                              <td className="py-4 px-4">
-                                <div className="flex justify-end">
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setSelectedCandidate(invitation.candidateId)}
-                                  >
-                                    <Eye className="h-4 w-4 mr-1" />
-                                    {copy.viewProfile}
-                                  </Button>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+            <TabsContent value="invitations" className="mt-0 space-y-0">
+              {invitations.length === 0 ? (
+                <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+                  <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
+                    <Mail className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
+                    <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                      {copy.noInvitations}
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                      {copy.noInvitationsDesc}
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="space-y-5">
+                  {invitations.map((invitation) => (
+                    <Card 
+                      key={invitation._id} 
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-white group"
+                    >
+                      <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] pb-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <Avatar className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 border-2 border-white shadow-md">
+                              <AvatarFallback className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] text-white text-base font-semibold">
+                                {invitation.candidateId?.firstName?.[0]}{invitation.candidateId?.lastName?.[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="min-w-0 flex-1">
+                              <CardTitle className="text-lg sm:text-xl text-[#4a3728] line-clamp-1">
+                                {invitation.candidateId?.firstName} {invitation.candidateId?.lastName}
+                              </CardTitle>
+                              <p className="text-xs sm:text-sm text-[#6b5444] mt-0.5 line-clamp-1">
+                                {invitation.candidateId?.email}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            {getInvitationStatusBadge(invitation.status)}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setSelectedCandidate(invitation.candidateId)}
+                              className="text-[#4a3728] hover:text-[#fa8072] hover:bg-[#fdf5e6]"
+                            >
+                              <Eye className="h-4 w-4 sm:mr-1" />
+                              <span className="hidden sm:inline text-sm">{copy.viewProfile}</span>
+                            </Button>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="pt-4 pb-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                            <Briefcase className="h-4 w-4 text-[#fa8072] shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs text-[#6b5444]">{copy.role}</p>
+                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                                {invitation.internshipId?.title}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                            <Send className="h-4 w-4 text-[#fa8072] shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs text-[#6b5444]">{copy.sentOn}</p>
+                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                                {new Date(invitation.sentAt).toLocaleDateString(locale)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40 sm:col-span-2 lg:col-span-1">
+                            <CheckCircle className="h-4 w-4 text-[#fa8072] shrink-0" />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs text-[#6b5444]">{copy.respondedOn}</p>
+                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                                {invitation.respondedAt 
+                                  ? new Date(invitation.respondedAt).toLocaleDateString(locale)
+                                  : '—'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </TabsContent>
           </Tabs>
         )}
 
         {/* Matched Candidates View for Selected Role */}
         {view === 'candidates' && (
-          <Card>
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div>
-                  <CardTitle>{copy.matchedCandidatesFor}</CardTitle>
-                  <CardDescription className="mt-2">
-                    <strong>{selectedRole?.title}</strong> • {selectedRole?.department}
-                  </CardDescription>
-                </div>
-                {matches.length > 0 && (
-                  <Badge className="bg-blue-100 text-blue-800 text-lg px-4 py-2">
-                    {matches.length} {matches.length === 1 ? 'Match' : 'Matches'}
-                  </Badge>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              {matches.length === 0 ? (
-                <div className="text-center py-12">
-                  <UserCheck className="mx-auto h-12 w-12 text-zinc-400 mb-4" />
-                  <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noMatches}</h3>
-                  <p className="text-sm text-zinc-500">{copy.noMatchesDesc}</p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-zinc-200">
-                        <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.candidate}
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.match}
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.skills}
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.education}
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.city}
-                        </th>
-                        <th className="text-right py-3 px-4 text-sm font-medium text-zinc-700">
-                          {copy.actions}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {matches.map((match) => (
-                        <tr key={match._id} className="border-b border-zinc-100 hover:bg-zinc-50">
-                          <td className="py-4 px-4">
-                            <div className="flex items-center">
-                              <Avatar className="h-10 w-10 mr-3">
-                                <AvatarFallback>
-                                  {match.candidate?.firstName?.[0]}{match.candidate?.lastName?.[0]}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <p className="text-sm font-medium text-zinc-900">
-                                  {match.candidate?.firstName} {match.candidate?.lastName}
-                                </p>
-                                <p className="text-xs text-zinc-500">{match.candidate?.email}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-4 px-4">
-                            <Badge className={`${getMatchColor(match.matchPercentage)} text-base px-3 py-1`}>
-                              {match.matchPercentage}%
-                            </Badge>
-                          </td>
-                          <td className="py-4 px-4">
-                            <div className="flex flex-wrap gap-1">
-                              {match.matchedSkills?.slice(0, 3).map((skill, idx) => (
-                                <Badge key={idx} variant="outline" className="text-xs">
-                                  {skill}
-                                </Badge>
-                              ))}
-                              {match.matchedSkills?.length > 3 && (
-                                <Badge variant="outline" className="text-xs">
-                                  +{match.matchedSkills.length - 3}
-                                </Badge>
-                              )}
-                            </div>
-                          </td>
-                          <td className="py-4 px-4">
-                            <div className="flex items-center text-sm text-zinc-600">
-                              <GraduationCap className="h-4 w-4 mr-1.5 text-zinc-400" />
-                              {match.candidate?.education}
-                            </div>
-                          </td>
-                          <td className="py-4 px-4">
-                            <div className="flex items-center text-sm text-zinc-600">
-                              <MapPin className="h-4 w-4 mr-1.5 text-zinc-400" />
+          <>
+            {matches.length === 0 ? (
+              <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+                <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
+                  <UserCheck className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                    {copy.noMatches}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                    {copy.noMatchesDesc}
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-5">
+                {matches.map((match) => (
+                  <Card 
+                    key={match._id} 
+                    className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-white group"
+                  >
+                    <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] pb-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <Avatar className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 border-2 border-white shadow-md">
+                            <AvatarFallback className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] text-white text-base sm:text-lg font-semibold">
+                              {match.candidate?.firstName?.[0]}{match.candidate?.lastName?.[0]}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="min-w-0 flex-1">
+                            <CardTitle className="text-lg sm:text-xl text-[#4a3728] line-clamp-1">
+                              {match.candidate?.firstName} {match.candidate?.lastName}
+                            </CardTitle>
+                            <p className="text-xs sm:text-sm text-[#6b5444] mt-0.5 line-clamp-1">
+                              {match.candidate?.email}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge className={`${getMatchColor(match.matchPercentage)} px-3 py-1.5 text-base sm:text-lg font-bold shrink-0`}>
+                          {match.matchPercentage}%
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-4 pb-4 space-y-4">
+                      {/* Skills Section */}
+                      {match.matchedSkills?.length > 0 && (
+                        <div>
+                          <h4 className="text-xs font-semibold text-[#6b5444] mb-2 flex items-center gap-1.5">
+                            <Sparkles className="h-3.5 w-3.5 text-[#fa8072]" />
+                            {copy.matchedSkills || 'Matched Skills'}
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {match.matchedSkills.map((skill, idx) => (
+                              <Badge key={idx} className="bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border-0 px-2.5 py-0.5 text-xs">
+                                {skill}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Details Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                          <GraduationCap className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs text-[#6b5444]">{copy.education}</p>
+                            <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              {match.candidate?.education || '-'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
+                          <MapPin className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs text-[#6b5444]">{copy.city}</p>
+                            <p className="text-sm font-semibold text-[#4a3728] truncate">
                               {match.candidate?.location?.city || match.candidate?.location?.address || match.candidate?.city || '-'}
-                            </div>
-                          </td>
-                          <td className="py-4 px-4">
-                            <div className="flex justify-end space-x-2">
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setSelectedCandidate(match.candidate)}
-                                  >
-                                    <Eye className="h-4 w-4 mr-1" />
-                                    {copy.viewProfile}
-                                  </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                                  <DialogHeader>
-                                    <DialogTitle className="text-2xl">
-                                      {match.candidate?.firstName} {match.candidate?.lastName}
-                                    </DialogTitle>
-                                    <DialogDescription className="flex items-center gap-4 mt-2">
-                                      <span className="flex items-center">
-                                        <Mail className="h-4 w-4 mr-1" />
-                                        {match.candidate?.email}
-                                      </span>
-                                      {match.candidate?.phone && (
-                                        <span className="flex items-center">
-                                          <Phone className="h-4 w-4 mr-1" />
-                                          {match.candidate?.phone}
-                                        </span>
-                                      )}
-                                    </DialogDescription>
-                                  </DialogHeader>
-                                  
-                                  <div className="space-y-6 mt-4">
-                                    {/* Match Score */}
-                                    <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-4">
-                                      <div className="flex items-center justify-between">
-                                        <span className="text-sm font-medium text-zinc-700">Match Score</span>
-                                        <Badge className={`${getMatchColor(match.matchPercentage)} text-lg px-4 py-1`}>
-                                          {match.matchPercentage}%
-                                        </Badge>
-                                      </div>
-                                    </div>
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40 sm:col-span-2 lg:col-span-1">
+                          <Mail className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs text-[#6b5444]">Email</p>
+                            <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              {match.candidate?.email}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
 
-                                    {/* Education */}
-                                    <div className="grid grid-cols-2 gap-4">
-                                      <div>
-                                        <p className="text-sm font-semibold text-zinc-700 mb-1">{copy.education}</p>
-                                        <p className="text-sm text-zinc-600">{match.candidate?.education}</p>
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-semibold text-zinc-700 mb-1">{copy.university}</p>
-                                        <p className="text-sm text-zinc-600">{match.candidate?.university}</p>
-                                      </div>
-                                    </div>
-
-                                    <div>
-                                      <p className="text-sm font-semibold text-zinc-700 mb-1">{copy.fieldOfStudy}</p>
-                                      <p className="text-sm text-zinc-600">{match.candidate?.fieldOfStudy}</p>
-                                    </div>
-
-                                    {/* Skills */}
-                                    <div>
-                                      <h4 className="text-sm font-semibold mb-3">{copy.skills}</h4>
-                                      <div className="flex flex-wrap gap-2">
-                                        {match.candidate?.skills?.map((skill, idx) => (
-                                          <Badge 
-                                            key={idx}
-                                            className={match.matchedSkills?.includes(skill) ? 'bg-green-100 text-green-800' : ''}
-                                          >
-                                            {skill}
-                                            {match.matchedSkills?.includes(skill) && ' ✓'}
-                                          </Badge>
-                                        ))}
-                                      </div>
-                                    </div>
-
-                                    {/* Location & Availability */}
-                                    <div className="grid grid-cols-2 gap-4">
-                                      <div>
-                                        <p className="text-sm font-semibold text-zinc-700 mb-1">{copy.location}</p>
-                                        <p className="text-sm text-zinc-600 flex items-center">
-                                          <MapPin className="h-4 w-4 mr-1" />
-                                          {match.candidate?.location?.city || match.candidate?.location?.address || match.candidate?.city || '-'}
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-semibold text-zinc-700 mb-1">{copy.availability}</p>
-                                        <p className="text-sm text-zinc-600">
-                                          {match.candidate?.availability} days/week
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    {/* Languages */}
-                                    {match.candidate?.languages?.length > 0 && (
-                                      <div>
-                                        <h4 className="text-sm font-semibold mb-2">{copy.languages}</h4>
-                                        <div className="flex flex-wrap gap-2">
-                                          {match.candidate.languages.map((lang, idx) => (
-                                            <Badge key={idx} variant="outline">
-                                              {typeof lang === 'string' ? lang : `${lang.language} (${lang.proficiency})`}
-                                            </Badge>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {/* Resume & Portfolio */}
-                                    <div className="flex gap-3">
-                                      {match.candidate?.resume && (
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          onClick={() => window.open(match.candidate.resume, '_blank')}
-                                        >
-                                          <Download className="h-4 w-4 mr-2" />
-                                          {copy.download} {copy.resume}
-                                        </Button>
-                                      )}
-                                      {match.candidate?.portfolio && (
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          onClick={() => window.open(match.candidate.portfolio, '_blank')}
-                                        >
-                                          <ExternalLink className="h-4 w-4 mr-2" />
-                                          {copy.openLink} {copy.portfolio}
-                                        </Button>
-                                      )}
-                                    </div>
-
-                                    {/* Bio */}
-                                    {match.candidate?.bio && (
-                                      <div>
-                                        <h4 className="text-sm font-semibold mb-2">About</h4>
-                                        <p className="text-sm text-zinc-600 leading-relaxed">
-                                          {match.candidate.bio}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </div>
-                                </DialogContent>
-                              </Dialog>
-
-                              {(() => {
-                                // Check if invitation already sent for this candidate and internship
-                                const existingInvitation = invitations.find(
-                                  inv => inv.candidateId?._id === match.candidate._id && 
-                                         inv.internshipId?._id === selectedRole._id
-                                );
-
-                                if (existingInvitation) {
-                                  return (
-                                    <div className="flex items-center gap-2">
-                                      {getInvitationStatusBadge(existingInvitation.status)}
-                                      {existingInvitation.status === 'pending' && (
-                                        <span className="text-xs text-zinc-500">
-                                          {copy.sentOn}: {new Date(existingInvitation.sentAt).toLocaleDateString()}
-                                        </span>
-                                      )}
-                                      {existingInvitation.status === 'accepted' && (
-                                        <span className="text-xs text-green-600 font-medium">
-                                          ✓ {copy.accepted}
-                                        </span>
-                                      )}
-                                      {existingInvitation.status === 'rejected' && (
-                                        <span className="text-xs text-red-600">
-                                          {copy.rejected}
-                                        </span>
-                                      )}
-                                    </div>
-                                  );
-                                }
-
-                                return (
-                                  <ActionButton
-                                    variant="default"
-                                    size="sm"
-                                    icon={Send}
-                                    onClick={() => openInviteModal(match.candidate, selectedRole._id)}
-                                  >
-                                    {copy.invite}
-                                  </ActionButton>
-                                );
-                              })()}
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                      {/* Action Buttons */}
+                      <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                        <Button
+                          onClick={() => setSelectedCandidate(match.candidate)}
+                          className="flex-1 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md h-10"
+                        >
+                          <Eye className="h-4 w-4 mr-2" />
+                          {copy.viewFullProfile}
+                        </Button>
+                        <ActionButton
+                          onClick={() => openInviteModal(match.candidate, selectedRole._id)}
+                          icon={Send}
+                          variant="outline"
+                          className="flex-1 border-2 border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728] h-10"
+                        >
+                          {copy.sendInvite}
+                        </ActionButton>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {/* Invite Modal */}
@@ -905,7 +767,82 @@ export default function MatchesPage() {
             </Button>
           </div>
         </Modal>
-      </div>
+
+        {/* Candidate Profile Modal */}
+        {selectedCandidate && (
+          <Modal
+            isOpen={!!selectedCandidate}
+            onClose={() => setSelectedCandidate(null)}
+            title={`${selectedCandidate.firstName} ${selectedCandidate.lastName}`}
+          >
+            <div className="space-y-6">
+              {/* Contact Info */}
+              <div className="flex items-center gap-4 text-sm text-[#6b5444]">
+                <span className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-[#fa8072]" />
+                  {selectedCandidate.email}
+                </span>
+                {selectedCandidate.phone && (
+                  <span className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-[#fa8072]" />
+                    {selectedCandidate.phone}
+                  </span>
+                )}
+              </div>
+
+              {/* Education */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-semibold text-[#4a3728] mb-1">{copy.education}</p>
+                  <p className="text-sm text-[#6b5444]">{selectedCandidate.education}</p>
+                </div>
+                {selectedCandidate.university && (
+                  <div>
+                    <p className="text-sm font-semibold text-[#4a3728] mb-1">{copy.university}</p>
+                    <p className="text-sm text-[#6b5444]">{selectedCandidate.university}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Skills */}
+              {selectedCandidate.skills?.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold text-[#4a3728] mb-3">{copy.skills}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedCandidate.skills.map((skill, idx) => (
+                      <Badge key={idx} className="bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffe4b5]">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Location */}
+              {(selectedCandidate.location?.city || selectedCandidate.city) && (
+                <div>
+                  <p className="text-sm font-semibold text-[#4a3728] mb-1">{copy.location}</p>
+                  <p className="text-sm text-[#6b5444] flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-[#fa8072]" />
+                    {selectedCandidate.location?.city || selectedCandidate.city}
+                  </p>
+                </div>
+              )}
+
+              {/* Bio */}
+              {selectedCandidate.bio && (
+                <div>
+                  <h4 className="text-sm font-semibold text-[#4a3728] mb-2">About</h4>
+                  <p className="text-sm text-[#6b5444] leading-relaxed">
+                    {selectedCandidate.bio}
+                  </p>
+                </div>
+              )}
+            </div>
+          </Modal>
+        )}
+        </div>
+      </main>
     </div>
   );
 }

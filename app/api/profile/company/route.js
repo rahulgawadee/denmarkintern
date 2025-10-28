@@ -31,22 +31,31 @@ function cleanProfileData(data) {
 
 export async function GET(request) {
   try {
+    console.log('GET /api/profile/company - Starting');
     await connectDB();
+    console.log('Database connected');
     
     const token = request.headers.get('authorization')?.replace('Bearer ', '');
+    console.log('Token exists:', !!token);
     
     if (!token) {
+      console.log('No token provided');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
     const decoded = verifyToken(token);
+    console.log('Token decoded:', !!decoded, decoded?.userId);
+    
     if (!decoded) {
+      console.log('Invalid token');
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
     
     const profile = await CompanyProfile.findOne({ userId: decoded.userId });
+    console.log('Profile found:', !!profile);
     
     if (!profile) {
+      console.log('Profile not found for userId:', decoded.userId);
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
     

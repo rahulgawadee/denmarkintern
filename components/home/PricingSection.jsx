@@ -8,7 +8,7 @@ export default function PricingSection({ pricing, compliance }) {
   }
 
   return (
-    <section id="pricing" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 bg-[#ffefd5]">
+    <section id="pricing" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 sm:py-24 bg-linear-to-b from-white via-[#ffefd5]/30 to-white">
       <div className="grid gap-8 md:grid-cols-2 md:items-start">
         {pricing ? (
           <div>
@@ -25,8 +25,8 @@ export default function PricingSection({ pricing, compliance }) {
           </div>
         ) : null}
         {compliance ? (
-          <Card className="border-2 border-[#ffe4b5] shadow-md bg-white">
-            <CardHeader className="border-b-2 border-[#ffefd5] bg-[#ffefd5]/40">
+          <Card className="border-2 border-[#ffe4b5] shadow-md bg-white hover:shadow-xl transition-shadow">
+            <CardHeader className="border-b-2 border-[#ffefd5] bg-linear-to-r from-[#ffefd5]/40 to-[#fdf5e6]/40">
               <CardTitle className="text-xl font-bold text-[#4a3728]">{compliance.title}</CardTitle>
             </CardHeader>
             <CardContent className="pt-6">

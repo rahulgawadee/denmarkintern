@@ -3,8 +3,17 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
-  ArrowLeft,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Separator } from '@/components/ui/separator';
+import {
   RefreshCw,
   Clock,
   Calendar,
@@ -134,116 +143,145 @@ export default function StudentInterviewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-zinc-600">{copy.loading}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fa8072] mx-auto"></div>
+          <p className="mt-4 text-[#6b5444]">{copy.loading}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
+    <>
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                href={`/${locale}/dashboard/candidate`}
+                className="text-[#6b5444] hover:text-[#fa8072]"
+              >
+                Dashboard
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className="ml-auto">
           <Button
+            onClick={handleRefresh}
+            disabled={refreshing}
             variant="ghost"
-            onClick={() => router.push(`/${locale}/dashboard/candidate`)}
-            className="mb-4"
+            size="sm"
+            className="gap-2 hover:bg-[#ffefd5] hover:text-[#fa8072]"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {copy.back}
+            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">{copy.refresh}</span>
           </Button>
-          
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-zinc-900">{copy.title}</h1>
-              <p className="text-zinc-600 mt-2">{copy.subtitle}</p>
-            </div>
-            <Button
-              onClick={handleRefresh}
-              disabled={refreshing}
-              variant="outline"
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              {copy.refresh}
-            </Button>
-          </div>
         </div>
+      </header>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-6">
-            <TabsTrigger value="pending" className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              {copy.pendingTab}
-              {pendingInterviews.length > 0 && (
-                <Badge className="ml-2 bg-yellow-100 text-yellow-800">
-                  {pendingInterviews.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="upcoming" className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              {copy.upcomingTab}
-              {upcomingInterviews.length > 0 && (
-                <Badge className="ml-2 bg-blue-100 text-blue-800">
-                  {upcomingInterviews.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="completed" className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4" />
-              {copy.completedTab}
-              {completedInterviews.length > 0 && (
-                <Badge className="ml-2 bg-green-100 text-green-800">
-                  {completedInterviews.length}
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+        <div className="w-full max-w-7xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#ffe4b5] shadow-sm">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent">
+              {copy.title}
+            </h1>
+            <p className="text-[#6b5444] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
+          </div>
+
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="bg-[#ffefd5] border border-[#ffe4b5] p-1 h-auto w-full sm:w-auto grid grid-cols-3 gap-1">
+              <TabsTrigger 
+                value="pending" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <Clock className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.pendingTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Vent.' : 'Pend.'}</span>
+                {pendingInterviews.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {pendingInterviews.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="upcoming" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <Calendar className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.upcomingTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Komm.' : 'Upcom.'}</span>
+                {upcomingInterviews.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {upcomingInterviews.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger 
+                value="completed" 
+                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+              >
+                <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="hidden sm:inline">{copy.completedTab}</span>
+                <span className="sm:hidden">{locale === 'da' ? 'Afsl.' : 'Done'}</span>
+                {completedInterviews.length > 0 && (
+                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                    {completedInterviews.length}
+                  </Badge>
+                )}
+              </TabsTrigger>
+            </TabsList>
 
           {/* Tab 1: Yet to be Scheduled */}
-          <TabsContent value="pending">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-yellow-600" />
+          <TabsContent value="pending" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <Clock className="h-5 w-5 text-[#fa8072]" />
                   {copy.pendingTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {pendingInterviews.length === 0 
                     ? copy.noPendingDesc
                     : `${pendingInterviews.length} interview${pendingInterviews.length === 1 ? '' : 's'} awaiting schedule`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {pendingInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Clock className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noPending}</h3>
-                    <p className="text-sm text-zinc-500 mb-6">{copy.noPendingDesc}</p>
-                    <Button onClick={() => router.push(`/${locale}/dashboard/candidate/internships`)}>
+                    <Clock className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noPending}</h3>
+                    <p className="text-sm text-[#6b5444] mb-6">{copy.noPendingDesc}</p>
+                    <Button 
+                      onClick={() => router.push(`/${locale}/dashboard/candidate/internships`)}
+                      className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
+                    >
                       <Video className="h-4 w-4 mr-2" />
                       {copy.browse}
                     </Button>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                      <div className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-yellow-900">
+                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 sm:p-4 mb-6">
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <AlertCircle className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs sm:text-sm font-medium text-amber-900">
                             {locale === 'da' 
                               ? 'Status kun visning - ingen handlinger påkrævet'
                               : 'Status-only view - no actions required'}
                           </p>
-                          <p className="text-xs text-yellow-700 mt-1">
+                          <p className="text-xs text-amber-700 mt-1">
                             {locale === 'da'
                               ? 'Virksomheden vil planlægge samtaletiden. Du får besked, når det er planlagt.'
                               : 'The company will schedule the interview time. You will be notified once scheduled.'}
@@ -251,7 +289,7 @@ export default function StudentInterviewsPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                       {pendingInterviews.map((interview) => (
                         <PendingInterviewCard
                           key={interview._id}
@@ -267,29 +305,29 @@ export default function StudentInterviewsPage() {
           </TabsContent>
 
           {/* Tab 2: Upcoming Interviews */}
-          <TabsContent value="upcoming">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-blue-600" />
+          <TabsContent value="upcoming" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <Calendar className="h-5 w-5 text-[#fa8072]" />
                   {copy.upcomingTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {upcomingInterviews.length === 0 
                     ? copy.noUpcomingDesc
                     : `${upcomingInterviews.length} scheduled interview${upcomingInterviews.length === 1 ? '' : 's'}`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {upcomingInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Calendar className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noUpcoming}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noUpcomingDesc}</p>
+                    <Calendar className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noUpcoming}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noUpcomingDesc}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     {upcomingInterviews.map((interview) => (
                       <UpcomingInterviewCard
                         key={interview._id}
@@ -305,34 +343,34 @@ export default function StudentInterviewsPage() {
           </TabsContent>
 
           {/* Tab 3: Completed Interviews */}
-          <TabsContent value="completed">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-green-600" />
+          <TabsContent value="completed" className="mt-6">
+            <Card className="border-[#ffe4b5] shadow-md">
+              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
+                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
+                  <CheckCircle className="h-5 w-5 text-[#fa8072]" />
                   {copy.completedTab}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-[#6b5444]">
                   {completedInterviews.length === 0 
                     ? copy.noCompletedDesc
                     : `${completedInterviews.length} completed interview${completedInterviews.length === 1 ? '' : 's'}`
                   }
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-6">
                 {completedInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Award className="mx-auto h-16 w-16 text-zinc-300 mb-4" />
-                    <h3 className="text-lg font-medium text-zinc-900 mb-2">{copy.noCompleted}</h3>
-                    <p className="text-sm text-zinc-500">{copy.noCompletedDesc}</p>
+                    <Award className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
+                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noCompleted}</h3>
+                    <p className="text-sm text-[#6b5444]">{copy.noCompletedDesc}</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                      <div className="flex items-start gap-3">
-                        <Award className="h-5 w-5 text-blue-600 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-blue-900">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-6">
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <Award className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs sm:text-sm font-medium text-blue-900">
                             {locale === 'da' 
                               ? 'Accepterede tilbud flyttet til Mine ansøgninger'
                               : 'Accepted offers moved to My Applications'}
@@ -345,7 +383,7 @@ export default function StudentInterviewsPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                       {completedInterviews.map((interview) => (
                         <CompletedInterviewCard
                           key={interview._id}
@@ -360,6 +398,8 @@ export default function StudentInterviewsPage() {
             </Card>
           </TabsContent>
         </Tabs>
+        </div>
+      </main>
 
         {/* Join Interview Modal */}
         <JoinInterviewModal
@@ -371,7 +411,6 @@ export default function StudentInterviewsPage() {
           interview={selectedInterview}
           locale={locale}
         />
-      </div>
-    </div>
-  );
-}
+      </>
+    );
+  }
