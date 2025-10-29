@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Users, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Users, CheckCircle2, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { HomeHeader } from '@/components/home';
 
 export default function StudentSignupPage() {
   const params = useParams();
@@ -32,24 +33,26 @@ export default function StudentSignupPage() {
         description: 'Få adgang til danske praktikmuligheder fra svenske virksomheder.',
         submit: 'Opret kandidatkonto',
         success: 'Kontoen er oprettet! Vi sender dig videre til login.',
+        loginPrompt: 'Har du allerede en konto?',
+        loginLink: 'Log ind',
+        backToMain: 'Tilbage til hovedside',
         errors: {
           passwordMatch: 'Adgangskoderne matcher ikke.',
           passwordLength: 'Adgangskoden skal være mindst 8 tegn.',
         },
-        loginPrompt: 'Har du allerede en konto?',
-        loginLink: 'Log ind',
       }
     : {
         heading: 'Student signup',
         description: 'Unlock curated internship opportunities across the Øresund region.',
         submit: 'Create student account',
         success: 'Account created! Redirecting you to login.',
+        loginPrompt: 'Already have an account?',
+        loginLink: 'Log in',
+        backToMain: 'Back to home',
         errors: {
           passwordMatch: 'Passwords do not match.',
           passwordLength: 'Password must be at least 8 characters.',
         },
-        loginPrompt: 'Already have an account?',
-        loginLink: 'Log in',
       };
 
   const handleChange = (event) => {
@@ -105,137 +108,176 @@ export default function StudentSignupPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-cyan-50 p-4">
-        <div className="mx-auto flex max-w-md items-center justify-center py-20">
-          <Card className="w-full border-zinc-200">
-            <CardHeader className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100">
-                <CheckCircle2 className="h-8 w-8 text-blue-600" />
-              </div>
-              <CardTitle>{locale === 'da' ? 'Konto oprettet' : 'Account ready'}</CardTitle>
-              <CardDescription>{copy.success}</CardDescription>
-            </CardHeader>
-          </Card>
+      <>
+        <HomeHeader 
+          locale={locale} 
+          brand="Denmark Intern"
+          navItems={[]}
+          primaryCta={locale === 'da' ? 'Start nu' : 'Get started'}
+        />
+        <div className="min-h-screen bg-linear-to-br from-[#fdf5e6] via-[#ffefd5] to-[#ffe4b5] p-4 pt-24">
+          <div className="mx-auto flex max-w-md items-center justify-center py-20">
+            <Card className="w-full border-2 border-[#ffe4b5] shadow-xl bg-white">
+              <CardHeader className="text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#10b981] to-[#059669] shadow-lg">
+                  <CheckCircle2 className="h-8 w-8 text-white" />
+                </div>
+                <CardTitle className="text-[#4a3728]">{locale === 'da' ? 'Konto oprettet' : 'Account ready'}</CardTitle>
+                <CardDescription className="text-[#6b5444]">{copy.success}</CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-cyan-50 p-4">
-      <div className="mx-auto flex max-w-md items-center justify-center py-20">
-        <Card className="w-full border-zinc-200">
-          <CardHeader className="space-y-3 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-900 text-white">
-              <Users className="h-6 w-6" />
-            </div>
-            <CardTitle className="text-2xl font-semibold text-zinc-900">{copy.heading}</CardTitle>
-            <CardDescription>{copy.description}</CardDescription>
-          </CardHeader>
-          <form onSubmit={handleSubmit} noValidate>
-            <CardContent className="space-y-4">
-              {error ? (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              ) : null}
+    <>
+      <HomeHeader 
+        locale={locale} 
+        brand="Denmark Intern"
+        navItems={[]}
+        primaryCta={locale === 'da' ? 'Start nu' : 'Get started'}
+      />
+      <div className="min-h-screen bg-linear-to-br from-[#fdf5e6] via-[#ffefd5] to-[#ffe4b5] p-4 pt-24">
+        <div className="mx-auto flex max-w-lg items-center justify-center py-12">
+          <Card className="w-full border-2 border-[#ffe4b5] shadow-xl bg-white/95 backdrop-blur">
+            <CardHeader className="space-y-4 text-center pb-6">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#10b981] to-[#059669] shadow-lg">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <div className="space-y-2">
+                <CardTitle className="text-3xl font-bold text-[#4a3728]">{copy.heading}</CardTitle>
+                <CardDescription className="text-base text-[#6b5444]">{copy.description}</CardDescription>
+              </div>
+            </CardHeader>
+            <form onSubmit={handleSubmit} noValidate>
+              <CardContent className="space-y-4 px-6">
+                {error ? (
+                  <Alert variant="destructive" className="border-red-300 bg-red-50">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>{error}</AlertDescription>
+                  </Alert>
+                ) : null}
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="text-[#4a3728] font-semibold">{locale === 'da' ? 'Fornavn' : 'First name'}</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder={locale === 'da' ? 'Fornavn' : 'First name'}
+                      required
+                      disabled={loading}
+                      className="border-2 border-[#ffe4b5] focus:border-[#10b981]"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-[#4a3728] font-semibold">{locale === 'da' ? 'Efternavn' : 'Last name'}</Label>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder={locale === 'da' ? 'Efternavn' : 'Last name'}
+                      required
+                      disabled={loading}
+                      className="border-2 border-[#ffe4b5] focus:border-[#10b981]"
+                    />
+                  </div>
+                </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">{locale === 'da' ? 'Fornavn' : 'First name'}</Label>
+                  <Label htmlFor="email" className="text-[#4a3728] font-semibold">E-mail</Label>
                   <Input
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
                     onChange={handleChange}
-                    placeholder={locale === 'da' ? 'Fornavn' : 'First name'}
+                    placeholder="you@example.com"
                     required
                     disabled={loading}
+                    className="border-2 border-[#ffe4b5] focus:border-[#10b981]"
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">{locale === 'da' ? 'Efternavn' : 'Last name'}</Label>
+                  <Label htmlFor="password" className="text-[#4a3728] font-semibold">{locale === 'da' ? 'Adgangskode' : 'Password'}</Label>
                   <Input
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
                     onChange={handleChange}
-                    placeholder={locale === 'da' ? 'Efternavn' : 'Last name'}
+                    placeholder="••••••••"
                     required
                     disabled={loading}
+                    className="border-2 border-[#ffe4b5] focus:border-[#10b981]"
+                  />
+                  <p className="text-xs text-[#8b7355]">
+                    {locale === 'da' ? 'Mindst 8 tegn' : 'Minimum 8 characters'}
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-[#4a3728] font-semibold">
+                    {locale === 'da' ? 'Bekræft adgangskode' : 'Confirm password'}
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    required
+                    disabled={loading}
+                    className="border-2 border-[#ffe4b5] focus:border-[#10b981]"
                   />
                 </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="you@example.com"
-                  required
+              </CardContent>
+              <CardFooter className="flex flex-col gap-4 px-6 pb-8">
+                <Button 
+                  type="submit" 
+                  className="w-full bg-linear-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white font-bold shadow-lg hover:shadow-xl transition-all h-11" 
                   disabled={loading}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">{locale === 'da' ? 'Adgangskode' : 'Password'}</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  required
-                  disabled={loading}
-                />
-                <p className="text-xs text-zinc-500">
-                  {locale === 'da' ? 'Mindst 8 tegn' : 'Minimum 8 characters'}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">
-                  {locale === 'da' ? 'Bekræft adgangskode' : 'Confirm password'}
-                </Label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  required
-                  disabled={loading}
-                />
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {locale === 'da' ? 'Opretter konto...' : 'Creating account...'}
-                  </>
-                ) : (
-                  copy.submit
-                )}
-              </Button>
-              <p className="text-center text-xs text-zinc-500">
-                {copy.loginPrompt}{' '}
-                <Link href={`/${locale}/auth/login`} className="font-medium text-blue-600">
-                  {copy.loginLink}
-                </Link>
-              </p>
-            </CardFooter>
-          </form>
-        </Card>
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {locale === 'da' ? 'Opretter konto...' : 'Creating account...'}
+                    </>
+                  ) : (
+                    copy.submit
+                  )}
+                </Button>
+                
+                <div className="space-y-3 w-full">
+                  <p className="text-center text-sm text-[#6b5444]">
+                    {copy.loginPrompt}{' '}
+                    <Link href={`/${locale}/auth/login`} className="font-semibold text-[#10b981] hover:text-[#059669] transition-colors underline-offset-4 hover:underline">
+                      {copy.loginLink}
+                    </Link>
+                  </p>
+                  <div className="pt-3 border-t border-[#ffe4b5]">
+                    <Link 
+                      href={`/${locale}`}
+                      className="flex items-center justify-center gap-2 text-sm text-[#6b5444] hover:text-[#10b981] transition-colors"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      {copy.backToMain}
+                    </Link>
+                  </div>
+                </div>
+              </CardFooter>
+            </form>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

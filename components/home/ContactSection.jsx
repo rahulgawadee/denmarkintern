@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EmployerFullForm from '@/components/forms/EmployerFullForm';
 import EmployerQuickForm from '@/components/forms/EmployerQuickForm';
-import { FileText } from 'lucide-react';
+import { FileText, Mail, ClipboardList } from 'lucide-react';
 
 export default function ContactSection({ locale, contact, briefTemplateHref }) {
   if (!contact) {
@@ -36,35 +36,40 @@ export default function ContactSection({ locale, contact, briefTemplateHref }) {
         </div>
 
         <Tabs defaultValue="quick" className="w-full">
-          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 mb-8 bg-white border-2 border-[#ffe4b5] p-1 h-auto gap-2">
+          <TabsList className="grid w-full grid-cols-2 gap-2 mb-8 bg-white border-2 border-[#ffe4b5] p-2 h-auto">
             <TabsTrigger 
               value="quick" 
-              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-3 sm:py-4 px-3 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md text-xs sm:text-sm md:text-base leading-tight"
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-2.5 px-2 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
             >
-              <span className="hidden sm:inline">
-                {locale === 'da' ? 'Mulighed A — Efterlad din e-mail (hurtigst)' : 'Option A — Leave your email (fastest)'}
-              </span>
-              <span className="sm:hidden">
-                {locale === 'da' ? 'Mulighed A — E-mail (hurtigst)' : 'Option A — Email (fastest)'}
-              </span>
+              <Mail className="h-4 w-4 shrink-0" />
+              <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-center">
+                <span className="text-[10px] sm:text-xs font-normal">{locale === 'da' ? 'A:' : 'A:'}</span>
+                <span className="text-xs sm:text-sm font-semibold leading-tight">{locale === 'da' ? 'Hurtig' : 'Quick'}</span>
+              </div>
             </TabsTrigger>
             <TabsTrigger 
               value="full" 
-              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-3 sm:py-4 px-3 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md text-xs sm:text-sm md:text-base leading-tight"
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-2.5 px-2 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm"
             >
-              <span className="hidden sm:inline">
-                {locale === 'da' ? 'Mulighed B — Fortæl os om din virksomhed' : 'Option B — Tell us about your company'}
-              </span>
-              <span className="sm:hidden">
-                {locale === 'da' ? 'Mulighed B — Fuld formular' : 'Option B — Full form'}
-              </span>
+              <ClipboardList className="h-4 w-4 shrink-0" />
+              <div className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 text-center">
+                <span className="text-[10px] sm:text-xs font-normal">{locale === 'da' ? 'B:' : 'B:'}</span>
+                <span className="text-xs sm:text-sm font-semibold leading-tight">{locale === 'da' ? 'Fuld' : 'Full'}</span>
+              </div>
             </TabsTrigger>
           </TabsList>
 
           {contact.quick && (
             <TabsContent value="quick" className="mt-0">
               <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
-                <CardContent className="p-4 sm:p-6 pt-4 sm:pt-6">
+                <CardHeader className="border-b-2 border-[#ffefd5] bg-linear-to-r from-[#ffefd5]/40 to-[#fdf5e6]/40">
+                  <CardTitle className="text-xl font-bold text-[#4a3728] flex items-center gap-2">
+                    <Mail className="h-5 w-5 text-[#fa8072]" />
+                    {contact.quick.title}
+                  </CardTitle>
+                  <CardDescription className="text-[#6b5444]">{contact.quick.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6">
                   <EmployerQuickForm copy={contact.quick} />
                 </CardContent>
               </Card>
@@ -74,7 +79,14 @@ export default function ContactSection({ locale, contact, briefTemplateHref }) {
           {contact.full && (
             <TabsContent value="full" className="mt-0">
               <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
-                <CardContent className="p-4 sm:p-6 pt-4 sm:pt-6">
+                <CardHeader className="border-b-2 border-[#ffefd5] bg-linear-to-r from-[#ffefd5]/40 to-[#fdf5e6]/40">
+                  <CardTitle className="text-xl font-bold text-[#4a3728] flex items-center gap-2">
+                    <ClipboardList className="h-5 w-5 text-[#fa8072]" />
+                    {contact.full.title}
+                  </CardTitle>
+                  <CardDescription className="text-[#6b5444]">{contact.full.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6">
                   <EmployerFullForm copy={contact.full} />
                 </CardContent>
               </Card>

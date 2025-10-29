@@ -35,7 +35,7 @@ export default function HomeHeader({ locale, brand, navItems, primaryCta }) {
             <Link href={`/${locale}/auth/login`}>Login</Link>
           </Button>
           <Button asChild size="sm" className="bg-gradient-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white shadow-md hover:shadow-lg transition-all">
-            <Link href={`/${locale}/auth/signup/company`}>{primaryCta}</Link>
+            <Link href={`/${locale}/auth/signup`}>{primaryCta}</Link>
           </Button>
         </div>
       </div>
