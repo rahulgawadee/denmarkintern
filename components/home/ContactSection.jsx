@@ -36,25 +36,35 @@ export default function ContactSection({ locale, contact, briefTemplateHref }) {
         </div>
 
         <Tabs defaultValue="quick" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white border-2 border-[#ffe4b5] p-1 h-auto gap-2">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 mb-8 bg-white border-2 border-[#ffe4b5] p-1 h-auto gap-2">
             <TabsTrigger 
               value="quick" 
-              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-4 px-4 rounded-md transition-all data-[state=active]:shadow-md text-sm sm:text-base"
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-3 sm:py-4 px-3 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md text-xs sm:text-sm md:text-base leading-tight"
             >
-              {locale === 'da' ? 'Mulighed A — Efterlad din e-mail (hurtigst)' : 'Option A — Leave your email (fastest)'}
+              <span className="hidden sm:inline">
+                {locale === 'da' ? 'Mulighed A — Efterlad din e-mail (hurtigst)' : 'Option A — Leave your email (fastest)'}
+              </span>
+              <span className="sm:hidden">
+                {locale === 'da' ? 'Mulighed A — E-mail (hurtigst)' : 'Option A — Email (fastest)'}
+              </span>
             </TabsTrigger>
             <TabsTrigger 
               value="full" 
-              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-4 px-4 rounded-md transition-all data-[state=active]:shadow-md text-sm sm:text-base"
+              className="data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-semibold py-3 sm:py-4 px-3 sm:px-4 rounded-md transition-all data-[state=active]:shadow-md text-xs sm:text-sm md:text-base leading-tight"
             >
-              {locale === 'da' ? 'Mulighed B — Fortæl os om din virksomhed' : 'Option B — Tell us about your company'}
+              <span className="hidden sm:inline">
+                {locale === 'da' ? 'Mulighed B — Fortæl os om din virksomhed' : 'Option B — Tell us about your company'}
+              </span>
+              <span className="sm:hidden">
+                {locale === 'da' ? 'Mulighed B — Fuld formular' : 'Option B — Full form'}
+              </span>
             </TabsTrigger>
           </TabsList>
 
           {contact.quick && (
             <TabsContent value="quick" className="mt-0">
               <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
-                <CardContent className="pt-6">
+                <CardContent className="p-4 sm:p-6 pt-4 sm:pt-6">
                   <EmployerQuickForm copy={contact.quick} />
                 </CardContent>
               </Card>
@@ -64,7 +74,7 @@ export default function ContactSection({ locale, contact, briefTemplateHref }) {
           {contact.full && (
             <TabsContent value="full" className="mt-0">
               <Card className="border-2 border-[#ffe4b5] bg-white shadow-lg">
-                <CardContent className="pt-6">
+                <CardContent className="p-4 sm:p-6 pt-4 sm:pt-6">
                   <EmployerFullForm copy={contact.full} />
                 </CardContent>
               </Card>

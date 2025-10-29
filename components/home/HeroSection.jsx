@@ -27,16 +27,27 @@ export default function HeroSection({ locale, hero }) {
           Your browser does not support the video tag.
         </video>
         
-        {/* Subtle overlay for better text readability - very light */}
-        <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/40" />
+        {/* Subtle overlay for better text readability */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-black/30" />
       </div>
 
-   
 
-      {/* Content Container - Buttons Only */}
-      <div className="relative z-30 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20 text-center w-full">
-        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
-          <Button asChild size="lg" className="gap-2 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white shadow-2xl hover:shadow-[#ffa07a]/50 transition-all hover:scale-110 w-full sm:w-auto min-w-[220px] border-none h-14 text-base font-bold">
+      {/* Main Content Container */}
+      <div className="relative z-20 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+        
+        {/* Text Content */}
+        <div className="mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 ">
+              Hire Swedish interns, simply — for Danish companies.
+            </h1>
+            <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto shadow-lg">
+              Fast, low-friction matching across the Øresund. Minimal fee. Real impact.
+            </p>
+        </div>
+
+        {/* Buttons Container */}
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 w-full max-w-3xl">
+          <Button asChild size="lg" className="gap-2 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white shadow-2xl hover:shadow-[#ffa07a]/50 transition-all hover:scale-105 w-full sm:w-auto min-w-[220px] border-none h-14 text-base font-bold">
             <Link href={`/${locale}/auth/signup/company`}>
               <Building2 className="h-5 w-5" />
               {hero.primaryCta}
@@ -56,22 +67,6 @@ export default function HeroSection({ locale, hero }) {
           </Button>
         </div>
       </div>
-
-      {/* Text Card Below Buttons */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-3xl px-4">
-        <Card className="bg-white/95 backdrop-blur-md border-2 border-[#ffe4b5] shadow-2xl">
-          <CardContent className="p-6 sm:p-8 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#4a3728] mb-3">
-              Hire Swedish interns, simply — for Danish companies.
-            </h2>
-            <p className="text-base sm:text-lg text-[#6b5444] leading-relaxed">
-              Fast, low-friction matching across the Øresund. Minimal fee. Real impact.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-    
     </section>
   );
 }
