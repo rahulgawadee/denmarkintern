@@ -1,4 +1,4 @@
-export const brandName = 'Øresund Talent';
+export const brandName = 'Praktikplats';
 export const briefTemplateHref = '/downloads/oresund-brief-template.txt';
 
 export const sharedInitialValues = {
@@ -1168,12 +1168,6 @@ export const homeContent = {
   en: {
     brand: brandName,
     nav: [
-      { href: '#how-we-help', label: 'How we help' },
-      { href: '#story', label: 'Story' },
-      { href: '#roles', label: 'Roles' },
-      { href: '#process', label: 'How it works' },
-      { href: '#pricing', label: 'Pricing' },
-      { href: '#faq', label: 'FAQ' },
       { href: '#contact', label: 'Contact' },
     ],
     hero: {
@@ -1389,12 +1383,6 @@ export const homeContent = {
   da: {
     brand: brandName,
     nav: [
-      { href: '#how-we-help', label: 'Værdien' },
-      { href: '#story', label: 'Historien' },
-      { href: '#roles', label: 'Roller' },
-      { href: '#process', label: 'Sådan fungerer det' },
-      { href: '#pricing', label: 'Priser' },
-      { href: '#faq', label: 'FAQ' },
       { href: '#contact', label: 'Kontakt' },
     ],
     hero: {

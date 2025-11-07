@@ -6,7 +6,7 @@ import StoreProvider from '@/store/StoreProvider';
 import '../globals.css';
 
 export const metadata = {
-  title: 'Øresund Talent — Danish companies meet Swedish interns',
+  title: 'Praktikplats — Danish companies meet Swedish interns',
   description: 'Handpicked Swedish interns for Danish teams with a fast, transparent matching flow.',
 };
 

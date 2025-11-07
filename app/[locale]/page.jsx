@@ -6,15 +6,8 @@ import { useParams } from 'next/navigation';
 import {
   HomeHeader,
   HeroSection,
-  ValuePropsSection,
-  StorySection,
-  RolesSection,
-  HowItWorksSection,
-  PricingSection,
-  SocialProofSection,
-  FaqSection,
+  InfoTabsSection,
   ContactSection,
-  CheatSheetSection,
   HomeFooter,
 } from '@/components/home';
 import { homeContent, briefTemplateHref } from './home-content';
@@ -40,15 +33,8 @@ export default function HomePage() {
       <HomeHeader locale={locale} brand={text.brand} navItems={text.nav} primaryCta={text.hero?.primaryCta} />
       <main className="relative">
         <HeroSection locale={locale} hero={text.hero} />
-        <ValuePropsSection locale={locale} valueProps={text.valueProps} />
-        <StorySection locale={locale} story={text.story} />
-        <RolesSection locale={locale} roles={text.roles} />
-        <HowItWorksSection locale={locale} />
-        <PricingSection pricing={text.pricing} compliance={text.compliance} />
-        <SocialProofSection testimonials={text.socialProof} />
-        <FaqSection items={text.faq} />
+        <InfoTabsSection locale={locale} />
         <ContactSection locale={locale} contact={text.contact} briefTemplateHref={briefTemplateHref} />
-        <CheatSheetSection cheatSheet={text.cheatSheet} />
       </main>
       <HomeFooter footer={text.footer} />
     </div>

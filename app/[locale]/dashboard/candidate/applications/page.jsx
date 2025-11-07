@@ -282,10 +282,10 @@ export default function MyApplicationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fa8072] mx-auto"></div>
-          <p className="mt-4 text-[#6b5444]">{copy.loading}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2b2b2b] mx-auto"></div>
+          <p className="mt-4 text-[#737373]">{copy.loading}</p>
         </div>
       </div>
     );
@@ -293,22 +293,22 @@ export default function MyApplicationsPage() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white sticky top-0 z-10">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink 
                 href={`/${locale}/dashboard/candidate`}
-                className="text-[#6b5444] hover:text-[#fa8072]"
+                className="text-[#737373] hover:text-[#2b2b2b]"
               >
                 Dashboard
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -318,7 +318,7 @@ export default function MyApplicationsPage() {
             disabled={refreshing}
             variant="ghost"
             size="sm"
-            className="gap-2 hover:bg-[#ffefd5] hover:text-[#fa8072]"
+            className="gap-2 hover:bg-[#f5f5f5] hover:text-[#2b2b2b]"
           >
             <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">{copy.refresh}</span>
@@ -326,67 +326,67 @@ export default function MyApplicationsPage() {
         </div>
       </header>
 
-      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-[#f5f5f5] overflow-auto">
         <div className="w-full max-w-7xl mx-auto space-y-6">
           {/* Header */}
-          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#ffe4b5] shadow-sm">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent">
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#d4d4d4] shadow-sm">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">
               {copy.title}
             </h1>
-            <p className="text-[#6b5444] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
+            <p className="text-[#737373] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
           </div>
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="bg-[#ffefd5] border border-[#ffe4b5] p-1 h-auto w-full sm:w-auto grid grid-cols-2 sm:grid-cols-4 gap-1">
+            <TabsList className="bg-[#f5f5f5] border border-[#d4d4d4] p-1 h-auto w-full sm:w-auto grid grid-cols-2 sm:grid-cols-4 gap-1">
               <TabsTrigger 
                 value="invitations" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <Mail className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.invitationsTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Invit.' : 'Invit.'}</span>
                 {invitations.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {invitations.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger 
                 value="accepted" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.acceptedTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Accep.' : 'Accep.'}</span>
                 {acceptedApplications.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {acceptedApplications.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger 
                 value="pending" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <Clock className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.pendingTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Pend.' : 'Pend.'}</span>
                 {pendingApplications.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {pendingApplications.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger 
                 value="rejected" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <XCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.rejectedTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Rej.' : 'Rej.'}</span>
                 {rejectedApplications.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {rejectedApplications.length}
                   </Badge>
                 )}
@@ -395,13 +395,13 @@ export default function MyApplicationsPage() {
 
           {/* Tab 0: Invitations - New invitations from companies */}
           <TabsContent value="invitations" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <Mail className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <Mail className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.invitationsTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {invitations.length === 0 
                     ? copy.noInvitationsDesc
                     : `${invitations.length} pending invitation${invitations.length === 1 ? '' : 's'}`
@@ -411,27 +411,27 @@ export default function MyApplicationsPage() {
               <CardContent className="pt-6">
                 {invitations.length === 0 ? (
                   <div className="text-center py-12">
-                    <Mail className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noInvitations}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noInvitationsDesc}</p>
+                    <Mail className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noInvitations}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noInvitationsDesc}</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     {invitations.map((invitation) => (
-                      <div key={invitation._id} className="border border-[#ffe4b5] rounded-lg p-4 sm:p-6 hover:shadow-lg hover:border-[#fa8072] transition-all">
+                      <div key={invitation._id} className="border border-[#d4d4d4] rounded-lg p-4 sm:p-6 hover:shadow-lg hover:border-[#2b2b2b] transition-all">
                         <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
                           <div className="flex items-start space-x-3 sm:space-x-4 w-full sm:w-auto">
                             <Avatar className="h-10 w-10 sm:h-12 sm:w-12 shrink-0">
-                              <AvatarFallback className="bg-[#ffefd5]">
-                                <Building className="h-5 w-5 sm:h-6 sm:w-6 text-[#fa8072]" />
+                              <AvatarFallback className="bg-[#f5f5f5]">
+                                <Building className="h-5 w-5 sm:h-6 sm:w-6 text-[#2b2b2b]" />
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
-                              <h3 className="text-base sm:text-lg font-semibold text-[#4a3728] line-clamp-2">
+                              <h3 className="text-base sm:text-lg font-semibold text-[#2b2b2b] line-clamp-2">
                                 {invitation.internshipId?.title}
                               </h3>
-                              <p className="text-sm text-[#6b5444] truncate">{invitation.companyId?.companyName}</p>
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-xs sm:text-sm text-[#8b7355]">
+                              <p className="text-sm text-[#737373] truncate">{invitation.companyId?.companyName}</p>
+                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-xs sm:text-sm text-[#d4d4d4]">
                                 <span className="flex items-center">
                                   <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 shrink-0" />
                                   <span className="truncate">
@@ -447,7 +447,7 @@ export default function MyApplicationsPage() {
                               </div>
                             </div>
                           </div>
-                          <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white shrink-0">Invitation</Badge>
+                          <Badge className="bg-[#2b2b2b] text-white shrink-0">Invitation</Badge>
                         </div>
 
                         {invitation.message && (
@@ -457,7 +457,7 @@ export default function MyApplicationsPage() {
                           </div>
                         )}
 
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-[#8b7355] mb-4 gap-2">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-[#d4d4d4] mb-4 gap-2">
                           <span>{copy.sentOn}: {new Date(invitation.sentAt).toLocaleDateString()}</span>
                           <span className="text-orange-600">
                             {copy.expiresOn}: {new Date(invitation.expiresAt).toLocaleDateString()}
@@ -467,7 +467,7 @@ export default function MyApplicationsPage() {
                         <div className="flex flex-col sm:flex-row gap-2">
                           <Button
                             onClick={() => setRespondModal({ open: true, invitation, action: 'accepted' })}
-                            className="flex-1 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
+                            className="flex-1 bg-[#2b2b2b] hover:bg-[#737373] text-white"
                           >
                             <CheckCircle className="h-4 w-4 mr-2" />
                             {copy.accept}
@@ -497,13 +497,13 @@ export default function MyApplicationsPage() {
 
           {/* Tab 1: Pending - Awaiting or Scheduled Interviews */}
           <TabsContent value="pending" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <Clock className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <Clock className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.pendingTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {pendingApplications.length === 0 
                     ? copy.noPendingDesc
                     : `${pendingApplications.length} active application${pendingApplications.length === 1 ? '' : 's'}`
@@ -513,9 +513,9 @@ export default function MyApplicationsPage() {
               <CardContent className="pt-6">
                 {pendingApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <Clock className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noPending}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noPendingDesc}</p>
+                    <Clock className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noPending}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noPendingDesc}</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -535,13 +535,13 @@ export default function MyApplicationsPage() {
 
           {/* Tab 2: Accepted - Offer Letters Received */}
           <TabsContent value="accepted" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <Award className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <Award className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.acceptedTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {acceptedApplications.length === 0 
                     ? copy.noAcceptedDesc
                     : `${acceptedApplications.length} offer${acceptedApplications.length === 1 ? '' : 's'} received`
@@ -551,9 +551,9 @@ export default function MyApplicationsPage() {
               <CardContent className="pt-6">
                 {acceptedApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <Award className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noAccepted}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noAcceptedDesc}</p>
+                    <Award className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noAccepted}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noAcceptedDesc}</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -573,13 +573,13 @@ export default function MyApplicationsPage() {
 
           {/* Tab 3: Rejected */}
           <TabsContent value="rejected" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <XCircle className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <XCircle className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.rejectedTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {rejectedApplications.length === 0 
                     ? copy.noRejectedDesc
                     : `${rejectedApplications.length} rejected application${rejectedApplications.length === 1 ? '' : 's'}`
@@ -589,9 +589,9 @@ export default function MyApplicationsPage() {
               <CardContent className="pt-6">
                 {rejectedApplications.length === 0 ? (
                   <div className="text-center py-12">
-                    <CheckCircle className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noRejected}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noRejectedDesc}</p>
+                    <CheckCircle className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noRejected}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noRejectedDesc}</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -665,7 +665,7 @@ export default function MyApplicationsPage() {
               variant="outline"
               onClick={() => setRespondModal({ open: false, invitation: null, action: null })}
               disabled={responding}
-              className="hover:bg-[#ffefd5]"
+              className="hover:bg-[#f5f5f5]"
             >
               {copy.cancel}
             </Button>
@@ -674,7 +674,7 @@ export default function MyApplicationsPage() {
               disabled={responding}
               variant={respondModal.action === 'accepted' ? 'default' : 'destructive'}
               className={respondModal.action === 'accepted' 
-                ? "bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a]" 
+                ? "bg-[#2b2b2b] hover:bg-[#737373]" 
                 : ""
               }
             >

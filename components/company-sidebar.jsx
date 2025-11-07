@@ -216,24 +216,24 @@ export function CompanySidebar() {
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
-          className="fixed left-4 top-4 z-50 md:hidden bg-white/90 backdrop-blur-sm shadow-lg border border-[#ffe4b5] hover:bg-[#ffefd5] hover:border-[#fa8072] transition-all duration-200"
+          className="fixed left-4 top-4 z-50 md:hidden bg-white/90 backdrop-blur-sm shadow-lg border border-[#d4d4d4] hover:bg-[#f5f5f5] hover:border-[#2b2b2b] transition-all duration-200"
         >
-          {open ? <X className="h-5 w-5 text-[#4a3728]" /> : <Menu className="h-5 w-5 text-[#4a3728]" />}
+          {open ? <X className="h-5 w-5 text-[#2b2b2b]" /> : <Menu className="h-5 w-5 text-[#2b2b2b]" />}
         </Button>
       )}
 
-      <Sidebar collapsible="icon" className="border-r border-[#ffe4b5]">
-        <SidebarHeader className="border-b border-[#ffe4b5] bg-linear-to-br from-[#fdf5e6] to-[#ffefd5]">
+      <Sidebar collapsible="icon" className="border-r border-[#d4d4d4]">
+        <SidebarHeader className="border-b border-[#d4d4d4] bg-white">
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton size="lg" asChild className="h-16 hover:bg-[#ffe4b5]/50 transition-colors duration-200 group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center">
+              <SidebarMenuButton size="lg" asChild className="h-16 hover:bg-[#f5f5f5] transition-colors duration-200 group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center">
                 <div className="flex items-center gap-3">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] text-white shadow-lg group-data-[collapsible=icon]:size-6">
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-xl bg-[#2b2b2b] text-white shadow-lg group-data-[collapsible=icon]:size-6">
                     <Building2 className="size-5 group-data-[collapsible=icon]:size-4" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                    <span className="truncate font-bold text-lg text-[#4a3728]">Denmark Intern</span>
-                    <span className="truncate text-xs text-[#6b5444] font-medium">Company Portal</span>
+                    <span className="truncate font-bold text-lg text-[#2b2b2b]">Praktikplats</span>
+                    <span className="truncate text-xs text-[#737373] font-medium">Company Portal</span>
                   </div>
                 </div>
               </SidebarMenuButton>
@@ -247,32 +247,32 @@ export function CompanySidebar() {
                 <DropdownMenuTrigger asChild suppressHydrationWarning>
                   <SidebarMenuButton 
                     size="lg" 
-                    className="h-12 hover:bg-[#ffe4b5]/50 transition-colors duration-200 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center" 
+                    className="h-12 hover:bg-[#f5f5f5] transition-colors duration-200 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center" 
                     suppressHydrationWarning
                   >
-                    <Globe className="size-5 text-[#fa8072]" />
-                    <span className="text-base font-medium text-[#4a3728] group-data-[collapsible=icon]:hidden">
+                    <Globe className="size-5 text-[#525252]" />
+                    <span className="text-base font-medium text-[#2b2b2b] group-data-[collapsible=icon]:hidden">
                       {locale === "da" ? "Dansk" : locale === "sv" ? "Svenska" : "English"}
                     </span>
-                    <ChevronRight className="ml-auto size-4 text-[#6b5444] group-data-[collapsible=icon]:hidden" />
+                    <ChevronRight className="ml-auto size-4 text-[#737373] group-data-[collapsible=icon]:hidden" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-52 border-[#ffe4b5]">
+                <DropdownMenuContent align="start" className="w-52 border-[#d4d4d4]">
                   <DropdownMenuItem 
                     onClick={() => changeLocale("da")} 
-                    className="text-base py-2.5 cursor-pointer hover:bg-[#ffefd5]"
+                    className="text-base py-2.5 cursor-pointer hover:bg-[#f5f5f5]"
                   >
                     <span className="mr-2">🇩🇰</span> Dansk
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={() => changeLocale("en")} 
-                    className="text-base py-2.5 cursor-pointer hover:bg-[#ffefd5]"
+                    className="text-base py-2.5 cursor-pointer hover:bg-[#f5f5f5]"
                   >
                     <span className="mr-2">🇬🇧</span> English
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={() => changeLocale("sv")} 
-                    className="text-base py-2.5 cursor-pointer hover:bg-[#ffefd5]"
+                    className="text-base py-2.5 cursor-pointer hover:bg-[#f5f5f5]"
                   >
                     <span className="mr-2">🇸🇪</span> Svenska
                   </DropdownMenuItem>
@@ -282,9 +282,9 @@ export function CompanySidebar() {
           </SidebarMenu>
         </SidebarHeader>
 
-        <SidebarContent className="bg-linear-to-b from-[#fdf5e6] to-white">
+        <SidebarContent className="bg-white">
           <SidebarGroup>
-            <SidebarGroupLabel className="text-xs font-bold text-[#6b5444] uppercase tracking-wide px-4 py-3 group-data-[collapsible=icon]:hidden">
+            <SidebarGroupLabel className="text-xs font-bold text-[#737373] uppercase tracking-wide px-4 py-3 group-data-[collapsible=icon]:hidden">
               {locale === "da" ? "Navigation" : "Navigation"}
             </SidebarGroupLabel>
             <SidebarMenu className="space-y-1 px-2 group-data-[collapsible=icon]:px-0">
@@ -302,26 +302,26 @@ export function CompanySidebar() {
                             onClick={() => router.push(`/${locale}${item.url}`)}
                             className={`h-12 rounded-lg transition-all duration-200 cursor-pointer group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0 ${
                               isActive 
-                                ? 'bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white hover:from-[#fa8072] hover:to-[#ffa07a] shadow-md' 
-                                : 'hover:bg-[#ffe4b5]/50 text-[#4a3728] hover:text-[#fa8072]'
+                                ? 'bg-[#2b2b2b] text-white hover:bg-[#525252] shadow-md' 
+                                : 'hover:bg-[#f5f5f5] text-[#2b2b2b] hover:text-[#525252]'
                             }`}
                           >
-                            <item.icon className={`size-5 shrink-0 ${isActive ? 'text-white' : 'text-[#fa8072]'}`} />
+                            <item.icon className={`size-5 shrink-0 ${isActive ? 'text-white' : 'text-[#525252]'}`} />
                             <span className={`text-base font-medium group-data-[collapsible=icon]:hidden ${isActive ? 'text-white' : ''}`}>
                               {locale === "da" ? item.titleDa : item.title}
                             </span>
                             {badgeCount > 0 && (
                               <span className={`ml-auto text-xs font-bold px-2 py-0.5 rounded-full group-data-[collapsible=icon]:hidden ${
                                 isActive 
-                                  ? 'bg-white text-[#fa8072]' 
-                                  : 'bg-[#fa8072] text-white'
+                                  ? 'bg-white text-[#2b2b2b]' 
+                                  : 'bg-[#2b2b2b] text-white'
                               }`}>
                                 {formatCount(badgeCount)}
                               </span>
                             )}
                           </SidebarMenuButton>
                         </TooltipTrigger>
-                        <TooltipContent side="right" className="bg-[#4a3728] text-white">
+                        <TooltipContent side="right" className="bg-[#2b2b2b] text-white">
                           <p>{locale === "da" ? item.titleDa : item.title}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -333,57 +333,57 @@ export function CompanySidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter className="border-t border-[#ffe4b5] bg-linear-to-br from-[#fdf5e6] to-[#ffefd5]">
+        <SidebarFooter className="border-t border-[#d4d4d4] bg-white">
           <SidebarMenu>
             <SidebarMenuItem>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild suppressHydrationWarning>
                   <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-[#ffe4b5]/70 h-16 hover:bg-[#ffe4b5]/50 transition-all duration-200 border border-transparent hover:border-[#fa8072]/30 group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
+                    className="data-[state=open]:bg-[#f5f5f5] h-16 hover:bg-[#f5f5f5] transition-all duration-200 border border-transparent hover:border-[#d4d4d4] group-data-[collapsible=icon]:h-12 group-data-[collapsible=icon]:w-12 group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0"
                     suppressHydrationWarning
                   >
-                    <Avatar className="h-10 w-10 rounded-xl ring-2 ring-[#fa8072]/20 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:ring-1">
-                      <AvatarFallback className="rounded-xl text-base font-bold bg-linear-to-br from-[#ffa07a] to-[#fa8072] text-white group-data-[collapsible=icon]:text-xs" suppressHydrationWarning>
+                    <Avatar className="h-10 w-10 rounded-xl ring-2 ring-[#d4d4d4] group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:ring-1">
+                      <AvatarFallback className="rounded-xl text-base font-bold bg-[#2b2b2b] text-white group-data-[collapsible=icon]:text-xs" suppressHydrationWarning>
                         {getInitials(user?.firstName, user?.lastName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                      <span className="truncate font-semibold text-sm text-[#4a3728]" suppressHydrationWarning>
+                      <span className="truncate font-semibold text-sm text-[#2b2b2b]" suppressHydrationWarning>
                         {mounted ? `${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "User" : "User"}
                       </span>
-                      <span className="truncate text-xs text-[#6b5444]" suppressHydrationWarning>
+                      <span className="truncate text-xs text-[#737373]" suppressHydrationWarning>
                         {mounted ? user?.email || "" : ""}
                       </span>
                     </div>
-                    <ChevronRight className="ml-auto size-4 text-[#6b5444] group-data-[collapsible=icon]:hidden" />
+                    <ChevronRight className="ml-auto size-4 text-[#737373] group-data-[collapsible=icon]:hidden" />
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                  className="w-64 rounded-xl border-[#ffe4b5] shadow-xl"
+                  className="w-64 rounded-xl border-[#d4d4d4] shadow-xl"
                   side={isMobile ? "bottom" : "right"}
                   align="end"
                   sideOffset={8}
                 >
-                  <div className="px-3 py-3 border-b border-[#ffe4b5]">
-                    <p className="text-sm font-semibold text-[#4a3728]" suppressHydrationWarning>
+                  <div className="px-3 py-3 border-b border-[#d4d4d4]">
+                    <p className="text-sm font-semibold text-[#2b2b2b]" suppressHydrationWarning>
                       {mounted ? `${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "User" : "User"}
                     </p>
-                    <p className="text-xs text-[#6b5444] mt-0.5" suppressHydrationWarning>
+                    <p className="text-xs text-[#737373] mt-0.5" suppressHydrationWarning>
                       {mounted ? user?.email || "" : ""}
                     </p>
                   </div>
                   <DropdownMenuItem 
                     onClick={() => router.push(`/${locale}/dashboard/company/settings`)} 
-                    className="text-base py-3 cursor-pointer hover:bg-[#ffefd5]"
+                    className="text-base py-3 cursor-pointer hover:bg-[#f5f5f5]"
                   >
-                    <Settings className="size-5 mr-3 text-[#fa8072]" />
+                    <Settings className="size-5 mr-3 text-[#525252]" />
                     {locale === "da" ? "Indstillinger" : "Settings"}
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator className="bg-[#ffe4b5]" />
+                  <DropdownMenuSeparator className="bg-[#d4d4d4]" />
                   <DropdownMenuItem 
                     onClick={handleLogout} 
-                    className="text-base py-3 cursor-pointer hover:bg-red-50 text-red-600 focus:text-red-600"
+                    className="text-base py-3 cursor-pointer hover:bg-[#f5f5f5] text-[#737373] focus:text-[#2b2b2b]"
                   >
                     <LogOut className="size-5 mr-3" />
                     {locale === "da" ? "Log ud" : "Logout"}

@@ -49,7 +49,7 @@ export default function HeroSection({ locale, hero }) {
 
           {/* Buttons Section */}
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 w-full max-w-4xl mt-4 sm:mt-6">
-            <Button asChild size="lg" className="gap-2 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white shadow-2xl hover:shadow-[#ffa07a]/50 transition-all hover:scale-105 w-full sm:w-auto sm:min-w-[200px] lg:min-w-[220px] border-none h-12 sm:h-14 text-sm sm:text-base font-bold">
+            <Button asChild size="lg" className="gap-2 bg-[#2b2b2b] hover:bg-[#525252] text-white shadow-2xl hover:shadow-[#737373]/50 transition-all hover:scale-105 w-full sm:w-auto sm:min-w-[200px] lg:min-w-[220px] border-none h-12 sm:h-14 text-sm sm:text-base font-bold">
               <Link href={`/${locale}/auth/signup`}>
                 <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
                 {hero.primaryCta}

@@ -30,29 +30,29 @@ export default function LoginPage() {
       };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#fdf5e6] via-[#ffefd5] to-[#ffe4b5] p-4">
+    <div className="min-h-screen bg-white p-4">
       {/* Back Button - Fixed Position */}
       <div className="fixed left-4 top-4 z-50">
         <BackButton 
           href={`/${locale}`}
           variant="ghost"
-          className="bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white hover:shadow-md transition-all duration-200 text-[#4a3728] hover:text-[#fa8072]"
+          className="bg-white/80 backdrop-blur-sm shadow-sm hover:bg-[#f5f5f5] hover:shadow-md transition-all duration-200 text-[#2b2b2b] hover:text-[#525252]"
         >
           {copy.backButton}
         </BackButton>
       </div>
 
       <div className="mx-auto flex max-w-2xl items-center justify-center py-12 px-4">
-        <Card className="w-full shadow-xl border-2 border-[#ffe4b5] bg-white/95 backdrop-blur">
+        <Card className="w-full shadow-xl border-2 border-[#d4d4d4] bg-white/95 backdrop-blur">
           <CardHeader className="space-y-4 text-center pb-6">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br from-[#ffa07a] to-[#fa8072] shadow-lg">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#2b2b2b] shadow-lg">
               <LogIn className="h-8 w-8 text-white" />
             </div>
             <div className="space-y-2">
-              <CardTitle className="text-3xl font-bold text-[#4a3728]">
+              <CardTitle className="text-3xl font-bold text-[#2b2b2b]">
                 {copy.title}
               </CardTitle>
-              <CardDescription className="text-base text-[#6b5444]">
+              <CardDescription className="text-base text-[#737373]">
                 {copy.subtitle}
               </CardDescription>
             </div>
@@ -65,12 +65,12 @@ export default function LoginPage() {
             />
             
             {/* Sign Up Link */}
-            <div className="mt-8 pt-6 border-t border-[#ffe4b5]">
-              <p className="text-center text-sm text-[#6b5444]">
+            <div className="mt-8 pt-6 border-t border-[#d4d4d4]">
+              <p className="text-center text-sm text-[#737373]">
                 {copy.signupPrompt}{' '}
                 <Link 
                   href={`/${locale}/auth/signup`} 
-                  className="font-semibold text-[#fa8072] hover:text-[#ffa07a] transition-colors underline-offset-4 hover:underline"
+                  className="font-semibold text-[#2b2b2b] hover:text-[#525252] transition-colors underline-offset-4 hover:underline"
                 >
                   {copy.signupLink}
                 </Link>

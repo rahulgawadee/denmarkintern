@@ -143,10 +143,10 @@ export default function StudentInterviewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#fa8072] mx-auto"></div>
-          <p className="mt-4 text-[#6b5444]">{copy.loading}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2b2b2b] mx-auto"></div>
+          <p className="mt-4 text-[#737373]">{copy.loading}</p>
         </div>
       </div>
     );
@@ -154,22 +154,22 @@ export default function StudentInterviewsPage() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white sticky top-0 z-10">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink 
                 href={`/${locale}/dashboard/candidate`}
-                className="text-[#6b5444] hover:text-[#fa8072]"
+                className="text-[#737373] hover:text-[#2b2b2b]"
               >
                 Dashboard
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -179,7 +179,7 @@ export default function StudentInterviewsPage() {
             disabled={refreshing}
             variant="ghost"
             size="sm"
-            className="gap-2 hover:bg-[#ffefd5] hover:text-[#fa8072]"
+            className="gap-2 hover:bg-[#f5f5f5] hover:text-[#2b2b2b]"
           >
             <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">{copy.refresh}</span>
@@ -187,54 +187,54 @@ export default function StudentInterviewsPage() {
         </div>
       </header>
 
-      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-linear-to-b from-[#fdf5e6] to-white overflow-auto">
+      <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-[#f5f5f5] overflow-auto">
         <div className="w-full max-w-7xl mx-auto space-y-6">
           {/* Header */}
-          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#ffe4b5] shadow-sm">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-linear-to-r from-[#4a3728] to-[#6b5444] bg-clip-text text-transparent">
+          <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#d4d4d4] shadow-sm">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">
               {copy.title}
             </h1>
-            <p className="text-[#6b5444] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
+            <p className="text-[#737373] mt-2 text-sm lg:text-base">{copy.subtitle}</p>
           </div>
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="bg-[#ffefd5] border border-[#ffe4b5] p-1 h-auto w-full sm:w-auto grid grid-cols-3 gap-1">
+            <TabsList className="bg-[#f5f5f5] border border-[#d4d4d4] p-1 h-auto w-full sm:w-auto grid grid-cols-3 gap-1">
               <TabsTrigger 
                 value="pending" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <Clock className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.pendingTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Vent.' : 'Pend.'}</span>
                 {pendingInterviews.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {pendingInterviews.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger 
                 value="upcoming" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <Calendar className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.upcomingTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Komm.' : 'Upcom.'}</span>
                 {upcomingInterviews.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {upcomingInterviews.length}
                   </Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger 
                 value="completed" 
-                className="gap-2 data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white text-[#4a3728] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
+                className="gap-2 data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white text-[#2b2b2b] font-medium px-2 sm:px-4 py-2.5 whitespace-nowrap text-xs sm:text-sm"
               >
                 <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
                 <span className="hidden sm:inline">{copy.completedTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Afsl.' : 'Done'}</span>
                 {completedInterviews.length > 0 && (
-                  <Badge className="ml-1 bg-white text-[#fa8072] px-1.5 py-0 text-xs">
+                  <Badge className="ml-1 bg-white text-[#2b2b2b] px-1.5 py-0 text-xs">
                     {completedInterviews.length}
                   </Badge>
                 )}
@@ -243,13 +243,13 @@ export default function StudentInterviewsPage() {
 
           {/* Tab 1: Yet to be Scheduled */}
           <TabsContent value="pending" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <Clock className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <Clock className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.pendingTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {pendingInterviews.length === 0 
                     ? copy.noPendingDesc
                     : `${pendingInterviews.length} interview${pendingInterviews.length === 1 ? '' : 's'} awaiting schedule`
@@ -259,12 +259,12 @@ export default function StudentInterviewsPage() {
               <CardContent className="pt-6">
                 {pendingInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Clock className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noPending}</h3>
-                    <p className="text-sm text-[#6b5444] mb-6">{copy.noPendingDesc}</p>
+                    <Clock className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noPending}</h3>
+                    <p className="text-sm text-[#737373] mb-6">{copy.noPendingDesc}</p>
                     <Button 
                       onClick={() => router.push(`/${locale}/dashboard/candidate/internships`)}
-                      className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white"
+                      className="bg-[#2b2b2b] hover:bg-[#737373] text-white"
                     >
                       <Video className="h-4 w-4 mr-2" />
                       {copy.browse}
@@ -306,13 +306,13 @@ export default function StudentInterviewsPage() {
 
           {/* Tab 2: Upcoming Interviews */}
           <TabsContent value="upcoming" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <Calendar className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <Calendar className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.upcomingTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {upcomingInterviews.length === 0 
                     ? copy.noUpcomingDesc
                     : `${upcomingInterviews.length} scheduled interview${upcomingInterviews.length === 1 ? '' : 's'}`
@@ -322,9 +322,9 @@ export default function StudentInterviewsPage() {
               <CardContent className="pt-6">
                 {upcomingInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Calendar className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noUpcoming}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noUpcomingDesc}</p>
+                    <Calendar className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noUpcoming}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noUpcomingDesc}</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
@@ -344,13 +344,13 @@ export default function StudentInterviewsPage() {
 
           {/* Tab 3: Completed Interviews */}
           <TabsContent value="completed" className="mt-6">
-            <Card className="border-[#ffe4b5] shadow-md">
-              <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b border-[#ffe4b5]">
-                <CardTitle className="flex items-center gap-2 text-[#4a3728]">
-                  <CheckCircle className="h-5 w-5 text-[#fa8072]" />
+            <Card className="border-[#d4d4d4] shadow-md">
+              <CardHeader className="bg-[#f5f5f5] border-b border-[#d4d4d4]">
+                <CardTitle className="flex items-center gap-2 text-[#2b2b2b]">
+                  <CheckCircle className="h-5 w-5 text-[#2b2b2b]" />
                   {copy.completedTab}
                 </CardTitle>
-                <CardDescription className="text-[#6b5444]">
+                <CardDescription className="text-[#737373]">
                   {completedInterviews.length === 0 
                     ? copy.noCompletedDesc
                     : `${completedInterviews.length} completed interview${completedInterviews.length === 1 ? '' : 's'}`
@@ -360,9 +360,9 @@ export default function StudentInterviewsPage() {
               <CardContent className="pt-6">
                 {completedInterviews.length === 0 ? (
                   <div className="text-center py-12">
-                    <Award className="mx-auto h-16 w-16 text-[#ffe4b5] mb-4" />
-                    <h3 className="text-lg font-medium text-[#4a3728] mb-2">{copy.noCompleted}</h3>
-                    <p className="text-sm text-[#6b5444]">{copy.noCompletedDesc}</p>
+                    <Award className="mx-auto h-16 w-16 text-[#d4d4d4] mb-4" />
+                    <h3 className="text-lg font-medium text-[#2b2b2b] mb-2">{copy.noCompleted}</h3>
+                    <p className="text-sm text-[#737373]">{copy.noCompletedDesc}</p>
                   </div>
                 ) : (
                   <div className="space-y-4">

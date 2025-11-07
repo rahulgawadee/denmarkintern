@@ -172,25 +172,25 @@ export default function MatchesPage() {
 
   const getInvitationStatusBadge = (status) => {
     const badges = {
-      pending: <Badge className="bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0">{copy.pending}</Badge>,
-      accepted: <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0">{copy.accepted}</Badge>,
-      rejected: <Badge className="bg-linear-to-r from-[#ef4444] to-[#dc2626] text-white border-0">{copy.rejected}</Badge>,
-      expired: <Badge className="bg-linear-to-r from-[#9ca3af] to-[#6b7280] text-white border-0">{copy.expired}</Badge>,
+      pending: <Badge className="bg-[#e5e5e5] text-[#2b2b2b] border-0">{copy.pending}</Badge>,
+      accepted: <Badge className="bg-[#525252] text-white border-0">{copy.accepted}</Badge>,
+      rejected: <Badge className="bg-[#a3a3a3] text-white border-0">{copy.rejected}</Badge>,
+      expired: <Badge className="bg-[#d4d4d4] text-[#2b2b2b] border-0">{copy.expired}</Badge>,
     };
     return badges[status] || badges.pending;
   };
 
   const getMatchColor = (percentage) => {
-    if (percentage >= 80) return 'bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0';
-    if (percentage >= 60) return 'bg-linear-to-r from-[#3b82f6] to-[#2563eb] text-white border-0';
-    return 'bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0';
+    if (percentage >= 80) return 'bg-[#2b2b2b] text-white border-0';
+    if (percentage >= 60) return 'bg-[#525252] text-white border-0';
+    return 'bg-[#a3a3a3] text-white border-0';
   };
 
   const getStatusBadge = (status) => {
     return status === 'active' ? (
-      <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0 px-3 py-1">Active</Badge>
+      <Badge className="bg-[#2b2b2b] text-white border-0 px-3 py-1">Active</Badge>
     ) : (
-      <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white border-0 px-3 py-1">Under Review</Badge>
+      <Badge className="bg-[#d4d4d4] text-[#2b2b2b] border-0 px-3 py-1">Under Review</Badge>
     );
   };
 
@@ -316,34 +316,34 @@ export default function MatchesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#fa8072] border-r-transparent"></div>
-          <p className="mt-4 text-[#6b5444] font-medium">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#2b2b2b] border-r-transparent"></div>
+          <p className="mt-4 text-[#737373] font-medium">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-linear-to-b from-[#fdf5e6] to-white">
+    <div className="flex flex-col h-screen overflow-hidden bg-white">
       {/* Sticky Header with Breadcrumb */}
-      <header className="flex h-16 shrink-0 items-center gap-2 bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] px-4 sticky top-0 z-10 border-b border-[#ffe4b5]">
-        <SidebarTrigger className="-ml-1 text-[#4a3728]" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+      <header className="flex h-16 shrink-0 items-center gap-2 bg-white px-4 sticky top-0 z-10 border-b border-[#d4d4d4]">
+        <SidebarTrigger className="-ml-1 text-[#2b2b2b]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink 
                 href={`/${locale}/dashboard/company`}
-                className="text-[#6b5444] hover:text-[#fa8072] transition-colors"
+                className="text-[#737373] hover:text-[#2b2b2b] transition-colors"
               >
                 {locale === 'da' ? 'Dashboard' : 'Dashboard'}
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="text-[#ffe4b5]" />
+            <BreadcrumbSeparator className="text-[#d4d4d4]" />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">
                 {locale === 'da' ? 'Matches' : 'Matches'}
               </BreadcrumbPage>
             </BreadcrumbItem>
@@ -359,17 +359,17 @@ export default function MatchesPage() {
           <div className="mb-6 sm:mb-8">
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-lg">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl bg-[#2b2b2b] flex items-center justify-center shadow-lg">
                   <Users className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">
                     {view === 'candidates' && selectedRole 
                       ? `${copy.matchedCandidatesFor} ${selectedRole.title}`
                       : copy.title
                     }
                   </h1>
-                  <p className="text-sm sm:text-base text-[#6b5444] mt-1">
+                  <p className="text-sm sm:text-base text-[#737373] mt-1">
                     {view === 'candidates' 
                       ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'} found`
                       : copy.subtitle
@@ -382,7 +382,7 @@ export default function MatchesPage() {
                 <BackButton
                   onClick={goBackToInternships}
                   variant="outline"
-                  className="border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:text-[#fa8072] hover:border-[#fa8072] transition-all duration-200"
+                  className="border-[#d4d4d4] text-[#2b2b2b] hover:bg-[#f5f5f5] hover:text-[#1a1a1a] hover:border-[#2b2b2b] transition-all duration-200"
                 >
                   {copy.backToRoles}
                 </BackButton>
@@ -393,10 +393,10 @@ export default function MatchesPage() {
         {/* Internships List View */}
         {view === 'internships' && (
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 h-12 bg-white border-2 border-[#ffe4b5] rounded-xl p-1">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 h-12 bg-white border-2 border-[#d4d4d4] rounded-xl p-1">
               <TabsTrigger 
                 value="matches" 
-                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#737373] font-medium"
               >
                 <Users className="h-4 w-4" />
                 <span className="hidden sm:inline">{copy.matchesTab}</span>
@@ -404,13 +404,13 @@ export default function MatchesPage() {
               </TabsTrigger>
               <TabsTrigger 
                 value="invitations" 
-                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+                className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#737373] font-medium"
               >
                 <Mail className="h-4 w-4" />
                 <span className="hidden sm:inline">{copy.invitationsTab}</span>
                 <span className="sm:hidden">{locale === 'da' ? 'Anmodede' : 'Requested'}</span>
                 {invitations.length > 0 && (
-                  <Badge className="ml-2 bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0">{invitations.length}</Badge>
+                  <Badge className="ml-2 bg-[#2b2b2b] text-white border-0">{invitations.length}</Badge>
                 )}
               </TabsTrigger>
             </TabsList>
@@ -418,13 +418,13 @@ export default function MatchesPage() {
             {/* All Internships Tab */}
             <TabsContent value="matches" className="mt-0 space-y-0">
               {internships.length === 0 ? (
-                <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+                <Card className="border-2 border-[#d4d4d4] bg-white shadow-md">
                   <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
-                    <Sparkles className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
-                    <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                    <Sparkles className="h-16 w-16 sm:h-20 sm:w-20 text-[#737373] mb-4" />
+                    <h3 className="text-xl sm:text-2xl font-semibold text-[#2b2b2b] mb-2">
                       {copy.noInternships}
                     </h3>
-                    <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                    <p className="text-sm sm:text-base text-[#737373] text-center max-w-md">
                       {locale === 'da' ? 'Opret din første praktikopslag for at begynde at matche med kandidater.' : 'Create your first internship role to start matching with candidates.'}
                     </p>
                   </CardContent>
@@ -434,53 +434,53 @@ export default function MatchesPage() {
                   {internships.map((internship) => (
                     <Card 
                       key={internship._id} 
-                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-white cursor-pointer group"
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#d4d4d4] bg-white cursor-pointer group"
                       onClick={() => fetchMatchesForRole(internship._id)}
                     >
-                      <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] pb-4">
+                      <CardHeader className="bg-[#f5f5f5] pb-4">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shrink-0 shadow-md">
+                            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-[#2b2b2b] flex items-center justify-center shrink-0 shadow-md">
                               <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                             </div>
                             <div className="min-w-0 flex-1">
-                              <CardTitle className="text-lg sm:text-xl text-[#4a3728] group-hover:text-[#fa8072] transition-colors line-clamp-1">
+                              <CardTitle className="text-lg sm:text-xl text-[#2b2b2b] group-hover:text-[#525252] transition-colors line-clamp-1">
                                 {internship.title}
                               </CardTitle>
-                              <p className="text-xs sm:text-sm text-[#6b5444] mt-0.5 line-clamp-1">
+                              <p className="text-xs sm:text-sm text-[#737373] mt-0.5 line-clamp-1">
                                 {internship.department}
                               </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3 shrink-0">
-                            <Badge className="bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0 px-3 py-1.5 text-sm font-semibold whitespace-nowrap">
+                            <Badge className="bg-[#2b2b2b] text-white border-0 px-3 py-1.5 text-sm font-semibold whitespace-nowrap">
                               {internship.matchesFound} {locale === 'da' ? 'Matches' : 'Matches'}
                             </Badge>
-                            <ChevronRight className="h-5 w-5 text-[#6b5444] group-hover:text-[#fa8072] group-hover:translate-x-1 transition-all" />
+                            <ChevronRight className="h-5 w-5 text-[#737373] group-hover:text-[#2b2b2b] group-hover:translate-x-1 transition-all" />
                           </div>
                         </div>
                       </CardHeader>
                       <CardContent className="pt-4 pb-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
-                            <Calendar className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5]">
+                            <Calendar className="h-4 w-4 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs text-[#6b5444]">{copy.postedOn}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373]">{copy.postedOn}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {new Date(internship.postedOn).toLocaleDateString(locale)}
                               </p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
-                            <TrendingUp className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5]">
+                            <TrendingUp className="h-4 w-4 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs text-[#6b5444]">{copy.matchesFound}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373]">{copy.matchesFound}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {internship.matchesFound} {locale === 'da' ? 'kandidater' : 'candidates'}
                               </p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40 sm:col-span-2 lg:col-span-1">
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5] sm:col-span-2 lg:col-span-1">
                             {getStatusBadge(internship.status)}
                           </div>
                         </div>
@@ -494,13 +494,13 @@ export default function MatchesPage() {
             {/* Requested Candidates Tab */}
             <TabsContent value="invitations" className="mt-0 space-y-0">
               {invitations.length === 0 ? (
-                <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+                <Card className="border-2 border-[#d4d4d4] bg-white shadow-md">
                   <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
-                    <Mail className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
-                    <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                    <Mail className="h-16 w-16 sm:h-20 sm:w-20 text-[#737373] mb-4" />
+                    <h3 className="text-xl sm:text-2xl font-semibold text-[#2b2b2b] mb-2">
                       {copy.noInvitations}
                     </h3>
-                    <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                    <p className="text-sm sm:text-base text-[#737373] text-center max-w-md">
                       {copy.noInvitationsDesc}
                     </p>
                   </CardContent>
@@ -510,21 +510,21 @@ export default function MatchesPage() {
                   {invitations.map((invitation) => (
                     <Card 
                       key={invitation._id} 
-                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-white group"
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#d4d4d4] bg-white group"
                     >
-                      <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] pb-4">
+                      <CardHeader className="bg-[#f5f5f5] pb-4">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                           <div className="flex items-center gap-3 flex-1 min-w-0">
                             <Avatar className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 border-2 border-white shadow-md">
-                              <AvatarFallback className="bg-linear-to-br from-[#ffa07a] to-[#fa8072] text-white text-base font-semibold">
+                              <AvatarFallback className="bg-[#2b2b2b] text-white text-base font-semibold">
                                 {invitation.candidateId?.firstName?.[0]}{invitation.candidateId?.lastName?.[0]}
                               </AvatarFallback>
                             </Avatar>
                             <div className="min-w-0 flex-1">
-                              <CardTitle className="text-lg sm:text-xl text-[#4a3728] line-clamp-1">
+                              <CardTitle className="text-lg sm:text-xl text-[#2b2b2b] line-clamp-1">
                                 {invitation.candidateId?.firstName} {invitation.candidateId?.lastName}
                               </CardTitle>
-                              <p className="text-xs sm:text-sm text-[#6b5444] mt-0.5 line-clamp-1">
+                              <p className="text-xs sm:text-sm text-[#737373] mt-0.5 line-clamp-1">
                                 {invitation.candidateId?.email}
                               </p>
                             </div>
@@ -535,7 +535,7 @@ export default function MatchesPage() {
                               variant="ghost"
                               size="sm"
                               onClick={() => setSelectedCandidate(invitation.candidateId)}
-                              className="text-[#4a3728] hover:text-[#fa8072] hover:bg-[#fdf5e6]"
+                              className="text-[#2b2b2b] hover:text-[#1a1a1a] hover:bg-[#e5e5e5]"
                             >
                               <Eye className="h-4 w-4 sm:mr-1" />
                               <span className="hidden sm:inline text-sm">{copy.viewProfile}</span>
@@ -545,29 +545,29 @@ export default function MatchesPage() {
                       </CardHeader>
                       <CardContent className="pt-4 pb-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
-                            <Briefcase className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5]">
+                            <Briefcase className="h-4 w-4 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs text-[#6b5444]">{copy.role}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373]">{copy.role}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {invitation.internshipId?.title}
                               </p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40">
-                            <Send className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5]">
+                            <Send className="h-4 w-4 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs text-[#6b5444]">{copy.sentOn}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373]">{copy.sentOn}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {new Date(invitation.sentAt).toLocaleDateString(locale)}
                               </p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#fdf5e6]/40 sm:col-span-2 lg:col-span-1">
-                            <CheckCircle className="h-4 w-4 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#f5f5f5] sm:col-span-2 lg:col-span-1">
+                            <CheckCircle className="h-4 w-4 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs text-[#6b5444]">{copy.respondedOn}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373]">{copy.respondedOn}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {invitation.respondedAt 
                                   ? new Date(invitation.respondedAt).toLocaleDateString(locale)
                                   : '—'}
@@ -588,13 +588,13 @@ export default function MatchesPage() {
         {view === 'candidates' && (
           <>
             {matches.length === 0 ? (
-              <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+              <Card className="border-2 border-[#d4d4d4] bg-white shadow-md">
                 <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
-                  <UserCheck className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
-                  <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">
+                  <UserCheck className="h-16 w-16 sm:h-20 sm:w-20 text-[#737373] mb-4" />
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#2b2b2b] mb-2">
                     {copy.noMatches}
                   </h3>
-                  <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">
+                  <p className="text-sm sm:text-base text-[#737373] text-center max-w-md">
                     {copy.noMatchesDesc}
                   </p>
                 </CardContent>

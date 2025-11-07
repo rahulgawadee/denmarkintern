@@ -19,22 +19,22 @@ export default function CandidateNotificationsPage() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] px-4 bg-white sticky top-0 z-10">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white sticky top-0 z-10">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink 
                 href={`/${locale}/dashboard/candidate`}
-                className="text-[#6b5444] hover:text-[#fa8072]"
+                className="text-[#737373] hover:text-[#2b2b2b]"
               >
                 Dashboard
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">
                 {locale === 'da' ? 'Notifikationer' : 'Notifications'}
               </BreadcrumbPage>
             </BreadcrumbItem>

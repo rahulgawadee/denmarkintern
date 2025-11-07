@@ -285,12 +285,12 @@ export default function InterviewsPage() {
 
   const getStatusConfig = (status) => {
     const configs = {
-      pending: { label: copy.pending, color: 'bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0' },
-      scheduled: { label: copy.scheduled, color: 'bg-linear-to-r from-[#3b82f6] to-[#2563eb] text-white border-0' },
-      completed: { label: copy.completed, color: 'bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0' },
-      rejected: { label: copy.rejected, color: 'bg-linear-to-r from-[#ef4444] to-[#dc2626] text-white border-0' },
-      rescheduled: { label: copy.rescheduled, color: 'bg-linear-to-r from-[#a855f7] to-[#9333ea] text-white border-0' },
-      cancelled: { label: copy.cancelled, color: 'bg-linear-to-r from-[#9ca3af] to-[#6b7280] text-white border-0' },
+      pending: { label: copy.pending, color: 'bg-[#e5e5e5] text-[#2b2b2b] border-0' },
+      scheduled: { label: copy.scheduled, color: 'bg-[#525252] text-white border-0' },
+      completed: { label: copy.completed, color: 'bg-[#2b2b2b] text-white border-0' },
+      rejected: { label: copy.rejected, color: 'bg-[#a3a3a3] text-white border-0' },
+      rescheduled: { label: copy.rescheduled, color: 'bg-[#737373] text-white border-0' },
+      cancelled: { label: copy.cancelled, color: 'bg-[#d4d4d4] text-[#2b2b2b] border-0' },
     };
     return configs[status] || configs.pending;
   };
@@ -450,18 +450,18 @@ export default function InterviewsPage() {
             {/* Page Header */}
             <div className="mb-6 sm:mb-8">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-md">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#2b2b2b] flex items-center justify-center shadow-md">
                   <CalendarIcon className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">{copy.title}</h1>
-                  <p className="text-sm sm:text-base text-[#6b5444] mt-1">{copy.subtitle}</p>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">{copy.title}</h1>
+                  <p className="text-sm sm:text-base text-[#737373] mt-1">{copy.subtitle}</p>
                 </div>
                 <Button
                   variant="outline"
                   onClick={fetchInterviews}
                   disabled={loading}
-                  className="border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:text-[#fa8072] hover:border-[#fa8072] transition-all duration-200 gap-2"
+                  className="border-[#d4d4d4] text-[#2b2b2b] hover:bg-[#f5f5f5] hover:text-[#1a1a1a] hover:border-[#2b2b2b] transition-all duration-200 gap-2"
                 >
                   <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                   <span className="hidden sm:inline">{copy.refresh}</span>
@@ -471,42 +471,42 @@ export default function InterviewsPage() {
 
         {/* Tabbed Interviews */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8 h-12 bg-white border-2 border-[#ffe4b5] rounded-xl p-1">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8 h-12 bg-white border-2 border-[#d4d4d4] rounded-xl p-1">
             <TabsTrigger 
               value="pending"
-              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#737373] font-medium"
             >
               <Clock className="h-4 w-4" />
               <span className="hidden sm:inline">{copy.yetToSchedule}</span>
               <span className="sm:hidden">{locale === 'da' ? 'Afventer' : 'Pending'}</span>
               {interviews.filter(i => i.status === 'pending').length > 0 && (
-                <Badge className="ml-1 bg-linear-to-r from-[#fbbf24] to-[#f59e0b] text-white border-0 text-xs">
+                <Badge className="ml-1 bg-[#e5e5e5] text-[#2b2b2b] border-0 text-xs">
                   {interviews.filter(i => i.status === 'pending').length}
                 </Badge>
               )}
             </TabsTrigger>
             <TabsTrigger 
               value="scheduled"
-              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#737373] font-medium"
             >
               <CalendarIcon className="h-4 w-4" />
               <span className="hidden sm:inline">{copy.scheduledTab}</span>
               <span className="sm:hidden">{locale === 'da' ? 'Planlagt' : 'Scheduled'}</span>
               {interviews.filter(i => i.status === 'scheduled' || i.status === 'rescheduled').length > 0 && (
-                <Badge className="ml-1 bg-linear-to-r from-[#3b82f6] to-[#2563eb] text-white border-0 text-xs">
+                <Badge className="ml-1 bg-[#525252] text-white border-0 text-xs">
                   {interviews.filter(i => i.status === 'scheduled' || i.status === 'rescheduled').length}
                 </Badge>
               )}
             </TabsTrigger>
             <TabsTrigger 
               value="completed"
-              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-linear-to-r data-[state=active]:from-[#ffa07a] data-[state=active]:to-[#fa8072] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#4a3728] font-medium"
+              className="flex items-center justify-center gap-2 rounded-lg data-[state=active]:bg-[#2b2b2b] data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 text-[#737373] font-medium"
             >
               <CheckCircle className="h-4 w-4" />
               <span className="hidden sm:inline">{copy.completedTab}</span>
               <span className="sm:hidden">{locale === 'da' ? 'Afsluttet' : 'Done'}</span>
               {interviews.filter(i => i.status === 'completed').length > 0 && (
-                <Badge className="ml-1 bg-linear-to-r from-[#10b981] to-[#059669] text-white border-0 text-xs">
+                <Badge className="ml-1 bg-[#2b2b2b] text-white border-0 text-xs">
                   {interviews.filter(i => i.status === 'completed').length}
                 </Badge>
               )}
@@ -516,11 +516,11 @@ export default function InterviewsPage() {
           {/* Yet to Be Scheduled Tab */}
           <TabsContent value="pending" className="mt-0">
             {interviews.filter(i => i.status === 'pending').length === 0 ? (
-              <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+              <Card className="border-2 border-[#d4d4d4] bg-white shadow-md">
                 <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
-                  <CalendarIcon className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
-                  <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">{copy.noInterviews}</h3>
-                  <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">{copy.noInterviewsDesc}</p>
+                  <CalendarIcon className="h-16 w-16 sm:h-20 sm:w-20 text-[#737373] mb-4" />
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#2b2b2b] mb-2">{copy.noInterviews}</h3>
+                  <p className="text-sm sm:text-base text-[#737373] text-center max-w-md">{copy.noInterviewsDesc}</p>
                 </CardContent>
               </Card>
             ) : (
@@ -530,21 +530,21 @@ export default function InterviewsPage() {
                   return (
                     <Card 
                       key={interview._id}
-                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#ffe4b5] bg-linear-to-br from-white via-[#fdf5e6]/30 to-white group"
+                      className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-[#d4d4d4] bg-white group"
                     >
-                      <CardHeader className="bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] border-b-2 border-[#ffe4b5] pb-4">
+                      <CardHeader className="bg-[#f5f5f5] border-b-2 border-[#d4d4d4] pb-4">
                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                           <div className="flex items-center gap-3 flex-1">
-                            <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shrink-0 shadow-md">
+                            <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#2b2b2b] flex items-center justify-center shrink-0 shadow-md">
                               <span className="text-white font-semibold text-lg">
                                 {interview.candidateId?.firstName?.charAt(0) || 'C'}
                               </span>
                             </div>
                             <div className="min-w-0 flex-1">
-                              <CardTitle className="text-lg sm:text-xl text-[#4a3728] line-clamp-1">
+                              <CardTitle className="text-lg sm:text-xl text-[#2b2b2b] line-clamp-1">
                                 {interview.candidateId?.firstName} {interview.candidateId?.lastName}
                               </CardTitle>
-                              <p className="text-xs sm:text-sm text-[#6b5444] mt-1 line-clamp-1 flex items-center gap-2">
+                              <p className="text-xs sm:text-sm text-[#737373] mt-1 line-clamp-1 flex items-center gap-2">
                                 <Mail className="h-3 w-3" />
                                 {interview.candidateId?.email}
                               </p>
@@ -557,11 +557,11 @@ export default function InterviewsPage() {
                       </CardHeader>
                       <CardContent className="pt-6 pb-5">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                          <div className="flex items-center gap-3 p-3 rounded-lg bg-[#fdf5e6]/40 border border-[#ffe4b5]">
-                            <Building2 className="h-5 w-5 text-[#fa8072] shrink-0" />
+                          <div className="flex items-center gap-3 p-3 rounded-lg bg-[#f5f5f5] border border-[#d4d4d4]">
+                            <Building2 className="h-5 w-5 text-[#2b2b2b] shrink-0" />
                             <div className="min-w-0">
-                              <p className="text-xs text-[#6b5444] mb-0.5">{copy.role}</p>
-                              <p className="text-sm font-semibold text-[#4a3728] truncate">
+                              <p className="text-xs text-[#737373] mb-0.5">{copy.role}</p>
+                              <p className="text-sm font-semibold text-[#2b2b2b] truncate">
                                 {interview.internshipId?.title || 'N/A'}
                               </p>
                             </div>
@@ -573,7 +573,7 @@ export default function InterviewsPage() {
                           <Button
                             onClick={() => openCandidateProfile(interview)}
                             variant="outline"
-                            className="flex-1 border-2 border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
+                            className="flex-1 border-2 border-[#d4d4d4] hover:bg-[#f5f5f5] text-[#2b2b2b]"
                           >
                             <Users className="h-4 w-4 mr-2" />
                             {copy.viewProfile}
@@ -581,7 +581,7 @@ export default function InterviewsPage() {
                           <Button
                             onClick={() => handleSchedule(interview)}
                             disabled={actionLoading}
-                            className="flex-1 bg-linear-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#ffa07a] text-white shadow-md"
+                            className="flex-1 bg-[#2b2b2b] hover:bg-[#1a1a1a] text-white shadow-md"
                           >
                             <Video className="h-4 w-4 mr-2" />
                             {copy.sendLink}
@@ -590,7 +590,7 @@ export default function InterviewsPage() {
                             onClick={() => handleReject(interview._id)}
                             disabled={actionLoading}
                             variant="outline"
-                            className="flex-1 border-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                            className="flex-1 border-2 border-[#d4d4d4] text-[#737373] hover:bg-[#f5f5f5] hover:text-[#525252]"
                           >
                             <XCircle className="h-4 w-4 mr-2" />
                             <span className="hidden sm:inline">{copy.reject}</span>

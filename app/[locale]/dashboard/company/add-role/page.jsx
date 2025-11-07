@@ -44,22 +44,22 @@ export default function AddRolePage() {
   return (
     <>
       {/* Header with Breadcrumb */}
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] px-4 sticky top-0 z-10">
-        <SidebarTrigger className="-ml-1 text-[#4a3728]" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] bg-white px-4 sticky top-0 z-10">
+        <SidebarTrigger className="-ml-1 text-[#2b2b2b]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink 
                 href={`/${locale}/dashboard/company`}
-                className="text-[#6b5444] hover:text-[#fa8072] transition-colors"
+                className="text-[#737373] hover:text-[#2b2b2b] transition-colors"
               >
                 {copy.dashboard}
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="text-[#ffe4b5]" />
+            <BreadcrumbSeparator className="text-[#d4d4d4]" />
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">
                 {copy.addRole}
               </BreadcrumbPage>
             </BreadcrumbItem>
@@ -69,7 +69,7 @@ export default function AddRolePage() {
 
       {/* Main Content - Full Width */}
       <main className="flex-1 overflow-auto">
-        <div className="w-full h-full bg-linear-to-b from-[#fdf5e6] via-white to-[#ffefd5]">
+        <div className="w-full h-full bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
             
             {/* Header Section */}
@@ -77,14 +77,14 @@ export default function AddRolePage() {
               <div className="flex items-start justify-between flex-wrap gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-xl bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center shadow-lg">
+                    <div className="h-12 w-12 rounded-xl bg-[#2b2b2b] flex items-center justify-center shadow-lg">
                       <ListChecks className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4a3728]">
+                      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">
                         {copy.title}
                       </h1>
-                      <p className="text-sm sm:text-base text-[#6b5444] mt-1">
+                      <p className="text-sm sm:text-base text-[#737373] mt-1">
                         {copy.subtitle}
                       </p>
                     </div>
@@ -94,7 +94,7 @@ export default function AddRolePage() {
                 <BackButton
                   href={`/${locale}/dashboard/company`}
                   variant="outline"
-                  className="border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5] hover:text-[#fa8072] hover:border-[#fa8072] transition-all duration-200"
+                  className="border-[#d4d4d4] text-[#2b2b2b] hover:bg-[#f5f5f5] hover:text-[#525252] hover:border-[#2b2b2b] transition-all duration-200"
                 >
                   {copy.back}
                 </BackButton>
@@ -102,15 +102,15 @@ export default function AddRolePage() {
             </div>
 
             {/* Form Card */}
-            <Card className="border-2 border-[#ffe4b5] shadow-xl bg-white/95 backdrop-blur">
-              <CardHeader className="border-b border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-white">
+            <Card className="border-2 border-[#d4d4d4] shadow-xl bg-white/95 backdrop-blur">
+              <CardHeader className="border-b border-[#d4d4d4] bg-[#f5f5f5]">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-linear-to-br from-[#ffa07a] to-[#fa8072] flex items-center justify-center">
+                  <div className="h-10 w-10 rounded-lg bg-[#2b2b2b] flex items-center justify-center">
                     <ListChecks className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl text-[#4a3728]">{copy.formTitle}</CardTitle>
-                    <CardDescription className="text-[#6b5444]">{copy.formDesc}</CardDescription>
+                    <CardTitle className="text-xl text-[#2b2b2b]">{copy.formTitle}</CardTitle>
+                    <CardDescription className="text-[#737373]">{copy.formDesc}</CardDescription>
                   </div>
                 </div>
               </CardHeader>

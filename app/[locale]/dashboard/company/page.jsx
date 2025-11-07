@@ -297,13 +297,13 @@ export default function CompanyDashboard() {
 
   const getStatusConfig = (status) => {
     const configs = {
-      draft: { color: 'bg-zinc-100 text-zinc-800 border-zinc-300', icon: FileText, label: locale === 'da' ? 'Kladde' : 'Draft' },
-      under_review: { color: 'bg-blue-100 text-blue-800 border-blue-300', icon: Clock, label: locale === 'da' ? 'Under gennemgang' : 'Under Review' },
-      shortlist_sent: { color: 'bg-purple-100 text-purple-800 border-purple-300', icon: Users, label: locale === 'da' ? 'Shortlist sendt' : 'Shortlist Sent' },
-      matched: { color: 'bg-green-100 text-green-800 border-green-300', icon: CheckCircle2, label: locale === 'da' ? 'Matchet' : 'Matched' },
-      active: { color: 'bg-emerald-100 text-emerald-800 border-emerald-300', icon: TrendingUp, label: locale === 'da' ? 'Aktiv' : 'Active' },
-      completed: { color: 'bg-blue-100 text-blue-800 border-blue-300', icon: CheckCircle2, label: locale === 'da' ? 'Afsluttet' : 'Completed' },
-      closed: { color: 'bg-red-100 text-red-800 border-red-300', icon: XCircle, label: locale === 'da' ? 'Lukket' : 'Closed' },
+      draft: { color: 'bg-[#f5f5f5] text-[#2b2b2b] border-[#d4d4d4]', icon: FileText, label: locale === 'da' ? 'Kladde' : 'Draft' },
+      under_review: { color: 'bg-[#e5e5e5] text-[#2b2b2b] border-[#b3b3b3]', icon: Clock, label: locale === 'da' ? 'Under gennemgang' : 'Under Review' },
+      shortlist_sent: { color: 'bg-[#d4d4d4] text-[#2b2b2b] border-[#a3a3a3]', icon: Users, label: locale === 'da' ? 'Shortlist sendt' : 'Shortlist Sent' },
+      matched: { color: 'bg-[#2b2b2b] text-white border-[#525252]', icon: CheckCircle2, label: locale === 'da' ? 'Matchet' : 'Matched' },
+      active: { color: 'bg-[#525252] text-white border-[#737373]', icon: TrendingUp, label: locale === 'da' ? 'Aktiv' : 'Active' },
+      completed: { color: 'bg-[#737373] text-white border-[#a3a3a3]', icon: CheckCircle2, label: locale === 'da' ? 'Afsluttet' : 'Completed' },
+      closed: { color: 'bg-[#f5f5f5] text-[#525252] border-[#d4d4d4]', icon: XCircle, label: locale === 'da' ? 'Lukket' : 'Closed' },
     };
     return configs[status] || configs.draft;
   };
@@ -465,24 +465,24 @@ export default function CompanyDashboard() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white">
         <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage>{copy.title}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
-      <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
+      <main className="flex flex-1 flex-col gap-4 p-4 md:p-6 bg-white">
         <div className="space-y-6">
           {/* Header */}
           <div>
-            <h1 className="text-3xl font-bold text-zinc-900">{copy.title}</h1>
-            <p className="text-zinc-600 mt-2">{copy.subtitle}</p>
+            <h1 className="text-3xl font-bold text-[#2b2b2b]">{copy.title}</h1>
+            <p className="text-[#737373] mt-2">{copy.subtitle}</p>
           </div>
 
           {/* Stats Cards */}
@@ -493,8 +493,8 @@ export default function CompanyDashboard() {
               icon={Briefcase}
               trend={stats.activeRoles.trend}
               trendLabel="vs last month"
-              iconColor="text-blue-600"
-              iconBgColor="bg-blue-100"
+              iconColor="text-[#2b2b2b]"
+              iconBgColor="bg-[#f5f5f5]"
             />
             <StatsCard
               title={copy.matchesFound}
@@ -502,8 +502,8 @@ export default function CompanyDashboard() {
               icon={Users}
               trend={stats.matchesFound.trend}
                 trendLabel="vs last month"
-                iconColor="text-green-600"
-                iconBgColor="bg-green-100"
+                iconColor="text-[#2b2b2b]"
+                iconBgColor="bg-[#e5e5e5]"
               />
               <StatsCard
                 title={copy.pendingInterviews}
@@ -511,8 +511,8 @@ export default function CompanyDashboard() {
                 icon={Calendar}
                 trend={stats.pendingInterviews.trend}
                 trendLabel="vs last month"
-                iconColor="text-yellow-600"
-                iconBgColor="bg-yellow-100"
+                iconColor="text-[#525252]"
+                iconBgColor="bg-[#f5f5f5]"
               />
           <StatsCard
             title={copy.completedInternships}
@@ -520,8 +520,8 @@ export default function CompanyDashboard() {
             icon={CheckCircle}
             trend={stats.completedInternships.trend}
             trendLabel="vs last month"
-            iconColor="text-purple-600"
-            iconBgColor="bg-purple-100"
+            iconColor="text-[#737373]"
+            iconBgColor="bg-[#e5e5e5]"
           />
         </div>
 
@@ -544,11 +544,11 @@ export default function CompanyDashboard() {
         </div>
 
         {roles.length === 0 ? (
-          <Card className="text-center py-12">
+          <Card className="text-center py-12 border-[#d4d4d4]">
             <CardContent>
-              <Briefcase className="h-16 w-16 text-zinc-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{copy.noRoles}</h3>
-              <p className="text-zinc-600 mb-6">{copy.createFirst}</p>
+              <Briefcase className="h-16 w-16 text-[#d4d4d4] mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-[#2b2b2b]">{copy.noRoles}</h3>
+              <p className="text-[#737373] mb-6">{copy.createFirst}</p>
               <div className="flex gap-3 justify-center">
                 <ActionButton
                   icon={Plus}
@@ -568,32 +568,32 @@ export default function CompanyDashboard() {
           </Card>
         ) : (
           <div className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">{copy.viewRoles}</h2>
+            <h2 className="text-xl font-semibold mb-4 text-[#2b2b2b]">{copy.viewRoles}</h2>
             {roles.map((role) => {
               const statusConfig = getStatusConfig(role.status);
               const StatusIcon = statusConfig.icon;
               
               return (
-                <Card key={role._id} className="hover:shadow-md transition-shadow">
+                <Card key={role._id} className="hover:shadow-md transition-shadow border-[#d4d4d4]">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <CardTitle className="text-xl">{role.title}</CardTitle>
+                          <CardTitle className="text-xl text-[#2b2b2b]">{role.title}</CardTitle>
                           <Badge variant="outline" className={`${statusConfig.color} border`}>
                             <StatusIcon className="h-3 w-3 mr-1" />
                             {statusConfig.label}
                           </Badge>
                         </div>
-                        <CardDescription>
+                        <CardDescription className="text-[#737373]">
                           {role.area?.join(', ')} • {role.workMode} • {role.duration} {locale === 'da' ? 'uger' : 'weeks'}
                           {role.location?.city && ` • ${role.location.city}`}
                         </CardDescription>
                       </div>
-                      <div className="text-right text-sm text-zinc-500">
+                      <div className="text-right text-sm text-[#737373]">
                         <p>{new Date(role.createdAt).toLocaleDateString(locale === 'da' ? 'da-DK' : 'en-US')}</p>
                         {role.applications?.length > 0 && (
-                          <p className="font-medium text-blue-600">{role.applications.length} {locale === 'da' ? 'ansøgninger' : 'applications'}</p>
+                          <p className="font-medium text-[#2b2b2b]">{role.applications.length} {locale === 'da' ? 'ansøgninger' : 'applications'}</p>
                         )}
                       </div>
                     </div>
@@ -643,7 +643,7 @@ export default function CompanyDashboard() {
                           setRoleToDelete(role);
                           setDeleteDialogOpen(true);
                         }}
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-[#737373] hover:text-[#2b2b2b] hover:bg-[#f5f5f5]"
                       >
                         {copy.delete}
                       </ActionButton>

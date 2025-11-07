@@ -1,12 +1,5 @@
 export { default as HomeHeader } from './HomeHeader';
 export { default as HeroSection } from './HeroSection';
-export { default as ValuePropsSection } from './ValuePropsSection';
-export { default as StorySection } from './StorySection';
-export { default as RolesSection } from './RolesSection';
-export { default as HowItWorksSection } from './HowItWorksSection';
-export { default as PricingSection } from './PricingSection';
-export { default as SocialProofSection } from './SocialProofSection';
-export { default as FaqSection } from './FaqSection';
+export { default as InfoTabsSection } from './InfoTabsSection';
 export { default as ContactSection } from './ContactSection';
-export { default as CheatSheetSection } from './CheatSheetSection';
 export { default as HomeFooter } from './HomeFooter';

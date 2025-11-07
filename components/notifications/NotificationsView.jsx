@@ -253,21 +253,21 @@ export default function NotificationsView({ locale = 'en' }) {
   return (
     <div className="space-y-6">
       {/* Header Card with Stats */}
-      <Card className="border-2 border-[#ffe4b5] bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] shadow-md">
+      <Card className="border-2 border-[#d4d4d4] bg-[#f5f5f5] shadow-md">
         <CardContent className="pt-6 pb-5">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-4">
-              <Badge className="bg-linear-to-r from-[#ffa07a] to-[#fa8072] text-white border-0 px-4 py-2 text-base sm:text-lg font-semibold">
+              <Badge className="bg-[#2b2b2b] text-white border-0 px-4 py-2 text-base sm:text-lg font-semibold">
                 {copy.unread}: {unreadCount}
               </Badge>
-              <div className="text-sm text-[#6b5444]">
+              <div className="text-sm text-[#737373]">
                 {notifications.length} {locale === 'da' ? 'total' : locale === 'sv' ? 'totalt' : 'total'}
               </div>
             </div>
             <Button 
               onClick={markAllAsRead} 
               disabled={updating || unreadCount === 0}
-              className="bg-linear-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#10b981] text-white shadow-md"
+              className="bg-[#2b2b2b] hover:bg-[#525252] text-white shadow-md"
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />
               {copy.markAll}
@@ -292,12 +292,12 @@ export default function NotificationsView({ locale = 'en' }) {
       {loading ? (
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, idx) => (
-            <Card key={idx} className="border-2 border-[#ffe4b5]">
+            <Card key={idx} className="border-2 border-[#d4d4d4]">
               <CardContent className="pt-6">
                 <div className="space-y-3 animate-pulse">
-                  <div className="h-4 bg-[#ffefd5] rounded w-3/4"></div>
-                  <div className="h-3 bg-[#ffefd5] rounded w-full"></div>
-                  <div className="h-3 bg-[#ffefd5] rounded w-5/6"></div>
+                  <div className="h-4 bg-[#e5e5e5] rounded w-3/4"></div>
+                  <div className="h-3 bg-[#e5e5e5] rounded w-full"></div>
+                  <div className="h-3 bg-[#e5e5e5] rounded w-5/6"></div>
                 </div>
               </CardContent>
             </Card>
@@ -307,11 +307,11 @@ export default function NotificationsView({ locale = 'en' }) {
 
       {/* Empty State */}
       {!loading && notifications.length === 0 ? (
-        <Card className="border-2 border-[#ffe4b5] bg-linear-to-b from-white to-[#ffefd5]/20 shadow-md">
+        <Card className="border-2 border-[#d4d4d4] bg-[#f5f5f5] shadow-md">
           <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16">
-            <Bell className="h-16 w-16 sm:h-20 sm:w-20 text-[#fa8072] mb-4" />
-            <h3 className="text-xl sm:text-2xl font-semibold text-[#4a3728] mb-2">{copy.empty}</h3>
-            <p className="text-sm sm:text-base text-[#6b5444] text-center max-w-md">{copy.emptyHelper}</p>
+            <Bell className="h-16 w-16 sm:h-20 sm:w-20 text-[#737373] mb-4" />
+            <h3 className="text-xl sm:text-2xl font-semibold text-[#2b2b2b] mb-2">{copy.empty}</h3>
+            <p className="text-sm sm:text-base text-[#737373] text-center max-w-md">{copy.emptyHelper}</p>
           </CardContent>
         </Card>
       ) : null}
@@ -325,8 +325,8 @@ export default function NotificationsView({ locale = 'en' }) {
               key={notification._id}
               className={`overflow-hidden hover:shadow-xl transition-all duration-300 border-2 ${
                 notification.read 
-                  ? 'border-[#ffe4b5] bg-white' 
-                  : 'border-[#ffa07a] bg-linear-to-br from-[#fdf5e6] via-white to-[#ffefd5]/30'
+                  ? 'border-[#d4d4d4] bg-white' 
+                  : 'border-[#737373] bg-[#f9f9f9]'
               }`}
             >
               <CardContent className="pt-6 pb-5">
@@ -336,21 +336,21 @@ export default function NotificationsView({ locale = 'en' }) {
                     <div className="flex items-start gap-3 flex-1 min-w-0">
                       <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center shrink-0 shadow-md ${
                         notification.read 
-                          ? 'bg-linear-to-br from-[#e5e7eb] to-[#d1d5db]'
-                          : 'bg-linear-to-br from-[#ffa07a] to-[#fa8072]'
+                          ? 'bg-[#e5e5e5]'
+                          : 'bg-[#2b2b2b]'
                       }`}>
-                        <CategoryIcon className={`h-5 w-5 sm:h-6 sm:w-6 ${notification.read ? 'text-[#6b7280]' : 'text-white'}`} />
+                        <CategoryIcon className={`h-5 w-5 sm:h-6 sm:w-6 ${notification.read ? 'text-[#737373]' : 'text-white'}`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           {!notification.read && (
-                            <Circle className="h-2 w-2 text-[#fa8072] fill-[#fa8072] shrink-0" />
+                            <Circle className="h-2 w-2 text-[#2b2b2b] fill-[#2b2b2b] shrink-0" />
                           )}
-                          <h3 className="text-base sm:text-lg font-semibold text-[#4a3728] line-clamp-2">
+                          <h3 className="text-base sm:text-lg font-semibold text-[#2b2b2b] line-clamp-2">
                             {notification.title}
                           </h3>
                         </div>
-                        <p className="text-sm text-[#6b5444] whitespace-pre-wrap mt-1 line-clamp-3">
+                        <p className="text-sm text-[#737373] whitespace-pre-wrap mt-1 line-clamp-3">
                           {notification.message}
                         </p>
                       </div>
@@ -359,17 +359,17 @@ export default function NotificationsView({ locale = 'en' }) {
 
                   {/* Meta Info */}
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <Badge className="bg-linear-to-r from-[#ffefd5] to-[#ffe4b5] text-[#4a3728] border border-[#ffe4b5]">
+                    <Badge className="bg-[#f5f5f5] text-[#2b2b2b] border border-[#d4d4d4]">
                       {getCategoryLabel(notification.category, locale)}
                     </Badge>
-                    <span className="text-xs sm:text-sm text-[#6b5444] flex items-center gap-1">
+                    <span className="text-xs sm:text-sm text-[#737373] flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {formatDate(notification.createdAt, locale)}
                     </span>
                     {notification.link && (
                       <a 
                         href={notification.link} 
-                        className="text-xs sm:text-sm text-[#fa8072] hover:text-[#ffa07a] font-medium hover:underline transition-colors" 
+                        className="text-xs sm:text-sm text-[#2b2b2b] hover:text-[#525252] font-medium hover:underline transition-colors" 
                         rel="noopener noreferrer"
                       >
                         {locale === 'da' ? 'Åbn' : locale === 'sv' ? 'Öppna' : 'Open'} →
@@ -378,13 +378,13 @@ export default function NotificationsView({ locale = 'en' }) {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-[#ffe4b5]">
+                  <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-[#d4d4d4]">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => updateNotification(notification._id, !notification.read)}
                       disabled={updating}
-                      className="flex-1 border-[#ffe4b5] hover:bg-[#fdf5e6] text-[#4a3728]"
+                      className="flex-1 border-[#d4d4d4] hover:bg-[#f5f5f5] text-[#2b2b2b]"
                     >
                       <CheckCircle2 className="h-4 w-4 mr-2" />
                       {notification.read ? copy.unreadAction : copy.read}
