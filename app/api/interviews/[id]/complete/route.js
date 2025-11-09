@@ -14,7 +14,7 @@ export async function POST(request, { params }) {
   try {
     await dbConnect();
 
-    const { id } = await params;
+  const { id } = await params;
     const token = request.headers.get('authorization')?.replace('Bearer ', '') || request.cookies.get('token')?.value;
 
     if (!token) {

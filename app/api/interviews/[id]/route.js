@@ -9,7 +9,7 @@ import { sendEmail } from '@/lib/utils/email';
 // PATCH /api/interviews/[id] - Update interview (schedule, reschedule, complete)
 export async function PATCH(request, { params }) {
   try {
-    const { id } = await params;
+  const { id } = await params;
     const token = request.headers.get('authorization')?.split(' ')[1];
     
     if (!token) {
@@ -211,7 +211,7 @@ export async function PATCH(request, { params }) {
 // DELETE /api/interviews/[id] - Delete interview (reject candidate)
 export async function DELETE(request, { params }) {
   try {
-    const { id } = await params;
+  const { id } = await params;
     const token = request.headers.get('authorization')?.split(' ')[1];
     
     if (!token) {
