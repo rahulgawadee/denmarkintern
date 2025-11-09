@@ -85,10 +85,10 @@ const navigationItems = [
     badge: true,
   },
   {
-    title: "Settings",
-    titleDa: "Indstillinger",
+    title: "Profile",
+    titleDa: "Profil",
     url: "/dashboard/company/settings",
-    icon: Settings,
+    icon: UserCircle,
     badge: false,
   },
 ];
@@ -377,8 +377,8 @@ export function CompanySidebar() {
                     onClick={() => router.push(`/${locale}/dashboard/company/settings`)} 
                     className="text-base py-3 cursor-pointer hover:bg-[#f5f5f5]"
                   >
-                    <Settings className="size-5 mr-3 text-[#525252]" />
-                    {locale === "da" ? "Indstillinger" : "Settings"}
+                    <UserCircle className="size-5 mr-3 text-[#525252]" />
+                    {locale === "da" ? "Profil" : "Profile"}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-[#d4d4d4]" />
                   <DropdownMenuItem 

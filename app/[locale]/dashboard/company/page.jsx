@@ -20,6 +20,7 @@ import {
   BreadcrumbPage,
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
+import { SkeletonCard } from '@/components/ui/skeleton';
 import { 
   Plus, 
   Eye, 
@@ -454,12 +455,35 @@ export default function CompanyDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-zinc-600">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
-        </div>
-      </div>
+      <>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+
+        <main className="flex items-center justify-center min-h-screen bg-white p-6">
+          <div className="w-full max-w-6xl space-y-6">
+            <div className="bg-white rounded-xl p-6 border border-[#d4d4d4] shadow-sm">
+              <div className="h-8 w-1/3 bg-[#f5f5f5] rounded-md animate-pulse" />
+              <div className="mt-2 h-4 w-1/4 bg-[#f5f5f5] rounded-md animate-pulse" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </div>
+        </main>
+      </>
     );
   }
 

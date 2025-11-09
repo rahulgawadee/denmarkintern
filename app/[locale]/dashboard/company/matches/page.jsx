@@ -22,6 +22,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
+import { SkeletonCard } from '@/components/ui/skeleton';
 import {
   Dialog,
   DialogContent,
@@ -316,12 +317,50 @@ export default function MatchesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#2b2b2b] border-r-transparent"></div>
-          <p className="mt-4 text-[#737373] font-medium">{locale === 'da' ? 'Indlæser...' : 'Loading...'}</p>
-        </div>
-      </div>
+      <>
+        <header className="flex h-16 shrink-0 items-center gap-2 bg-white px-4 sticky top-0 z-10 border-b border-[#d4d4d4]">
+          <SidebarTrigger className="-ml-1 text-[#2b2b2b]" />
+          <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink 
+                  href={`/${locale}/dashboard/company`}
+                  className="text-[#737373] hover:text-[#2b2b2b] transition-colors"
+                >
+                  {locale === 'da' ? 'Dashboard' : 'Dashboard'}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="text-[#d4d4d4]" />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#2b2b2b] font-semibold">
+                  {locale === 'da' ? 'Matches' : 'Matches'}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+
+        <main className="flex items-center justify-center min-h-screen bg-white p-6">
+          <div className="w-full max-w-6xl space-y-6">
+            <div className="mb-6 sm:mb-8">
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 rounded-xl bg-[#f5f5f5] animate-pulse" />
+                <div className="min-w-0">
+                  <div className="h-6 w-56 bg-[#f5f5f5] rounded-md animate-pulse" />
+                  <div className="mt-2 h-4 w-2/3 bg-[#f5f5f5] rounded-md animate-pulse" />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </div>
+        </main>
+      </>
     );
   }
 

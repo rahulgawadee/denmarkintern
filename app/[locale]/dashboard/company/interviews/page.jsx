@@ -43,7 +43,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Calendar as CalendarIcon, Clock, Video, MapPin, CheckCircle, XCircle, Edit, Users, Phone, RefreshCw, Mail, GraduationCap, FileText, ExternalLink, Award, Sparkles, Building2, ChevronRight } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Video, MapPin, CheckCircle, XCircle, Edit, Users, Phone, Mail, GraduationCap, FileText, ExternalLink, Award, Sparkles, Building2, ChevronRight } from 'lucide-react';
+import { SkeletonCard } from '@/components/ui/skeleton';
 
 export default function InterviewsPage() {
   const params = useParams();
@@ -418,33 +419,45 @@ export default function InterviewsPage() {
   };
 
   if (loading) {
+    // Use reusable skeletons while loading
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#fdf5e6] to-white">
-        <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#fa8072] border-r-transparent"></div>
-          <p className="mt-4 text-[#6b5444] font-medium">{copy.loading}</p>
+      <main className="flex-1 overflow-auto bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 rounded-full bg-zinc-200" />
+            <div className="flex-1">
+              <div className="w-1/3 h-6 bg-zinc-200 rounded mb-2" />
+              <div className="w-1/4 h-4 bg-zinc-200 rounded" />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
     <>
-      {/* Header with Breadcrumb - No Border */}
-      <header className="flex h-16 shrink-0 items-center gap-2 bg-linear-to-r from-[#fdf5e6] to-[#ffefd5] px-4 sticky top-0 z-10">
-        <SidebarTrigger className="-ml-1 text-[#4a3728]" />
-        <Separator orientation="vertical" className="mr-2 h-4 bg-[#ffe4b5]" />
+      {/* Header with Breadcrumb - monochrome */}
+      <header className="flex h-16 shrink-0 items-center gap-2 bg-white px-4 sticky top-0 z-10 border-b border-[#d4d4d4]">
+        <SidebarTrigger className="-ml-1 text-[#2b2b2b]" />
+        <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-[#4a3728] font-semibold">{copy.title}</BreadcrumbPage>
+              <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
       <main className="flex-1 overflow-auto">
-        <div className="w-full h-full bg-linear-to-b from-[#fdf5e6] via-white to-[#ffefd5]">
+  <div className="w-full h-full bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
             
             {/* Page Header */}
@@ -457,15 +470,6 @@ export default function InterviewsPage() {
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2b2b2b]">{copy.title}</h1>
                   <p className="text-sm sm:text-base text-[#737373] mt-1">{copy.subtitle}</p>
                 </div>
-                <Button
-                  variant="outline"
-                  onClick={fetchInterviews}
-                  disabled={loading}
-                  className="border-[#d4d4d4] text-[#2b2b2b] hover:bg-[#f5f5f5] hover:text-[#1a1a1a] hover:border-[#2b2b2b] transition-all duration-200 gap-2"
-                >
-                  <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-                  <span className="hidden sm:inline">{copy.refresh}</span>
-                </Button>
               </div>
             </div>
 
@@ -645,8 +649,8 @@ export default function InterviewsPage() {
                             <TableRow key={interview._id}>
                               <TableCell>
                                 <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                                    <span className="text-purple-600 font-semibold">
+                                  <div className="w-10 h-10 rounded-full bg-[#f5f5f5] flex items-center justify-center">
+                                    <span className="text-[#2b2b2b] font-semibold">
                                       {interview.candidateId?.firstName?.charAt(0) || 'C'}
                                     </span>
                                   </div>
@@ -703,7 +707,7 @@ export default function InterviewsPage() {
                                     variant="outline"
                                     onClick={() => handleOpenCompleteModal(interview)}
                                     disabled={actionLoading}
-                                    className="gap-1 text-green-600 hover:text-green-700"
+                                    className="gap-1 text-[#2b2b2b] hover:text-[#525252]"
                                   >
                                     <CheckCircle className="w-4 h-4" />
                                     {copy.markCompleted}
@@ -772,8 +776,8 @@ export default function InterviewsPage() {
                             <TableRow key={interview._id}>
                               <TableCell>
                                 <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                                    <span className="text-purple-600 font-semibold">
+                                  <div className="w-10 h-10 rounded-full bg-[#f5f5f5] flex items-center justify-center">
+                                    <span className="text-[#2b2b2b] font-semibold">
                                       {interview.candidateId?.firstName?.charAt(0) || 'C'}
                                     </span>
                                   </div>
@@ -853,9 +857,9 @@ export default function InterviewsPage() {
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
-                    <Mail className="w-5 h-5" />
-                  </div>
+                    <div className="p-2 rounded-lg bg-[#f5f5f5] text-[#2b2b2b]">
+                      <Mail className="w-5 h-5" />
+                    </div>
                   <div>
                     <p className="text-xs uppercase tracking-wide text-zinc-500">Email</p>
                     <p className="text-sm font-medium text-zinc-900">
@@ -866,7 +870,7 @@ export default function InterviewsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-green-50 text-green-600">
+                  <div className="p-2 rounded-lg bg-[#f5f5f5] text-[#2b2b2b]">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
@@ -875,7 +879,7 @@ export default function InterviewsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-purple-50 text-purple-600">
+                  <div className="p-2 rounded-lg bg-[#f5f5f5] text-[#2b2b2b]">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -887,7 +891,7 @@ export default function InterviewsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-amber-50 text-amber-600">
+                  <div className="p-2 rounded-lg bg-[#f5f5f5] text-[#2b2b2b]">
                     <GraduationCap className="w-5 h-5" />
                   </div>
                   <div>
@@ -907,7 +911,7 @@ export default function InterviewsPage() {
               {candidateModal.interview?.candidateId?.skills?.length ? (
                 <div>
                   <p className="text-sm font-medium text-zinc-900 mb-2 flex items-center gap-2">
-                    <Award className="w-4 h-4 text-amber-500" />
+                    <Award className="w-4 h-4 text-[#737373]" />
                     {locale === 'da' ? 'Færdigheder' : 'Skills'}
                   </p>
                   <div className="flex flex-wrap gap-2">

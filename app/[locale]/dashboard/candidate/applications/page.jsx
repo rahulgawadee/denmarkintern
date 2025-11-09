@@ -38,6 +38,7 @@ import { Label } from '@/components/ui/label';
 import ApplicationCard from '@/components/student/ApplicationCard';
 import AcceptedApplicationCard from '@/components/student/AcceptedApplicationCard';
 import ApplicationDetailsModal from '@/components/student/ApplicationDetailsModal';
+import { SkeletonCard } from '@/components/ui/skeleton';
 
 export default function MyApplicationsPage() {
   const params = useParams();
@@ -282,12 +283,43 @@ export default function MyApplicationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2b2b2b] mx-auto"></div>
-          <p className="mt-4 text-[#737373]">{copy.loading}</p>
-        </div>
-      </div>
+      <>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-[#d4d4d4] px-4 bg-white sticky top-0 z-10">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4 bg-[#d4d4d4]" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink 
+                  href={`/${locale}/dashboard/candidate`}
+                  className="text-[#737373] hover:text-[#2b2b2b]"
+                >
+                  Dashboard
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#2b2b2b] font-semibold">{copy.title}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+
+        <main className="flex flex-1 flex-col gap-6 p-4 md:p-6 lg:p-8 bg-[#f5f5f5] overflow-auto">
+          <div className="w-full max-w-7xl mx-auto space-y-6">
+            <div className="bg-white rounded-xl p-4 sm:p-6 border border-[#d4d4d4] shadow-sm">
+              <h1 className="h-8 w-3/5 bg-[#f5f5f5] rounded-md animate-pulse" />
+              <p className="mt-2 h-4 w-1/3 bg-[#f5f5f5] rounded-md animate-pulse" />
+            </div>
+
+            <div className="space-y-4">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </div>
+        </main>
+      </>
     );
   }
 
