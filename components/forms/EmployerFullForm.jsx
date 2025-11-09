@@ -15,9 +15,9 @@ import { submitContactForm, resetFullForm } from '@/store/slices/contactSlice';
 // Lightweight progress indicator using div fallback if Progress component missing
 const LinearProgress = ({ value }) => {
   return (
-    <div className="h-2 w-full rounded-full bg-[#ffefd5]">
+    <div className="h-2 w-full rounded-full bg-[#d4d4d4]">
       <div
-        className="h-2 rounded-full bg-gradient-to-r from-[#ffa07a] to-[#fa8072] transition-all"
+        className="h-2 rounded-full bg-[#2b2b2b] transition-all"
         style={{ width: `${value}%` }}
       />
     </div>
@@ -128,14 +128,14 @@ export default function EmployerFullForm({ copy }) {
 
   if (success) {
     return (
-      <div className="space-y-4 rounded-xl border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50 p-6 shadow-md">
-        <div className="flex items-center gap-3 text-blue-700">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
-            <CheckCircle2 className="h-6 w-6" />
+      <div className="space-y-4 rounded-xl border-2 border-[#d4d4d4] bg-[#f5f5f5] p-6 shadow-sm">
+        <div className="flex items-center gap-3 text-zinc-900">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-zinc-900">
+            <CheckCircle2 className="h-6 w-6 text-white" />
           </div>
           <span className="font-bold text-lg">{copy.successTitle}</span>
         </div>
-        <p className="text-blue-700 leading-relaxed">{copy.successMessage}</p>
+        <p className="text-zinc-900 leading-relaxed">{copy.successMessage}</p>
         <Button 
           onClick={() => {
             setFormData(initialData);
@@ -143,7 +143,7 @@ export default function EmployerFullForm({ copy }) {
             dispatch(resetFullForm());
           }}
           variant="outline"
-          className="w-full border-blue-300 text-blue-700 hover:bg-blue-50"
+          className="w-full border-[#d4d4d4] text-zinc-900 hover:bg-[#f5f5f5]"
         >
           Submit Another Request
         </Button>
@@ -162,7 +162,7 @@ export default function EmployerFullForm({ copy }) {
 
       <div>
         <LinearProgress value={progressValue} />
-        <div className="mt-3 flex items-center justify-between text-sm text-[#6b5444]">
+        <div className="mt-3 flex items-center justify-between text-sm text-zinc-500">
           <span className="font-semibold">
             Step {step + 1} of {totalSteps}
           </span>
@@ -171,7 +171,7 @@ export default function EmployerFullForm({ copy }) {
       </div>
 
       {steps[step].description ? (
-        <p className="text-sm text-[#6b5444] leading-relaxed bg-[#ffefd5]/30 p-3 rounded-lg border border-[#ffe4b5]">
+        <p className="text-sm text-zinc-500 leading-relaxed bg-[#f5f5f5]/30 p-3 rounded-lg border border-[#d4d4d4]">
           {steps[step].description}
         </p>
       ) : null}
@@ -184,16 +184,16 @@ export default function EmployerFullForm({ copy }) {
           if (field.type === 'chips') {
             return (
               <div key={field.name} className={field.colSpan ?? ''}>
-                <ChipInput
-                  id={field.name}
-                  label={field.label}
-                  placeholder={field.placeholder}
-                  helpText={field.helpText}
-                  values={value}
-                  onChange={(nextValues) => updateField(field.name, nextValues)}
-                  max={field.max ?? 5}
-                  disabled={loading}
-                />
+                    <ChipInput
+                      id={field.name}
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      helpText={field.helpText}
+                      values={value}
+                      onChange={(nextValues) => updateField(field.name, nextValues)}
+                      max={field.max ?? 5}
+                      disabled={loading}
+                    />
                 {error ? (
                   <p className="text-sm text-red-600 flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
@@ -207,7 +207,7 @@ export default function EmployerFullForm({ copy }) {
           if (field.type === 'textarea') {
             return (
               <div key={field.name} className={field.colSpan ?? ''}>
-                <Label htmlFor={field.name} className="text-[#4a3728] font-semibold">
+                <Label htmlFor={field.name} className="text-zinc-900 font-semibold">
                   {field.label}
                 </Label>
                 <Textarea
@@ -217,10 +217,10 @@ export default function EmployerFullForm({ copy }) {
                   onChange={(event) => updateField(field.name, event.target.value)}
                   aria-invalid={error ? 'true' : 'false'}
                   disabled={loading}
-                  className="border-2 border-[#ffe4b5] focus:border-[#ffa07a] focus:ring-[#ffa07a] text-[#4a3728] mt-1.5"
+                  className="border-2 border-[#d4d4d4] focus:border-[#2b2b2b] focus:ring-[#2b2b2b] text-zinc-900 bg-white mt-1.5"
                 />
                 {field.helpText ? (
-                  <p className="text-xs text-[#6b5444] mt-1">{field.helpText}</p>
+                  <p className="text-xs text-zinc-500 mt-1">{field.helpText}</p>
                 ) : null}
                 {error ? (
                   <p className="text-sm text-red-600 flex items-center gap-1 mt-1">
@@ -235,10 +235,10 @@ export default function EmployerFullForm({ copy }) {
           if (field.type === 'radio') {
             return (
               <div key={field.name} className={field.colSpan ?? ''}>
-                <Label className="mb-2 block text-[#4a3728] font-semibold">{field.label}</Label>
+                <Label className="mb-2 block text-zinc-900 font-semibold">{field.label}</Label>
                 <div className="space-y-2">
                   {field.options.map((option) => (
-                    <label key={option.value} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-[#ffefd5]/30 cursor-pointer transition-colors">
+                    <label key={option.value} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-[#f5f5f5]/40 cursor-pointer transition-colors">
                       <input
                         type="radio"
                         name={field.name}
@@ -246,9 +246,9 @@ export default function EmployerFullForm({ copy }) {
                         checked={value === option.value}
                         onChange={(event) => updateField(field.name, event.target.value)}
                         disabled={loading}
-                        className="text-[#fa8072] focus:ring-[#ffa07a]"
+                        className="focus:ring-2 focus:ring-[#2b2b2b]"
                       />
-                      <span className="text-[#4a3728]">{option.label}</span>
+                      <span className="text-zinc-900">{option.label}</span>
                     </label>
                   ))}
                 </div>
@@ -265,21 +265,21 @@ export default function EmployerFullForm({ copy }) {
           if (field.type === 'checkbox-group') {
             return (
               <div key={field.name} className={field.colSpan ?? ''}>
-                <Label className="mb-2 block text-[#4a3728] font-semibold">{field.label}</Label>
-                <div className="grid gap-2">
-                  {field.options.map((option) => (
-                    <label key={option.value} className="flex items-start gap-2 text-sm p-2 rounded hover:bg-[#ffefd5]/30 cursor-pointer transition-colors">
-                      <Checkbox
-                        checked={(value || []).includes(option.value)}
-                        onChange={() => toggleCheckboxValue(field.name, option.value)}
-                        disabled={loading}
-                      />
-                      <span className="text-[#4a3728]">{option.label}</span>
-                    </label>
-                  ))}
-                </div>
+                  <Label className="mb-2 block text-zinc-900 font-semibold">{field.label}</Label>
+                  <div className="grid gap-2">
+                    {field.options.map((option) => (
+                      <label key={option.value} className="flex items-start gap-2 text-sm p-2 rounded hover:bg-[#f5f5f5]/40 cursor-pointer transition-colors">
+                        <Checkbox
+                          checked={(value || []).includes(option.value)}
+                          onChange={() => toggleCheckboxValue(field.name, option.value)}
+                          disabled={loading}
+                        />
+                        <span className="text-zinc-900">{option.label}</span>
+                      </label>
+                    ))}
+                  </div>
                 {field.helpText ? (
-                  <p className="text-xs text-[#6b5444] mt-1">{field.helpText}</p>
+                    <p className="text-xs text-zinc-500 mt-1">{field.helpText}</p>
                 ) : null}
                 {error ? (
                   <p className="text-sm text-red-600 flex items-center gap-1 mt-1">
@@ -293,14 +293,14 @@ export default function EmployerFullForm({ copy }) {
 
           if (field.type === 'checkbox') {
             return (
-              <label key={field.name} className={`${field.colSpan ?? ''} flex items-start gap-2 text-sm p-3 rounded-lg bg-[#ffefd5]/30 border border-[#ffe4b5] cursor-pointer hover:bg-[#ffefd5]/50 transition-colors`}>
+              <label key={field.name} className={`${field.colSpan ?? ''} flex items-start gap-2 text-sm p-3 rounded-lg bg-[#f5f5f5]/30 border border-[#d4d4d4] cursor-pointer hover:bg-[#f5f5f5]/50 transition-colors`}>
                 <Checkbox
                   checked={Boolean(value)}
                   onChange={(e) => updateField(field.name, e.target.checked)}
                   disabled={loading}
                   className="mt-0.5"
                 />
-                <span className="text-[#4a3728]">{field.label}</span>
+                  <span className="text-zinc-900">{field.label}</span>
                 {error ? (
                   <p className="text-sm text-red-600 flex items-center gap-1 mt-1">
                     <AlertCircle className="h-3 w-3" />
@@ -314,14 +314,14 @@ export default function EmployerFullForm({ copy }) {
           if (field.type === 'select') {
             return (
               <div key={field.name} className={field.colSpan ?? ''}>
-                <Label htmlFor={field.name} className="text-[#4a3728] font-semibold">
+                <Label htmlFor={field.name} className="text-zinc-900 font-semibold">
                   {field.label}
                 </Label>
                 <select
                   id={field.name}
                   value={value}
                   onChange={(event) => updateField(field.name, event.target.value)}
-                  className="mt-1.5 w-full rounded-lg border-2 border-[#ffe4b5] p-2.5 text-sm text-[#4a3728] focus:border-[#ffa07a] focus:ring-[#ffa07a] disabled:opacity-50"
+                  className="mt-1.5 w-full rounded-lg border-2 border-[#d4d4d4] p-2.5 text-sm text-zinc-900 focus:border-[#2b2b2b] focus:ring-[#2b2b2b] disabled:opacity-50 bg-white"
                   aria-invalid={error ? 'true' : 'false'}
                   disabled={loading}
                 >
@@ -358,15 +358,15 @@ export default function EmployerFullForm({ copy }) {
                       updateField(field.name, files);
                     }}
                     disabled={loading}
-                    className="border-2 border-[#ffe4b5] focus:border-[#ffa07a] focus:ring-[#ffa07a]"
+                    className="border-2 border-[#d4d4d4] focus:border-[#2b2b2b] focus:ring-[#2b2b2b] bg-white"
                   />
-                  <UploadCloud className="h-5 w-5 text-[#ffa07a]" />
+                  <UploadCloud className="h-5 w-5 text-zinc-500" />
                 </div>
                 {field.helpText ? (
-                  <p className="text-xs text-[#6b5444] mt-1">{field.helpText}</p>
+                  <p className="text-xs text-zinc-500 mt-1">{field.helpText}</p>
                 ) : null}
                 {value?.length ? (
-                  <p className="text-xs text-[#6b5444] mt-2 bg-[#ffefd5]/30 p-2 rounded">
+                  <p className="text-xs text-zinc-500 mt-2 bg-[#f5f5f5]/30 p-2 rounded">
                     {value.length} file(s): {value.join(', ')}
                   </p>
                 ) : null}
@@ -376,7 +376,7 @@ export default function EmployerFullForm({ copy }) {
 
           return (
             <div key={field.name} className={field.colSpan ?? ''}>
-              <Label htmlFor={field.name} className="text-[#4a3728] font-semibold">
+              <Label htmlFor={field.name} className="text-zinc-900 font-semibold">
                 {field.label}
               </Label>
               <Input
@@ -387,10 +387,10 @@ export default function EmployerFullForm({ copy }) {
                 onChange={(event) => updateField(field.name, event.target.value)}
                 aria-invalid={error ? 'true' : 'false'}
                 disabled={loading}
-                className="border-2 border-[#ffe4b5] focus:border-[#ffa07a] focus:ring-[#ffa07a] text-[#4a3728] mt-1.5"
+                className="border-2 border-[#d4d4d4] focus:border-[#2b2b2b] focus:ring-[#2b2b2b] text-zinc-900 bg-white mt-1.5"
               />
               {field.helpText ? (
-                <p className="text-xs text-[#6b5444] mt-1">{field.helpText}</p>
+                <p className="text-xs text-zinc-500 mt-1">{field.helpText}</p>
               ) : null}
               {error ? (
                 <p className="text-sm text-red-600 flex items-center gap-1 mt-1">
@@ -404,8 +404,8 @@ export default function EmployerFullForm({ copy }) {
       </div>
 
       {steps[step].note ? (
-        <Alert className="border-[#ffe4b5] bg-[#ffefd5]/20">
-          <AlertDescription className="text-[#6b5444]">{steps[step].note}</AlertDescription>
+        <Alert className="border-[#d4d4d4] bg-[#f5f5f5]/20">
+          <AlertDescription className="text-zinc-500">{steps[step].note}</AlertDescription>
         </Alert>
       ) : null}
 
@@ -415,7 +415,7 @@ export default function EmployerFullForm({ copy }) {
           variant="outline" 
           onClick={goBack} 
           disabled={step === 0 || loading}
-          className="border-2 border-[#ffe4b5] text-[#4a3728] hover:bg-[#ffefd5]/50"
+          className="border-2 border-[#d4d4d4] text-zinc-900 hover:bg-[#f5f5f5]/50"
         >
           {copy.actions.back}
         </Button>
@@ -424,7 +424,7 @@ export default function EmployerFullForm({ copy }) {
             type="button" 
             onClick={goNext}
             disabled={loading}
-            className="bg-gradient-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+            className="bg-zinc-900 hover:bg-zinc-700 text-white font-bold shadow-sm transition-all hover:scale-105"
           >
             {copy.actions.next}
           </Button>
@@ -432,7 +432,7 @@ export default function EmployerFullForm({ copy }) {
           <Button 
             type="submit"
             disabled={loading}
-            className="bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#059669] hover:to-[#047857] text-white font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="bg-zinc-900 hover:bg-zinc-700 text-white font-bold shadow-sm transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
             {loading ? (
               <>

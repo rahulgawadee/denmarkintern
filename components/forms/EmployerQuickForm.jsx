@@ -51,14 +51,14 @@ export default function EmployerQuickForm({ copy }) {
 
   if (success) {
     return (
-      <div className="space-y-4 rounded-xl border-2 border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-6 shadow-md">
-        <div className="flex items-center gap-3 text-green-700">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-green-100">
-            <CheckCircle2 className="h-6 w-6" />
+      <div className="space-y-4 rounded-xl border-2 border-[#d4d4d4] bg-[#f5f5f5] p-6 shadow-sm">
+        <div className="flex items-center gap-3 text-zinc-900">
+          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-zinc-900">
+            <CheckCircle2 className="h-6 w-6 text-white" />
           </div>
           <span className="font-bold text-lg">{copy.successTitle}</span>
         </div>
-        <p className="text-green-700 leading-relaxed">{copy.successMessage}</p>
+        <p className="text-zinc-900 leading-relaxed">{copy.successMessage}</p>
         <Button 
           onClick={() => {
             setEmail('');
@@ -66,7 +66,7 @@ export default function EmployerQuickForm({ copy }) {
             dispatch(resetQuickForm());
           }}
           variant="outline"
-          className="w-full border-green-300 text-green-700 hover:bg-green-50"
+          className="w-full border-[#d4d4d4] text-zinc-900 hover:bg-[#f5f5f5]"
         >
           Send Another Message
         </Button>
@@ -84,18 +84,18 @@ export default function EmployerQuickForm({ copy }) {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="quick-email" className="text-[#4a3728] font-semibold">
+        <Label htmlFor="quick-email" className="text-zinc-900 font-semibold">
           {copy.emailLabel}
         </Label>
         <div className="relative">
-          <Mail className="absolute left-3 top-3 h-5 w-5 text-[#ffa07a]" />
+          <Mail className="absolute left-3 top-3 h-5 w-5 text-zinc-500" />
           <Input
             id="quick-email"
             type="email"
             placeholder={copy.emailPlaceholder}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="pl-11 border-2 border-[#ffe4b5] focus:border-[#ffa07a] focus:ring-[#ffa07a] text-[#4a3728]"
+            className="pl-11 border-2 border-[#d4d4d4] focus:border-[#2b2b2b] focus:ring-[#2b2b2b] text-zinc-900 bg-white"
             aria-invalid={errors.email ? 'true' : 'false'}
             disabled={loading}
           />
@@ -108,7 +108,7 @@ export default function EmployerQuickForm({ copy }) {
         ) : null}
       </div>
 
-      <div className="flex items-start gap-3 p-4 rounded-lg bg-[#ffefd5]/30 border border-[#ffe4b5]">
+      <div className="flex items-start gap-3 p-4 rounded-lg bg-[#f5f5f5]/40 border border-[#d4d4d4]">
         <Checkbox
           id="quick-consent"
           checked={consent}
@@ -119,11 +119,11 @@ export default function EmployerQuickForm({ copy }) {
         <div className="space-y-1 text-sm flex-1">
           <Label 
             htmlFor="quick-consent" 
-            className="font-normal text-[#4a3728] leading-relaxed cursor-pointer"
+            className="font-normal text-zinc-900 leading-relaxed cursor-pointer"
           >
             {copy.consentLabel}
           </Label>
-          <p className="text-xs text-[#6b5444]">{copy.privacy}</p>
+          <p className="text-xs text-zinc-500">{copy.privacy}</p>
           {errors.consent ? (
             <p className="text-sm text-red-600 flex items-center gap-1">
               <AlertCircle className="h-3 w-3" />
@@ -134,14 +134,14 @@ export default function EmployerQuickForm({ copy }) {
       </div>
 
       {copy.notice ? (
-        <Alert className="border-[#ffe4b5] bg-[#ffefd5]/20">
-          <AlertDescription className="text-[#6b5444]">{copy.notice}</AlertDescription>
+        <Alert className="border-[#d4d4d4] bg-[#f5f5f5]/20">
+          <AlertDescription className="text-zinc-500">{copy.notice}</AlertDescription>
         </Alert>
       ) : null}
 
       <Button 
         type="submit" 
-        className="w-full bg-gradient-to-r from-[#ffa07a] to-[#fa8072] hover:from-[#fa8072] hover:to-[#e9967a] text-white font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        className="w-full bg-zinc-900 hover:bg-zinc-700 text-white font-bold shadow-sm transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={loading}
       >
         {loading ? (
